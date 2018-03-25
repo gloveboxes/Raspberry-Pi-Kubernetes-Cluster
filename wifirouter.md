@@ -38,6 +38,7 @@ $ sudo nano /etc/dhcpcd.conf
 interface eth0
 static ip_address=192.168.2.1/24
 static domain_name_servers=8.8.8.8 8.8.4.4
+noipv6
 ```
 
 Then reboot
@@ -143,11 +144,23 @@ $ sudo systemctl restart isc-dhcp-server.service
 ```
 
 
-### DHCP Service Commands
+## DHCP Service Commands
 
 ```bash
 $ sudo systemctl start isc-dhcp-server.service 
 $ sudo systemctl stop isc-dhcp-server.service
 $ sudo systemctl restart isc-dhcp-server.service  
 $ sudo systemctl status isc-dhcp-server.service 
+```
+
+## Useful Tools
+
+### Network Mapper
+
+Scans network for active IP Addresses
+
+```bash
+$ sudo apt install nmap
+
+$ nmap -sn 192.168.2.0/24
 ```
