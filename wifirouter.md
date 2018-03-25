@@ -43,7 +43,7 @@ static domain_name_servers=8.8.8.8 8.8.4.4
 Then reboot
 
 ```bash
-sudo reboot now
+sudo reboot
 ```
 
 ## Install the DHCP Server
