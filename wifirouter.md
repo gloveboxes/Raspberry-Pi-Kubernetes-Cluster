@@ -30,7 +30,7 @@ Run **man sysctl** for more information on this command.
 
 
 ```bash
-sudo nano /etc/dhcpcd.conf
+$ sudo nano /etc/dhcpcd.conf
 ```
 
 ```
