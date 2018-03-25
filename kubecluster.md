@@ -1,6 +1,12 @@
+Setting up Raspberry Pi Kubernetes Cluster
 
 
-[Kubernetes on Raspberry Pi with .NET Core](https://medium.com/@mczachurski/kubernetes-on-raspberry-pi-with-net-core-36ea79681fe7)
+* Date: **March 2018**
+* Operating System: **Raspbian Sketch**
+* Kernel: **4.9**
+
+
+Follow notes at [Kubernetes on Raspberry Pi with .NET Core](https://medium.com/@mczachurski/kubernetes-on-raspberry-pi-with-net-core-36ea79681fe7)
 
 
 ## Kubernetes Dashboard Security
