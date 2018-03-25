@@ -5,4 +5,5 @@
 * Operating System: **Raspbian Sketch**
 * Kernel: **4.9**
 
-[Using a Pi 3 as a Ethernet to WiFi router](wifirouter.md)
+1. [Using a Pi 3 as a Ethernet to WiFi router](wifirouter.md)
+2. [Setting up Kubernetes Cluster](kubecluster.md)
