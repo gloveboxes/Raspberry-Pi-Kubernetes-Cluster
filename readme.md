@@ -1,0 +1,1 @@
+[Using a Pi 3 as a Ethernet to WiFi router](wifirouter.md)
