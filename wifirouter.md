@@ -41,6 +41,17 @@ static domain_name_servers=8.8.8.8 8.8.4.4
 noipv6
 ```
 
+Alternatively append network configuration to the /etc/dhcpcd.conf with the cat command.
+
+```bash
+sudo cat <<EOT>> /etc/dhcpcd.conf
+interface eth0
+static ip_address=192.168.2.1/24
+static domain_name_servers=8.8.8.8 8.8.4.4
+noipv6
+EOT
+```
+
 Then reboot
 
 ```bash
