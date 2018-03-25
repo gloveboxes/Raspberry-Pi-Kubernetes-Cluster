@@ -43,7 +43,7 @@ static domain_name_servers=8.8.8.8 8.8.4.4
 Then reboot
 
 ```bash
-sudo reboot
+$ sudo reboot
 ```
 
 ## Install the DHCP Server
@@ -69,7 +69,7 @@ INTERFACESv4="eth0"
 ### Configure the DHCP Server Options
 
 ```bash
-sudo nano /etc/dhcp/dhcpd.conf
+$ sudo nano /etc/dhcp/dhcpd.conf
 ```
 
 Scroll through file and replace sample #authoritative section.
@@ -98,19 +98,19 @@ subnet 192.168.2.0 netmask 255.255.255.0 {
 ## Routing traffic through the wireless interface
 
 ```bash
-sudo iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o wlan0 -j MASQUERADE
+$ sudo iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o wlan0 -j MASQUERADE
 ```
 
 ### Persist the iptables
 
 ```bash
-sudo apt install iptables-persistent
+$ sudo apt install iptables-persistent
 ```
 
 ## DHCP IP Address Reservations
 
 ```bash
-sudo nano /etc/dhcp/dhcpd.conf
+$ sudo nano /etc/dhcp/dhcpd.conf
 ```
 
 
@@ -139,15 +139,15 @@ host k8snode4 {
 ### Restart the DHCP Server
 
 ```bash
-sudo systemctl restart isc-dhcp-server.service 
+$ sudo systemctl restart isc-dhcp-server.service 
 ```
 
 
 ### DHCP Service Commands
 
 ```bash
-sudo systemctl start isc-dhcp-server.service 
-sudo systemctl stop isc-dhcp-server.service
-sudo systemctl restart isc-dhcp-server.service  
-sudo systemctl status isc-dhcp-server.service 
+$ sudo systemctl start isc-dhcp-server.service 
+$ sudo systemctl stop isc-dhcp-server.service
+$ sudo systemctl restart isc-dhcp-server.service  
+$ sudo systemctl status isc-dhcp-server.service 
 ```
