@@ -136,6 +136,12 @@ host k8snode4 {
 }
 ```
 
+### Restart the DHCP Server
+
+```bash
+sudo systemctl restart isc-dhcp-server.service 
+```
+
 
 ### DHCP Service Commands
 
