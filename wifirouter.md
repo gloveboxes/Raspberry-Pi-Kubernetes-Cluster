@@ -98,7 +98,7 @@ subnet 192.168.2.0 netmask 255.255.255.0 {
 ## Routing traffic through the wireless interface
 
 ```bash
-$ sudo iptables -t nat -A POSTROUTING -s 192.168.1.0/24 -o wlan0 -j MASQUERADE
+$ sudo iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -o wlan0 -j MASQUERADE
 ```
 
 ### Persist the iptables
