@@ -2,7 +2,7 @@
 
 ## SD Card Optimisation
 
-Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. 
+Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. Note you will lose the contents of these directories on reboot.
 
 ```bash
 sudo cat <<EOT>> /etc/fstab
