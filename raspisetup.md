@@ -2,6 +2,8 @@
 
 ## SD Card Optimisation
 
+Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. 
+
 ```bash
 sudo cat <<EOT>> /etc/fstab
 tmpfs /tmp  tmpfs defaults,noatime 0 0
