@@ -20,7 +20,7 @@ $ sudo apt install nmap
 $ nmap -sn 192.168.2.0/24
 ```
 
-## Manage Cluster as one unit with Fabric
+## Manage Raspberry Pi Cluster as one unit with Fabric
 
 See [Welcome to Fabric](http://www.fabfile.org/) for more information.
 
