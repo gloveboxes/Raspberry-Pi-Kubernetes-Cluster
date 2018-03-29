@@ -11,6 +11,14 @@ tmpfs /var/log  tmpfs defaults,noatime,size=16m 0 0
 EOT
 ```
 
+## Memory Optimisation
+
+if using Raspberry Pi Lite (Headless) you can reduce the memory split between the GPU and the rest of the system down to 16mb.
+
+```bash
+echo "cgroup_enable=cpuset cgroup_enable=memory" | sudo tee -a /boot/cmdline.txt
+```
+
 
 ## Network Mapper
 
