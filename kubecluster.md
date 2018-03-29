@@ -27,20 +27,35 @@ add the following to the end of the line (don't add to a new line)
 
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
-sudo kubeadm init --apiserver-advertise-address=192.168.2.1 --token-ttl 0 --pod-network-cidr=10.244.0.0/16 --service-dns-domain k8smaster.local
+sudo kubeadm init --apiserver-advertise-address=192.168.2.1 --token-ttl 0
 
 
 ## Setup Nodes
 
+When the kubeadm init command completes you need to take a note of the token. You use this command to join a node to the kubernetes master.
 
-kubeadm join 192.168.2.1:6443 --token hy15wr.pyfx1d8xbec6f0hw --discovery-token-ca-cert-hash sha256:ab6224e85966f1bf5f7ad2446a08af4a24fc8c510c8aa5df353c76f6b8cb938f
-
+```bash
+$ sudo kubeadm join 192.168.2.1:6443 --token hy15wr.pyfx1d8xbec6f0hw --discovery-token-ca-cert-hash sha256:ab6224e85966f1bf5f7ad2446a08af4a24fc8c510c8aa5df353c76f6b8cb938f
+```
 
 
 kubectl apply -f \
  "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
+## Reseting Kubernetes Master or Node
 
+````bash
+$ sudo kubeadm reset
+$ sudo systemctl restart kubelet.service
+````
+
+## Useful Kubernetes Commands
+
+```bash
+$ kubectl get pods --namespace=kube-system -o wide
+
+$ kubectl get nodes
+```
 
 ## Kubernetes Dashboard Security
 

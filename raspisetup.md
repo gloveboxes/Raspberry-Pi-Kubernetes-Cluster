@@ -5,10 +5,8 @@
 Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. Note you will lose the contents of these directories on reboot.
 
 ```bash
-sudo cat <<EOT>> /etc/fstab
-tmpfs /tmp  tmpfs defaults,noatime 0 0
-tmpfs /var/log  tmpfs defaults,noatime,size=16m 0 0
-EOT
+sudo sh -c echo "tmpfs /tmp  tmpfs defaults,noatime 0 0
+tmpfs /var/log  tmpfs defaults,noatime,size=16m 0 0" | sudo tee -a /etc/fstab
 ```
 
 ## Memory Optimisation
@@ -16,7 +14,7 @@ EOT
 if using Raspberry Pi Lite (Headless) you can reduce the memory split between the GPU and the rest of the system down to 16mb.
 
 ```bash
-echo "cgroup_enable=cpuset cgroup_enable=memory" | sudo tee -a /boot/cmdline.txt
+sudo sh -c echo "cgroup_enable=cpuset cgroup_enable=memory" | sudo tee -a /boot/cmdline.txt
 ```
 
 
