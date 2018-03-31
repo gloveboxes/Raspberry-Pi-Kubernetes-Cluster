@@ -29,8 +29,17 @@ sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
 sudo kubeadm init --apiserver-advertise-address=192.168.2.1 --token-ttl 0
 
+sudo kubeadm init --apiserver-advertise-address=192.168.0.135 --token-ttl 0
+
+kubectl apply -f https://git.io/weave-kube-1.6
+
+
 
 ## Setup Nodes
+
+
+
+
 
 When the kubeadm init command completes you need to take a note of the token. You use this command to join a node to the kubernetes master.
 
@@ -55,6 +64,9 @@ $ sudo systemctl restart kubelet.service
 $ kubectl get pods --namespace=kube-system -o wide
 
 $ kubectl get nodes
+
+$ for i in range{1..1000}; do date; kubectl get pods --namespace=kube-system -o wide;sleep 5; done;
+
 ```
 
 ## Kubernetes Dashboard Security
@@ -87,3 +99,9 @@ then run
 ```bash
 kubectl create -f dashboard-admin.yaml 
 ```
+
+
+## SSH Tunnel to Cluster Master
+
+sudo ssh -L 8080:10.101.166.227:80 pi@192.168.0.142
+
