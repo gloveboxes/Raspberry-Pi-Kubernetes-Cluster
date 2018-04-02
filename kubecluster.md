@@ -1,7 +1,7 @@
 Setting up Raspberry Pi Kubernetes Cluster
 
 
-* Date: **March 2018**
+* Date: **April 2018**
 * Operating System: **Raspbian Sketch**
 * Kernel: **4.9**
 
@@ -15,31 +15,37 @@ Follow notes at [Kubernetes on Raspberry Pi with .NET Core](https://medium.com/@
 if using Raspberry Pi Lite (Headless) you can reduce the memory split between the GPU and the rest of the system down to 16mb.
 
 ```bash
-sudo nano /boot/cmdline.txt
+echo "gpu_mem=16" | sudo tee -a /boot/config.txt
 ```
-add the following to the end of the line (don't add to a new line)
 
 
-**cgroup_enable=cpuset cgroup_enable=memory**
+## Enable cgroups for kubernetes
 
- WORK IN PROGRESS - NOT WORKING ATM
+Append cgroup_enable=cpuset cgroup_enable=memory to the end of the line of /boot/cmdline.txt file.
 
+```bash
+sudo sed -i 's/$/ cgroup_enable=cpuset cgroup_enable=memory/' /boot/cmdline.txt
+```
 
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+## Initialise an instance of Kubernetes Master Node
 
+```bash
 sudo kubeadm init --apiserver-advertise-address=192.168.2.1 --token-ttl 0
 
-sudo kubeadm init --apiserver-advertise-address=192.168.0.135 --token-ttl 0
+```
 
+Note, using a --token-ttl 0 is not recommended for production environments. It's fine and simplifies a development/test environment.
+
+
+## Weave
+
+```bash
 kubectl apply -f https://git.io/weave-kube-1.6
+```
 
 
 
 ## Setup Nodes
-
-
-
-
 
 When the kubeadm init command completes you need to take a note of the token. You use this command to join a node to the kubernetes master.
 
@@ -47,9 +53,6 @@ When the kubeadm init command completes you need to take a note of the token. Yo
 $ sudo kubeadm join 192.168.2.1:6443 --token hy15wr.pyfx1d8xbec6f0hw --discovery-token-ca-cert-hash sha256:ab6224e85966f1bf5f7ad2446a08af4a24fc8c510c8aa5df353c76f6b8cb938f
 ```
 
-
-kubectl apply -f \
- "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
 ## Reseting Kubernetes Master or Node
 
@@ -103,5 +106,12 @@ kubectl create -f dashboard-admin.yaml
 
 ## SSH Tunnel to Cluster Master
 
-sudo ssh -L 8080:10.101.166.227:80 pi@192.168.0.142
+ssh -f -N -L 8080:10.101.166.227:80 pi@192.168.0.142
 
+ssh -L 8080:10.101.213.96:80 pi@192.168.0.129
+10.101.213.96 
+
+
+https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
+
+http://kamilslab.com/2016/12/17/how-to-set-up-ssh-keys-on-the-raspberry-pi/
