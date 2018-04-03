@@ -41,6 +41,7 @@ sudo sed -i 's/$/ cgroup_enable=cpuset cgroup_enable=memory/' /boot/cmdline.txt
 
 ## Install Kubernetes
 
+Copy the next complete block of commands and paste in to the Raspberry Pi Terminal.
 
 ```bash
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
