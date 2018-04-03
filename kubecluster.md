@@ -152,5 +152,5 @@ http://kamilslab.com/2016/12/17/how-to-set-up-ssh-keys-on-the-raspberry-pi/
 ## Exercise .NET App
 
 ```bash
-or i in {1..1000000}; do curl http://192.168.0.142:8002/api/values; echo $i; done
+for i in {1..1000000}; do curl http://192.168.0.142:8002/api/values; echo $i; done
 ```
