@@ -145,3 +145,12 @@ ssh -L 8080:10.101.213.96:80 pi@192.168.0.129
 https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
 
 http://kamilslab.com/2016/12/17/how-to-set-up-ssh-keys-on-the-raspberry-pi/
+
+
+
+
+## Exercise .NET App
+
+```bash
+or i in {1..1000000}; do curl http://192.168.0.142:8002/api/values; echo $i; done
+```
