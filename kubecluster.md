@@ -49,6 +49,14 @@ sudo apt-get update -q
 sudo apt-get install -qy kubeadm
 ```
 
+## Reboot
+
+Reboot so configuration changes made above take effect.
+
+```bash
+sudo reboot
+```
+
 ## Initialise an instance of a Kubernetes Master Node
 
 ```bash
