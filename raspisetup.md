@@ -12,14 +12,13 @@ I created a file called raspberry and added to the /etc/apt/preferences.d direct
 cd /etc/apt/preferences.d && sudo nano raspberry
 ```
 
-
 ```
 Package: raspberrypi*       
 Pin: release *
 Pin-Priority: -5
 ```
 
-save and rerun the apt upgrade process.
+save and rerun the apt upgrade process which will exclude the kernel updates.
 
 ```bash
 sudo apt update && sudo apt list --upgradable && sudo apt dist-upgrade -y

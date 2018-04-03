@@ -8,11 +8,23 @@ Setting up Raspberry Pi Kubernetes Cluster
 
 Follow notes at [Kubernetes on Raspberry Pi with .NET Core](https://medium.com/@mczachurski/kubernetes-on-raspberry-pi-with-net-core-36ea79681fe7)
 
+## Install Docker
 
+```bash
+curl -sSL get.docker.com | sh && sudo usermod pi -aG docker
+```
+
+## Disable Virtual Memory
+
+```bash
+sudo dphys-swapfile swapoff && \
+sudo dphys-swapfile uninstall && \
+sudo update-rc.d dphys-swapfile remove
+```
 
 ## Memory Optimisation
 
-if using Raspberry Pi Lite (Headless) you can reduce the memory split between the GPU and the rest of the system down to 16mb.
+If using Raspberry Pi Lite (Headless) you can reduce the memory split between the GPU and the rest of the system down to 16mb.
 
 ```bash
 echo "gpu_mem=16" | sudo tee -a /boot/config.txt
@@ -27,11 +39,19 @@ Append cgroup_enable=cpuset cgroup_enable=memory to the end of the line of /boot
 sudo sed -i 's/$/ cgroup_enable=cpuset cgroup_enable=memory/' /boot/cmdline.txt
 ```
 
-## Initialise an instance of Kubernetes Master Node
+## Install Kubernetes
+
+```bash
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
+echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
+sudo apt-get update -q && \
+sudo apt-get install -qy kubeadm
+```
+
+## Initialise an instance of a Kubernetes Master Node
 
 ```bash
 sudo kubeadm init --apiserver-advertise-address=192.168.2.1 --token-ttl 0
-
 ```
 
 Note, using a --token-ttl 0 is not recommended for production environments. It's fine and simplifies a development/test environment.
