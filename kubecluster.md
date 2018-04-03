@@ -42,10 +42,10 @@ sudo sed -i 's/$/ cgroup_enable=cpuset cgroup_enable=memory/' /boot/cmdline.txt
 ## Install Kubernetes
 
 ```bash
-curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - && \
-echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list && \
-sudo apt-get update -q && \
-sudo apt-get install -qy kubeadm
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - \
+&& echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list \
+&& sudo apt-get update -q \
+&& sudo apt-get install -qy kubeadm
 ```
 
 ## Initialise an instance of a Kubernetes Master Node
