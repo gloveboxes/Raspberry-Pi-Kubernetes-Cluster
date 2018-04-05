@@ -154,3 +154,35 @@ http://kamilslab.com/2016/12/17/how-to-set-up-ssh-keys-on-the-raspberry-pi/
 ```bash
 for i in {1..1000000}; do curl http://192.168.0.142:8002/api/values; echo $i; done
 ```
+
+
+```bash
+nslookup netcoreapi.default.svc.cluster.local 
+```
+
+
+
+## Docker Build Process
+
+```bash
+docker build -t netcoreapi .
+docker tag netcoreapi glovebox/netcoreapi:v002
+docker push glovebox/netcoreapi:v002
+
+```
+
+
+### Update Kubernetes Image
+
+[Interactive Tutorial - Updating Your App](https://kubernetes.io/docs/tutorials/kubernetes-basics/update-interactive/)
+
+```bash
+kubectl set image deployments/netcoreapi-deployment netcoreapi=glovebox/netcoreapi:v002
+```
+
+
+
+## MySQL on Raspberry Pi
+
+https://hub.docker.com/r/hypriot/rpi-mysql/
+
