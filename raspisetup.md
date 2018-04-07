@@ -227,3 +227,23 @@ sudo chmod -R 777 /mnt/ssdrive1/
 See an explanation of [file permissions](https://www.maketecheasier.com/file-permissions-what-does-chmod-777-means/)
 
 ## Step 8: Pat yourself on the back
+
+
+# Backing up Raspberry Pi SD Card
+
+* [Backing up and Restoring your Raspberry Pi's SD Card](https://thepihut.com/blogs/raspberry-pi-tutorials/17789160-backing-up-and-restoring-your-raspberry-pis-sd-card)
+* [How do you monitor the progress of dd?](https://askubuntu.com/questions/215505/how-do-you-monitor-the-progress-of-dd)
+
+**Notes** 
+
+1. Use 'pv' to provide backup progress information.
+2. pv -s 32G signifies that the SD Card is 32GB and is used to estimate the copy time.
+
+
+
+
+
+```bash
+$ sudo apt install pv -y
+$ sudo dd if=/dev/mmcblk0 | pv -s 32G  |dd of=~/rpi3plus.img
+```
