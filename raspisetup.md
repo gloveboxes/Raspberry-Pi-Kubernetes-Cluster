@@ -175,7 +175,7 @@ Add the following line.
 
 
 ```
-LABEL=SSDRIVE1  /mnt/ssdrive2               ext4    defaults,noatime,rw,nofail  0       1
+LABEL=SSDRIVE1  /mnt/ssdrive1               ext4    defaults,noatime,rw,nofail  0       1
 ```
 
 **Note:** I wanted all users to have full permissions on the drive so it's also marked with the 'rw' property.
@@ -217,5 +217,13 @@ The permission set should be as follows.
 ```
 drwxrwxrwx  4 root root 4096 Apr  6 21:55 ssdrive1
 ```
+
+If not then set the permissions.
+
+```bash
+sudo chmod -R 777 /mnt/ssdrive1/
+```
+
+See an explanation of [file permissions](https://www.maketecheasier.com/file-permissions-what-does-chmod-777-means/)
 
 ## Step 8: Pat yourself on the back
