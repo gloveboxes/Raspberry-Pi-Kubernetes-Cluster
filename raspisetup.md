@@ -247,3 +247,7 @@ See an explanation of [file permissions](https://www.maketecheasier.com/file-per
 $ sudo apt install pv -y
 $ sudo dd if=/dev/mmcblk0 | pv -s 32G  |dd of=~/rpi3plus.img
 ```
+
+# Performance testing your external disks and USB sticks
+
+[Test performance of a variety of microSD cards on Raspberry Pi ](https://github.com/geerlingguy/raspberry-pi-dramble/issues/7)
