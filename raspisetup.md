@@ -100,3 +100,122 @@ to execute ensure fabfile.py in path or current directory
 ```bash
 $ fab cmd:"sudo reboot"
 ```
+
+
+
+# Auto Mount External SSD Storage
+
+Acknowledgments: This notes are a summary of [Attach USB storage to your Raspberry Pi](https://blog.alexellis.io/attach-usb-storage/). Read Alex's article for a full explaination.
+
+
+## Step 1: Unmount Storage
+
+It may be necessary to 'unmount' the storage if it auto loaded in the context of your session
+
+## Step 2: Identify the drive 
+
+```bash
+$ lsblk
+```
+
+````
+NAME        MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT
+sda           8:0    0  118G  0 disk 
+└─sda1        8:1    0  118G  0 part
+mmcblk0     179:0    0 29.8G  0 disk 
+├─mmcblk0p1 179:1    0 41.8M  0 part /boot
+└─mmcblk0p2 179:2    0 29.8G  0 part /
+````
+
+The 'sda' disk is the external storage device.
+
+
+## Step 3: Create the partitions
+
+```bash
+$ sudo fdisk /dev/sda
+```
+
+Use the following commands
+
+1. o - wipe existing partitions
+2. n - create new partition and take all the defaults
+3. w - write the changes
+4. q - to quit
+
+## Step 4: Format the new partition
+
+```bash
+$ sudo fdisk -l /dev/sda
+````
+
+```
+Device     Boot Start       End   Sectors  Size Id Type
+/dev/sda1        2048 247463935 247461888  118G 83 Linux
+```
+
+```bash
+$ sudo mkfs.ext4 -L SSDRIVE1 /dev/sda1
+```
+
+## Step 5: Create a mount-point
+
+```bash
+$ sudo mkdir /mnt/ssdrive1
+```
+
+## Step 6: Make it permanent
+
+
+```bash
+$ sudo nano /etc/fstab
+```
+
+Add the following line.
+
+
+```
+LABEL=SSDRIVE1  /mnt/ssdrive2               ext4    defaults,noatime,rw,nofail  0       1
+```
+
+**Note:** I wanted all users to have full permissions on the drive so it's also marked with the 'rw' property.
+
+The tmpfs lines move temp and log directories to ram to reduce wear on the SD Card.
+
+```
+proc            /proc           proc    defaults          0       0
+PARTUUID=ccccbc57-01  /boot           vfat    defaults          0       2
+PARTUUID=ccccbc57-02  /               ext4    defaults,noatime  0       1
+LABEL=SSDRIVE1  /mnt/ssdrive2               ext4    defaults,noatime,rw,nofail  0       1
+# a swapfile is not a swap partition, no line here
+#   use  dphys-swapfile swap[on|off]  for that
+tmpfs /tmp  tmpfs defaults,noatime 0 0
+tmpfs /var/log  tmpfs defaults,noatime,size=16m 0 0
+```
+
+## Step 6: Test
+
+Reboot your Raspberry Pi. 
+
+
+```bash
+sudo reboot
+```
+
+## Step 7: Review Permissions
+
+From the File Manager review the permissions of your SSD storage. From the permisions tab of the mount point '/mnt/ssdrive1' then 'anyone' should have all permissions'.
+
+Alternatively from command line.
+
+```bash
+$ ls -l
+```
+
+The permission set should be as follows.
+
+```
+drwxrwxrwx  4 root root 4096 Apr  6 21:55 ssdrive1
+```
+
+## Step 8: Pat yourself on the back

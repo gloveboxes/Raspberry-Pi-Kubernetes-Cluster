@@ -146,7 +146,9 @@ https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh
 
 http://kamilslab.com/2016/12/17/how-to-set-up-ssh-keys-on-the-raspberry-pi/
 
-
+```bash
+ssh-copy-id username@remote_host
+```
 
 
 ## Exercise .NET App
