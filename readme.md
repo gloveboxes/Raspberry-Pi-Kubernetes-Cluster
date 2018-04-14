@@ -45,6 +45,20 @@ sudo apt update && sudo apt list --upgradable && sudo apt dist-upgrade -y
 ![Raspberry Pi Kubernetes Cluser](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/RaspberryPiKubernetesCluster.jpg)
 
 
+## Kubernetes Nodes
+
+```
+pi@k8smaster:~ $ kubectl get nodes -o wide
+NAME        STATUS    ROLES     AGE       VERSION   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION   CONTAINER-RUNTIME
+k8smaster   Ready     master    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
+k8snode1    Ready     <none>    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
+k8snode2    Ready     <none>    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
+k8snode3    Ready     <none>    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
+k8snode4    Ready     <none>    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
+```
+
+
+
 ## Kubernetes Dashboard
 
 ![Kubernetes Dashboard](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/KubernetesDashboard.png)
