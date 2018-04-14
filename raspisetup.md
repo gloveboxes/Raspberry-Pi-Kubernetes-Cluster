@@ -50,10 +50,10 @@ echo "tmpfs /var/log  tmpfs defaults,noatime,size=16m 0 0" | sudo tee -a /etc/fs
 
 ## Memory Optimisation
 
-if using Raspberry Pi Lite (Headless) you can reduce the memory split between the GPU and the rest of the system down to 16mb.
+If using Raspberry Pi Lite (Headless) you can reduce the memory split between the GPU and the rest of the system down to 16mb.
 
 ```bash
-sudo sh -c echo "cgroup_enable=cpuset cgroup_enable=memory" | sudo tee -a /boot/cmdline.txt
+echo "gpu_mem=16" | sudo tee -a /boot/config.txt
 ```
 
 
@@ -262,3 +262,8 @@ sudo dd if=~/media/data/RaspberryPiBacku/k8smaster.img | pv -s 32G | dd of=/dev/
 # Performance testing your external disks and USB sticks
 
 [Test performance of a variety of microSD cards on Raspberry Pi ](https://github.com/geerlingguy/raspberry-pi-dramble/issues/7)
+
+
+## SSH Public/Private Keys
+
+* [SSH Essentials: Working with SSH Servers, Clients, and Keys](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
