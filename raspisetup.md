@@ -240,12 +240,23 @@ See an explanation of [file permissions](https://www.maketecheasier.com/file-per
 2. pv -s 32G signifies that the SD Card is 32GB and is used to estimate the copy time.
 
 
-
+### Backup
 
 
 ```bash
 $ sudo apt install pv -y
-$ sudo dd if=/dev/mmcblk0 | pv -s 32G  |dd of=~/rpi3plus.img
+$ sudo dd if=/dev/mmcblk0 | pv -s 32G | dd of=~/rpi3plus.img
+```
+
+### Restore
+
+```bash
+$ sudo apt install pv -y
+$ sudo dd if=~/rpi3plus.img | pv -s 32G | dd of=/dev/mmcblk0
+
+sudo dd if=k8smaster.img | pv -s 16G | dd bs=1M of=/dev/mmcblk0
+
+sudo dd if=~/media/data/RaspberryPiBacku/k8smaster.img | pv -s 32G | dd of=/dev/mmcblk0
 ```
 
 # Performance testing your external disks and USB sticks
