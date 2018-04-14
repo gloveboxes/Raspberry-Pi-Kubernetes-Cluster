@@ -3,6 +3,7 @@
 
 ** These notes are "work in progress"**
 
+** The Kubernetes cluster is up and running:)**
 
 ## Pinning Raspberrypi-kernel
 
@@ -29,7 +30,7 @@ sudo apt update && sudo apt list --upgradable && sudo apt dist-upgrade -y
 ```
 
 
-Cluster up and running:)
+
 
 * Date: **April 2018**
 * Operating System: **Raspbian Sketch**
@@ -40,11 +41,4 @@ Cluster up and running:)
 2. [Setting up Kubernetes Cluster](kubecluster.md)
 
 ![Raspberry Pi Kubernetes Cluser](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/RaspberryPiKubernetesCluster.jpg)
-
-
-
-# Useful Resources
-
-
-* [SSH Essentials: Working with SSH Servers, Clients, and Keys](https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys)
 
