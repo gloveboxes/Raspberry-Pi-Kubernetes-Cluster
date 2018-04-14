@@ -1,9 +1,9 @@
 # Setting up a Raspberry Pi Kubernetes Cluster
 
 
-** These notes are "work in progress"**
+**These notes are "work in progress"**
 
-** The Kubernetes cluster is up and running:)**
+**The Kubernetes cluster is up and running:)**
 
 ## Pinning Raspberrypi-kernel
 
@@ -40,5 +40,11 @@ sudo apt update && sudo apt list --upgradable && sudo apt dist-upgrade -y
 1. [Using a Pi 3 as a Ethernet to WiFi router](wifirouter.md)
 2. [Setting up Kubernetes Cluster](kubecluster.md)
 
+## Raspberry Pi Cluster
+
 ![Raspberry Pi Kubernetes Cluser](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/RaspberryPiKubernetesCluster.jpg)
 
+
+## Kubernetes Dashboard
+
+![Kubernetes Dashboard](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/KubernetesDashboard.png)
