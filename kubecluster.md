@@ -136,10 +136,8 @@ kubectl create -f dashboard-admin.yaml
 
 ## SSH Tunnel to Cluster Master
 
-ssh -f -N -L 8080:10.101.166.227:80 pi@192.168.0.142
+ssh -f -N -L 8080:10.101.166.227:80 pi@192.168.0.150
 
-ssh -L 8080:10.101.213.96:80 pi@192.168.0.129
-10.101.213.96 
 
 
 https://www.digitalocean.com/community/tutorials/ssh-essentials-working-with-ssh-servers-clients-and-keys
