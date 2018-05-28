@@ -42,7 +42,7 @@ Reduce writes to the SD Card and increase IO performance by mapping the /tmp and
 
 ```bash
 
-echo "tmpfs /tmp  tmpfs defaults,noatime 0 0" | sudo tee -a /etc/fstab
+echo "tmpfs /tmp  tmpfs defaults,noatime 0 0" | sudo tee -a /etc/fstab && \
 echo "tmpfs /var/log  tmpfs defaults,noatime,size=16m 0 0" | sudo tee -a /etc/fstab
 
 
@@ -65,6 +65,14 @@ Scans network for active IP Addresses
 $ sudo apt install nmap
 
 $ nmap -sn 192.168.2.0/24
+```
+
+## Bandwidth Monitor
+
+```bash
+$ sudo apt install bmon
+
+$ bmon
 ```
 
 ## Manage Raspberry Pi Cluster as one unit with Fabric

@@ -6,7 +6,11 @@ Setting up Raspberry Pi Kubernetes Cluster
 * Kernel: **4.9**
 
 
-Follow notes at [Kubernetes on Raspberry Pi with .NET Core](https://medium.com/@mczachurski/kubernetes-on-raspberry-pi-with-net-core-36ea79681fe7)
+Follow notes at 
+
+1. [Kubernetes on Raspberry Pi with .NET Core](https://medium.com/@mczachurski/kubernetes-on-raspberry-pi-with-net-core-36ea79681fe7)
+
+2. [k8s-pi.md ](https://codegists.com/snippet/shell/k8s-pimd_elafargue_shell)
 
 ## Install Docker
 
@@ -87,8 +91,9 @@ $ sudo kubeadm join 192.168.2.1:6443 --token hy15wr.pyfx1d8xbec6f0hw --discovery
 ## Reseting Kubernetes Master or Node
 
 ````bash
-$ sudo kubeadm reset
-$ sudo systemctl restart kubelet.service
+$ sudo kubeadm reset && \
+  sudo systemctl daemon-reload && \
+  sudo systemctl restart kubelet.service
 ````
 
 ## Useful Kubernetes Commands
