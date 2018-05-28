@@ -1,6 +1,12 @@
 # Setting up a Raspberry Pi Kubernetes Cluster
 
 
+
+|Author|Dave Glover, Microsoft Australia|
+|----|---|
+|Platform| Raspbery Pi, Kernel 4.9|
+|Date|April 2018|
+
 **These notes are "work in progress"**
 
 **The Kubernetes cluster is up and running:)**
@@ -32,9 +38,7 @@ sudo apt update && sudo apt list --upgradable && sudo apt dist-upgrade -y
 
 
 
-* Date: **April 2018**
-* Operating System: **Raspbian Sketch**
-* Kernel: **4.9**
+
 
 1. [Raspberry Pi Optimisations](raspisetup.md)
 1. [Using a Pi 3 as a Ethernet to WiFi router](wifirouter.md)
