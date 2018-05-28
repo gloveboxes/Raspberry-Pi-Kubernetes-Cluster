@@ -4,7 +4,7 @@
 
 |Author|Dave Glover, Microsoft Australia|
 |----|---|
-|Platform| Raspbery Pi, Kernel 4.9|
+|Platform| Raspberry Pi, Kernel 4.9|
 |Date|April 2018|
 
 **These notes are "work in progress"**
@@ -46,7 +46,7 @@ sudo apt update && sudo apt list --upgradable && sudo apt dist-upgrade -y
 
 ## Raspberry Pi Cluster
 
-![Raspberry Pi Kubernetes Cluser](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/RaspberryPiKubernetesCluster.jpg)
+![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/RaspberryPiKubernetesCluster.jpg)
 
 
 ## Kubernetes Nodes

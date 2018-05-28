@@ -70,7 +70,7 @@ $ sudo service isc-dhcp-server stop
 ```
 $ sudo nano /etc/default/isc-dhcp-server
 ```
-We only want the DHCP Server to serve IP Addresses on the ethernet adapter (not the wifi)
+We only want the DHCP Server to serve IP Addresses on the Ethernet adapter (not the wifi)
 
 Modify INTERFACESv4=""
 

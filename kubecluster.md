@@ -88,7 +88,7 @@ $ sudo kubeadm join 192.168.2.1:6443 --token hy15wr.pyfx1d8xbec6f0hw --discovery
 ```
 
 
-## Reseting Kubernetes Master or Node
+## Resetting Kubernetes Master or Node
 
 ````bash
 $ sudo kubeadm reset && \

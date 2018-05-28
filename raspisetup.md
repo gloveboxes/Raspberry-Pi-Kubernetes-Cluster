@@ -113,7 +113,7 @@ $ fab cmd:"sudo reboot"
 
 # Auto Mount External SSD Storage
 
-Acknowledgments: This notes are a summary of [Attach USB storage to your Raspberry Pi](https://blog.alexellis.io/attach-usb-storage/). Read Alex's article for a full explaination.
+Acknowledgements: This notes are a summary of [Attach USB storage to your Raspberry Pi](https://blog.alexellis.io/attach-usb-storage/). Read Alex's article for a full explanation.
 
 
 ## Step 1: Unmount Storage
@@ -212,7 +212,7 @@ sudo reboot
 
 ## Step 7: Review Permissions
 
-From the File Manager review the permissions of your SSD storage. From the permisions tab of the mount point '/mnt/ssdrive1' then 'anyone' should have all permissions'.
+From the File Manager review the permissions of your SSD storage. From the permissions tab of the mount point '/mnt/ssdrive1' then 'anyone' should have all permissions'.
 
 Alternatively from command line.
 
