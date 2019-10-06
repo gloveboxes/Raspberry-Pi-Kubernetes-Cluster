@@ -53,6 +53,13 @@ pi@192.168.2.1 `
 
 Ensure Ethernet cable is unplugged from Raspberry Pi as packet routing gets modified and it will cause install issues later in the script.
 
+## Raspberry Pi Buster Lite Pi Sense HAT Patch
+
+```bash
+sudo raspi-config nonint do_resolution 2 4
+sudo sed -i 's/#hdmi_force_hotplug=1/hdmi_force_hotplug=1/g' /boot/config.txt
+```
+
 ## Update Raspberry Pi and Reboot
 
 ```bash
@@ -72,8 +79,7 @@ Append network configuration to the /etc/dhcpcd.conf.
 
 ```bash
 echo 'interface eth0' | sudo tee -a /etc/dhcpcd.conf && \
-echo 'static ip_address=192.168.2.1/24' | sudo tee -a /etc/dhcpcd.conf && \
-echo 'static domain_name_servers=8.8.8.8 8.8.4.4' | sudo tee -a /etc/dhcpcd.conf && \
+echo 'static ip_address=192.168.100.1/24' | sudo tee -a /etc/dhcpcd.conf && \
 echo 'noipv6' | sudo tee -a /etc/dhcpcd.conf && \
 sudo reboot
 ```
@@ -81,26 +87,55 @@ sudo reboot
 ## Install the DNS/DHCP Server
 
 ```bash
-sudo apt-get install -y dnsmasq && \
-sudo systemctl stop dnsmasq
+sudo apt-get install isc-dhcp-server && \
+sudo service isc-dhcp-server stop
 ```
 
-## Configuring the DNS/DHCP server (dnsmasq)
+```bash
+sudo nano /etc/default/isc-dhcp-server
+```
 
-The DHCP service is provided by dnsmasq. By default, the configuration file contains a lot of information that is not needed, and it is easier to start from scratch. Backup the existing configuration file, and create a new one. We are going to provide IP addresses between 192.168.2.10 and 192.168.2.100, with a lease time of 24 hours.
+```text
+INTERFACESv4="eth0"
+```
 
 ```bash
-sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig && \
-echo 'interface=eth0' | sudo tee -a /etc/dnsmasq.conf
-echo 'dhcp-range=192.168.2.10,192.168.2.100,255.255.255.0,24h' | sudo tee -a /etc/dnsmasq.conf && \
-sudo systemctl start dnsmasq && \
-sudo systemctl status dnsmasq
+sudo nano /etc/dhcp/dhcpd.conf
+```
+
+Scroll through file and replace sample #authoritative section.
+
+```bash
+sudo cat <<EOT>> /etc/dhcp/dhcpd.conf
+#authoritative;
+
+authoritative; # I will be the single DHCP server on this network, trust me authoritatively
+# subnet and netmask matches what you've defined on the network interface
+
+subnet 192.168.100.0 netmask 255.255.255.0 {
+  interface eth0; # Maybe optional, I was not sure :o
+
+  range 192.168.100.50 192.168.100.100; # Hands addresses in this range
+  option broadcast-address 192.168.100.255; # Matches the broadcast address of the network interface
+  option routers  192.168.100.1; # The IP address of the Pi
+  option domain-name "kube8s.local"; # You can pick what you want here
+  option domain-name-servers 8.8.8.8, 8.8.4.4; # Use your company DNS servers, or your home router, or any other DNS server
+  default-lease-time 600;
+  max-lease-time 7200;
+}
+EOT
+```
+
+## Reboot
+
+```bash
+sudo reboot
 ```
 
 ## Routing traffic through the wireless interface, and persist
 
 ```bash
-sudo iptables -t nat -A POSTROUTING -s 192.168.2.0/24 -o wlan0 -j MASQUERADE && \
+sudo iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o wlan0 -j MASQUERADE && \
 sudo sh -c "iptables-save > /etc/iptables.ipv4.nat" && \
 sudo sed -i -e '$i \iptables-restore < /etc/iptables.ipv4.nat\n' /etc/rc.local
 ```

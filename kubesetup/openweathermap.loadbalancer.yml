@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: openweathermap
+  labels:
+    app: openweathermap
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: openweathermap
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openweathermap
+  labels:
+   app: openweathermap
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: openweathermap
+  template:
+    metadata:
+      labels:
+        app: openweathermap
+    spec:
+      containers:
+      - name: openweathermap
+        image: glovebox/openweathermap:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP

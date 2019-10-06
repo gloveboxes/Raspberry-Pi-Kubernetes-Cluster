@@ -7,36 +7,6 @@
 |Platform| Raspberry Pi, Kernel 4.9|
 |Date|April 2018|
 
-**These notes are "work in progress"**
-
-**The Kubernetes cluster is up and running:)**
-
-## Pinning Raspberrypi-kernel
-
-As at April 2nd, 2018 there is an issue with the raspberrypi-kernel/stable 1.20180328-1 armhf release of the kernel. Unsure what the issue but the kubernetes master would repeatedly "kernel panic" and restart.
-
-So as a temporary work around I've pinned the upgrades that are prefixed raspberrypi.
-
-To pin upgrades create a file in the /etc/apt/preferences.d directory with the following contents.
-
-```bash
-$ cd /etc/apt/preferences.d && sudo nano raspberry
-```
-
-```
-Package: raspberrypi*       
-Pin: release *
-Pin-Priority: -5
-```
-
-save and rerun the apt upgrade process which will exclude the kernel updates.
-
-```bash
-sudo apt update && sudo apt list --upgradable && sudo apt dist-upgrade -y
-```
-
-
-
 
 
 
@@ -53,12 +23,7 @@ sudo apt update && sudo apt list --upgradable && sudo apt dist-upgrade -y
 
 ```
 pi@k8smaster:~ $ kubectl get nodes -o wide
-NAME        STATUS    ROLES     AGE       VERSION   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION   CONTAINER-RUNTIME
-k8smaster   Ready     master    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
-k8snode1    Ready     <none>    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
-k8snode2    Ready     <none>    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
-k8snode3    Ready     <none>    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
-k8snode4    Ready     <none>    14d       v1.10.1   <none>        Raspbian GNU/Linux 9 (stretch)   4.9.80-v7+       docker://18.4.0
+NAME        STATUS     ROLES    AGE   VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION   CONTAINER-RUNTIME      k8s         Ready      <none>   55m   v1.16.0   192.168.0.132   <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2        k8smaster   Ready      master   84m   v1.16.0   192.168.2.33    <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2        k8snode1    NotReady   <none>   80m   v1.16.0   192.168.2.83    <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2        k8snode2    Ready      <none>   79m   v1.16.0   192.168.2.22    <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2        k8snode4    Ready      <none>   42m   v1.16.0   192.168.2.93    <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2 
 ```
 
 
