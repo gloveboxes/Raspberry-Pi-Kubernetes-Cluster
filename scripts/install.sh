@@ -12,7 +12,7 @@ while true; do
 done
 
 if [ $Kube_Setup_Mode = 'M' ] || [ $Kube_Setup_Mode = 'm' ]; then   
-    ./install-master-node.sh
+    ./install-master.sh
 else 
     ./install-node.sh
 fi
