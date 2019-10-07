@@ -7,6 +7,7 @@ sudo apt-get update -q
 sudo apt-get install -qy kubeadm
 
 # Preload the Kubernetes images
+echo -e "\nPulling Kubernetes Images - this will take a few minutes depending on network speed.\n"
 kubeadm config images pull
 
 # Set up Kubernetes Master Node
@@ -20,3 +21,6 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 # Install Flannel
 sudo sysctl net.bridge.bridge-nf-call-iptables=1
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
+
+## Remove install restart after reboot
+sed --in-place '/~\/kube-setup\/scripts\/install-kube-master.sh/d' ~/.bashrc

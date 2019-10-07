@@ -4,4 +4,4 @@ git clone https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster.git ~/ku
 
 cd ~/kube-setup/scripts
 sudo chmod +x *.sh
-./kube-master-setup.sh
+./install.sh
