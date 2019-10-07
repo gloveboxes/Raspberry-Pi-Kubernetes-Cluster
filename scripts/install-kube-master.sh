@@ -23,7 +23,11 @@ echo -e "\n\nInstalling Flannel CNI\n"
 sudo sysctl net.bridge.bridge-nf-call-iptables=1
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
 
-./install-pods.sh
+./install-metallb.sh
 
 ## Remove install restart after reboot
 sed --in-place '/~\/kube-setup\/scripts\/install-kube-master.sh/d' ~/.bashrc
+
+echo -e "\nMake a note of the kubecntl join and token displayed above. \nYou will need for joing Kubernettes nodes to this master."
+echo -e "\nwatch kubectl get pods --namespace=kube-system -o wide"
+echo -e "\nkubectl get pods --namespace=metallb-system -o wide"

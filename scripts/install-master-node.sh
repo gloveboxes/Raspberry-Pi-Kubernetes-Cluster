@@ -7,8 +7,7 @@ echo "~/kube-setup/scripts/install-kube-master.sh" >> ~/.bashrc
 read -p "Name your Raspberry Pi (eg k8smaster, k8snode1, ...): " RPINAME
 sudo raspi-config nonint do_hostname $RPINAME
 
-# Update aptitude
-sudo apt update && sudo upgrade -y
+# Install utilities
 sudo apt install -y bmon 
 
 # Network set up, set up packet passthrough
@@ -42,5 +41,8 @@ sudo sed -i 's/$/ ipv6.disable=1 cgroup_enable=cpuset cgroup_enable=memory cgrou
 # Install Docker
 curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
 
-echo -e "\nThe system will reboot. Then run ~/kube-setup/scripts/kube-master.sh\n"
+# perform system upgrade
+sudo apt update && sudo apt dist-upgrade -y
+
+echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue."
 sudo reboot
