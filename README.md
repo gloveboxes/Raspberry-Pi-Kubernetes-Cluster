@@ -1,14 +1,9 @@
 # Setting up a Raspberry Pi Kubernetes Cluster
 
-
-
 |Author|Dave Glover, Microsoft Australia|
 |----|---|
-|Platform| Raspberry Pi, Kernel 4.9|
-|Date|April 2018|
-
-
-
+|Platform| Raspberry Pi, Kernel 4.19|
+|Date|October 2019|
 
 1. [Raspberry Pi Optimisations](raspisetup.md)
 1. [Using a Pi 3 as a Ethernet to WiFi router](wifirouter.md)
