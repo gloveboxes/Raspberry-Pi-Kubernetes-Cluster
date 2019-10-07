@@ -19,8 +19,11 @@ sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 # Install Flannel
+echo -e "\n\nInstalling Flannel CNI\n"
 sudo sysctl net.bridge.bridge-nf-call-iptables=1
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
+
+./install-pods.sh
 
 ## Remove install restart after reboot
 sed --in-place '/~\/kube-setup\/scripts\/install-kube-master.sh/d' ~/.bashrc
