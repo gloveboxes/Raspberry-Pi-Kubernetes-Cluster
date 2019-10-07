@@ -29,5 +29,6 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134
 sed --in-place '/~\/kube-setup\/scripts\/install-kube-master.sh/d' ~/.bashrc
 
 echo -e "\nMake a note of the kubecntl join and token displayed above. \nYou will need for joing Kubernettes nodes to this master."
+echo -e "\n\nUseful Commands:"
 echo -e "\nwatch kubectl get pods --namespace=kube-system -o wide"
 echo -e "\nkubectl get pods --namespace=metallb-system -o wide"
