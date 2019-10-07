@@ -13,21 +13,13 @@
 
 ![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/RaspberryPiKubernetesCluster.jpg)
 
-## Install
+## Installer
+
+Log into the Raspberry Pi that will be the Kubernettes Master. Run the following command from the Raspberry SSH session:
 
 ```bash
 bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
 ```
-
-
-## Kubernetes Nodes
-
-```
-pi@k8smaster:~ $ kubectl get nodes -o wide
-NAME        STATUS     ROLES    AGE   VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION   CONTAINER-RUNTIME      k8s         Ready      <none>   55m   v1.16.0   192.168.0.132   <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2        k8smaster   Ready      master   84m   v1.16.0   192.168.2.33    <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2        k8snode1    NotReady   <none>   80m   v1.16.0   192.168.2.83    <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2        k8snode2    Ready      <none>   79m   v1.16.0   192.168.2.22    <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2        k8snode4    Ready      <none>   42m   v1.16.0   192.168.2.93    <none>        Raspbian GNU/Linux 10 (buster)   4.19.75-v7+      docker://19.3.2 
-```
-
-
 
 ## Kubernetes Dashboard
 
