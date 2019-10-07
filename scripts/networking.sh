@@ -9,6 +9,10 @@ echo 'interface eth0' | sudo tee -a /etc/dhcpcd.conf
 echo 'static ip_address=192.168.100.1/24' | sudo tee -a /etc/dhcpcd.conf
 echo 'noipv6' | sudo tee -a /etc/dhcpcd.conf
 
+# stop and restart eth0 network interface
+sudo ip link set eth0 down && sudo ip link set eth0 up 
+sleep 10
+
 # enable Ethernet to WiFi traffic routing
 sudo iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -o wlan0 -j MASQUERADE
 sudo sh -c "iptables-save > /etc/iptables.ipv4.nat"

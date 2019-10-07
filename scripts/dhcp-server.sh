@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install DHCP Server
-sudo apt-get install isc-dhcp-server
+sudo apt-get install -y isc-dhcp-server
 sudo service isc-dhcp-server stop
 
 # bind IPV4 to eth0
