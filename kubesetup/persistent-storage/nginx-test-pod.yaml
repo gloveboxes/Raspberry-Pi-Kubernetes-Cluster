@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-test-pod
+  labels:
+    app: nginx-test-pod
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: nginx-test-pod
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-test-pod
+  labels:
+    app: nginx-test-pod
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nginx-test-pod
+  template:
+    metadata:
+      labels:
+        app: nginx-test-pod
+    spec:
+      volumes:
+        - name: glovebox-storage
+          persistentVolumeClaim:
+            claimName: glovebox-claim
+      containers:
+        - name: task-pv-container
+          image: nginx
+          ports:
+            - containerPort: 80
+              name: "http-server"
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: glovebox-storage

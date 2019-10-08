@@ -1,0 +1,20 @@
+# https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: glovebox-storage
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: managed-nfs-storage
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /home/pi/nfsshare
+    server: k8snode1.local
