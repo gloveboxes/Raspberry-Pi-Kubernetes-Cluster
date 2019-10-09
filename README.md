@@ -19,7 +19,7 @@ Log into the Raspberry Pi that will be the Kubernettes Master. Run the following
 
 ## Kubernetes Cluster and Network Topology
 
-![](resources/network.png)
+![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/network.png)
 
 ```bash
 bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
