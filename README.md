@@ -23,4 +23,4 @@ bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubern
 
 ## Raspberry Pi Cluster
 
-![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/rpi-kube-cluster.jpg)
+![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/rpi-kube-cluster-medium.jpg)
