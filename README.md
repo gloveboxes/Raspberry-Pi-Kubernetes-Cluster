@@ -1,4 +1,4 @@
-# Run Azure Functions on a Raspberry Pi Kubernetes Cluster
+# Azure Functions on a Raspberry Pi Kubernetes Cluster
 
 |Author|Dave Glover, Microsoft Australia|
 |----|---|
