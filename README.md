@@ -11,7 +11,6 @@
 
 ## Raspberry Pi Cluster
 
-![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/RaspberryPiKubernetesCluster.jpg)
 
 ## Installer
 
@@ -28,3 +27,5 @@ bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubern
 ## Kubernetes Dashboard
 
 ![Kubernetes Dashboard](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/KubernetesDashboard.png)
+
+![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/rpi-kube-cluster.jpg)
