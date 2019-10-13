@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: owm-python
+  labels:
+    app: owm-python
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: owm-python
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: owm-python
+  labels:
+   app: owm-python
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: owm-python
+  template:
+    metadata:
+      labels:
+        app: owm-python
+    spec:
+      containers:
+      - name: owm-python
+        image: glovebox/owm-python-arm32v7:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP

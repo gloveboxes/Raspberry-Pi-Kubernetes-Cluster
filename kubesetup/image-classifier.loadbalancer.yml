@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: image-classifier
+  labels:
+    app: image-classifier
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: image-classifier
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: image-classifier
+  labels:
+   app: image-classifier
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: image-classifier
+  template:
+    metadata:
+      labels:
+        app: image-classifier
+    spec:
+      containers:
+      - name: image-classifier
+        image: glovebox/image-classifier-v2:arm32v7-1.0
+        resources:
+          limits:
+            memory: "512Mi"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          protocol: TCP
