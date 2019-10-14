@@ -4,8 +4,8 @@ sed --in-place '/~\/kube-setup\/scripts\/install-kube-master.sh/d' ~/.bashrc
 echo "~/kube-setup/scripts/install-kube-master.sh" >> ~/.bashrc
 
 # Rename your pi
-read -p "Name your Raspberry Pi (eg k8smaster, k8snode1, ...): " RPINAME
-sudo raspi-config nonint do_hostname $RPINAME
+echo -e "\nYour Raspberry Pi/Kubernetes Master has been named 'k8smaster'\n"
+sudo raspi-config nonint do_hostname 'k8smaster'
 
 # Install utilities
 sudo apt install -y bmon 
