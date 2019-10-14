@@ -1,6 +1,6 @@
 #!/bin/bash
 
-STATE=~/.PyLabState
+STATE=~/.KubeNodeInstallState
 RUNNING=true
 
 sed --in-place '/~\/kube-setup\/scripts\/install-node.sh/d' ~/.bashrc
