@@ -141,6 +141,9 @@ while $RUNNING; do
     PREREQUISITES) 
         # Set iptables in legacy mode - required for Kube compatibility
         # https://github.com/kubernetes/kubernetes/issues/71305
+
+        echo -e "\nSetting Prerequisites\n"
+        echo -e "iptables to legacy mode, swap off, gpu mem min, disable wifi, tmpfs optimisations, cgroups for kube\n"
         sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
         sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
