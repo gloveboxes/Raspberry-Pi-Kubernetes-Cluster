@@ -40,17 +40,24 @@ while $RUNNING; do
     NFS)
         echo -e "\nInstalling NFS Server on k8snode1 for use as Cluster Storage Class and Persistent Storage\n"
         # https://sysadmins.co.za/setup-a-nfs-server-and-client-on-the-raspberry-pi/
+        # https://vitux.com/install-nfs-server-and-client-on-ubuntu/
+        
         sudo apt install -y nfs-kernel-server
+
+        # Make the nfs directory to be shared
         mkdir -p ~/nfsshare
+        sudo chown nobody:nogroup /home/pi/nfsshare
+        # ‘777’ permission, everyone can read, write and execute the file
+        sudo chmod 777 /home/pi/nfsshare
 
         # id pi
         # uid=1000(pi) gid=1000(pi)
-
-        echo "/home/pi/nfsshare 192.168.100.0/24(rw,all_squash,async,no_subtree_check,anonuid=1000,anongid=1000)" | sudo tee -a /etc/exports
+        echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports
+ 
         # reload exports
-        exportfs -ra
+        sudo exportfs -ra
 
-        sudo systemctl enable nfs-kernel-server
+        # Restart the NFS Server
         sudo systemctl restart nfs-kernel-server
 
         # show what's being shared
@@ -82,7 +89,7 @@ while $RUNNING; do
             sudo mount /dev/sda1 /media/usbdrive
             sudo rsync -avx / /media/usbdrive
             sudo sed -i '$s/$/ root=\/dev\/sda1 rootfstype=ext4 rootwait/' /boot/cmdline.txt
-            echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue."
+            echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue.\n"
             sudo reboot
         fi
         ;;
@@ -102,7 +109,7 @@ while $RUNNING; do
         echo "FANSHIM" > $STATE
         if [ "$OS_UPDATE" = true ]; then
             sudo apt update && sudo apt upgrade -y 
-            echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue."
+            echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue.\n"
             sudo reboot
         fi
         ;;    
@@ -165,7 +172,7 @@ while $RUNNING; do
         curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
 
         echo "KUBERNETES" > $STATE
-        echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue."
+        echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue.\n"
         sudo reboot        
     ;;
 
