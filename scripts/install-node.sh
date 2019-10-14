@@ -16,7 +16,7 @@ while $RUNNING; do
         while :
         do
             echo -e "\nNumber this Raspberry Pi/Kubernetes Node. The first node should be numbered should be numbered 1"
-            echo -e "\nas it will also run the NFS Server for Cluster Persistent Storage Services.\n"
+            echo -e "as it will also run the NFS Server for Cluster Persistent Storage Services.\n"
             read -p "Enter an Integer, the node will be named k8snodeN: " NodeNumber
             if [[ -z "$NodeNumber" || -n ${NodeNumber//[0-9]/} ]]; then
                 echo "Not a number!"
@@ -40,7 +40,7 @@ while $RUNNING; do
     NFS)
         echo -e "\nInstalling NFS Server on k8snode1 for use as Cluster Storage Class and Persistent Storage\n"
         # https://sysadmins.co.za/setup-a-nfs-server-and-client-on-the-raspberry-pi/
-        apt-get install -y nfs-kernel-server
+        sudo apt install -y nfs-kernel-server
         mkdir -p ~/nfsshare
 
         # id pi
