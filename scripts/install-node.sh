@@ -36,7 +36,7 @@ while $RUNNING; do
         fi
 
         # not 100% necessary but it is safer
-        echo -e "\nThe system will reboot. Log back in, remember to use new system name.\nssh pi@${RPINAME}\nSet up will automatically continue.\n"
+        echo -e "\nThe system will reboot. Log back in, remember to use new system name.\nssh pi@${RPINAME}.local\nSet up will automatically continue.\n"
         sudo reboot
         
     ;;
@@ -53,6 +53,7 @@ while $RUNNING; do
         sudo chown nobody:nogroup /home/pi/nfsshare
         # ‘777’ permission, everyone can read, write and execute the file
         sudo chmod 777 /home/pi/nfsshare
+        echo "Hello, World!" > /home/pi/nfsshare/index.html
 
         # available to * (all) IP address on the cluster
         echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports
