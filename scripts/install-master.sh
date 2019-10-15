@@ -5,6 +5,7 @@ echo "~/kube-setup/scripts/install-kube-master.sh" >> ~/.bashrc
 
 # Rename your pi
 echo -e "\nYour Raspberry Pi/Kubernetes Master has been named 'k8smaster'\n"
+echo -e "Access by ssh pi@k8smaster.local\n"
 sudo raspi-config nonint do_hostname 'k8smaster'
 
 # Install utilities
@@ -28,6 +29,8 @@ sudo systemctl disable dphys-swapfile
 
 # maximise memory by reducing gpu memory
 echo "gpu_mem=16" | sudo tee -a /boot/config.txt
+# use 64 bit kernel
+echo "arm_64bit=1" | sudo tee -a /boot/config.txt
 
 # Disk optimisations - move temp to ram.
 # Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. 

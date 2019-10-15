@@ -160,6 +160,8 @@ while $RUNNING; do
         echo "gpu_mem=16" | sudo tee -a /boot/config.txt
         # disable wifi on the node board as network will be over Ethernet
         echo "dtoverlay=disable-wifi" | sudo tee -a /boot/config.txt
+        # use 64 bit kernel
+        echo "arm_64bit=1" | sudo tee -a /boot/config.txt
 
         # Disk optimisations - move temp to ram.
         # Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. 
