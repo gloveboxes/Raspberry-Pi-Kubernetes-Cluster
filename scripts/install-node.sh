@@ -95,7 +95,7 @@ while $RUNNING; do
             echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue.\n"
             sudo reboot
         fi
-        ;;
+    ;;
 
     UPDATE)
         OS_UPDATE=false
@@ -115,7 +115,7 @@ while $RUNNING; do
             echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue.\n"
             sudo reboot
         fi
-        ;;    
+    ;;    
 
     FANSHIM)
         INSTALL_FAN_SHIM=false
@@ -139,7 +139,7 @@ while $RUNNING; do
             cd examples && \
             sudo ./install-service.sh --on-threshold 65 --off-threshold 55 --delay 2
         fi
-        ;;
+    ;;
 
     PREREQUISITES) 
         # Set iptables in legacy mode - required for Kube compatibility
@@ -195,10 +195,11 @@ while $RUNNING; do
 
     BREAK)
       RUNNING=false
-      ;;
+    ;;
+    
     *)
       echo "INIT" > $STATE
-      ;;
+    ;;
   esac
 done
 
