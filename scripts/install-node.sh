@@ -36,7 +36,7 @@ while $RUNNING; do
         fi
 
         # not 100% necessary but it is safer
-        echo -e "\nThe system will reboot. Log back in, remember to use new system name.\nssh pi@${NodeNumber}\nSet up will automatically continue.\n"
+        echo -e "\nThe system will reboot. Log back in, remember to use new system name.\nssh pi@${RPINAME}\nSet up will automatically continue.\n"
         sudo reboot
         
     ;;
@@ -196,7 +196,7 @@ while $RUNNING; do
     BREAK)
       RUNNING=false
     ;;
-    
+
     *)
       echo "INIT" > $STATE
     ;;
