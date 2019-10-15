@@ -34,6 +34,10 @@ while $RUNNING; do
         else
             echo "SSD" > $STATE
         fi
+
+        # not 100% necessary but it is safer
+        echo -e "\nThe system will reboot. Log back in, remember to use new system name.\nssh pi@${NodeNumber}\nSet up will automatically continue.\n"
+        sudo reboot
         
     ;;
 
@@ -50,8 +54,7 @@ while $RUNNING; do
         # ‘777’ permission, everyone can read, write and execute the file
         sudo chmod 777 /home/pi/nfsshare
 
-        # id pi
-        # uid=1000(pi) gid=1000(pi)
+        # available to * (all) IP address on the cluster
         echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports
  
         # reload exports
@@ -203,4 +206,4 @@ done
 rm $STATE
 sed --in-place '/~\/kube-setup\/scripts\/install-node.sh/d' ~/.bashrc
 
-echo -e "\nFINISHED and read for 'sudo kubeadm join'\n"
+echo -e "\nFINISHED and ready for 'sudo kubeadm join'\n"
