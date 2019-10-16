@@ -12,7 +12,7 @@
 
 |Items||
 |-----|----|
-| 1 x Raspberry Pi for Kubernetes Master. I used Raspberry 3B Plus.<br/><br/>2 x Raspberry Pis for Kubernetes Nodes: I used Raspberry Pi 4 4GBs.<br/><br/>3 x SD Cards (min 16GB, smaller if using USB3 SSD drives for nodes.<br/><br/>3 Power supplies, one for each Raspberry Pi.|![rpi4](Resources/rpi4.png) |
+| 1 x Raspberry Pi for Kubernetes Master. I used a Raspberry 3B Plus.<br/><br/>2 x Raspberry Pis for Kubernetes Nodes: I used two Raspberry Pi 4 4GBs.<br/><br/>3 x SD Cards (min 16GB, recommend 32GB, but can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.<br/><br/>3 Power supplies, one for each Raspberry Pi.|![rpi4](Resources/rpi4.png) |
 |1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![](Resources/switch.png) |
 |1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![](Resources/rack.jpg) |
 |Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips. The BlinkT LED Strip can be a great way to visualize pod state. | ![](Resources/blinkt.jpg).|
@@ -68,7 +68,7 @@ The installation will performance the following operations:
 
 Ensure the k8smaster and the Raspberry Pi that will be the first Kubernetes node are powered on and connected to the Network Switch. The DHCP Server running on the k8smaster will allocate an IP Address to the Raspberry Pi that will be the Kubernetes node.
 
-![](resources/k8s-first-node.png)
+![](Resources/k8s-first-node.png)
 
 1. Reconnect to the k8smaster **ssh pi@k8smaster.local**
 2. From the k8smaster device **ssh pi@raspberry.local**
