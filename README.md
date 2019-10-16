@@ -1,11 +1,11 @@
 # Azure Functions on a Raspberry Pi Kubernetes Cluster
 
-![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/network.png)
-
 |Author|Dave Glover, Microsoft Australia|
 |----|---|
-|Platform| Raspberry Pi, Kernel 4.19|
+|Platform| Raspberry Pi, Raspbian Buster, Kernel 4.19|
 |Date|October 2019|
+
+![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/network.png)
 
 ## Parts List
 
@@ -14,14 +14,31 @@
 | 1 x Raspberry Pi for Kubernetes Master. I used Raspberry 3B Plus.<br/><br/>2 x Raspberry Pis for Kubernetes Nodes: I used Raspberry Pi 4 4GBs.<br/><br/>3 x SD Cards (min 16GB, smaller if using USB3 SSD drives for nodes.<br/><br/>3 Power supplies, one for each Raspberry Pi.|![rpi4](Resources/rpi4.png) |
 |1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![](Resources/switch.png) |
 |1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![](Resources/rack.jpg) |
-|Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips | ![](Resources/blinkt.jpg) |
+|Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips | ![](Resources/blinkt.jpg). The BlinkT LED Strip can be a great visual representation of pod state. |
 |Optional: 3 x 25 CM Ethernet Patch Cables | ![](Resources/patch-cable.jpg)|
 |Optional: 2 x USB3 SSDs for Kubernetes Nodes (Enabled for boot from USB) | ![](Resources/) |
 
-
 ## Creating Raspberry Pi Boot SD Cards
 
+1. Using [balena Etcher](https://www.balena.io/etcher/), flash 3 x SD Cards with [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/)
+2. On **ONE** SD Card, add the a **wpa_supplicant.conf** file with your WiFi Routers WiFi settings. This card with be used for the Kuberetes Master.
+
+    ```text
+    ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
+    update_config=1
+    country=AU
+
+    network={
+        ssid="SSID"
+        psk="WiFi Password"
+    }
+    ```
+
+3. On **ALL** SD Cards add an empty file named **ssh**. This enabled SSH for the Raspberry Pi when it boots up.
+
 ## Kubernetes Master Installation
+
+![](Resources/k8s-master.png)
 
 SSH to what will you will become the Kubernetes Master and run the following command:
 
