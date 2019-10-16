@@ -13,11 +13,11 @@
 |Items||
 |-----|----|
 | 1 x Raspberry Pi for Kubernetes Master. I used a Raspberry 3B Plus.<br/><br/>2 x Raspberry Pis for Kubernetes Nodes: I used two Raspberry Pi 4 4GBs.<br/><br/>3 x SD Cards (min 16GB, recommend 32GB, but can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.<br/><br/>3 Power supplies, one for each Raspberry Pi.|![rpi4](Resources/rpi4.png) |
-|1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![](Resources/switch.png) |
-|Optional: 1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![](Resources/rack.jpg) |
-|Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips. The BlinkT LED Strip can be a great way to visualize pod state. | ![](Resources/blinkt.jpg).|
-|Optional: 3 x 25 CM Ethernet Patch Cables | ![](Resources/patch-cable.jpg)|
-|Optional: 2 x USB3 SSDs for Kubernetes Nodes (Enabled for boot from USB) | ![](Resources/) |
+|1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![network switch](Resources/switch.png) |
+|Optional: 1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![raspberry pi rack](Resources/rack.jpg) |
+|Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips. The BlinkT LED Strip can be a great way to visualize pod state. | ![blinlt](Resources/blinkt.jpg).|
+|Optional: 3 x 25 CM Ethernet Patch Cables | ![patch cables](Resources/patch-cable.jpg)|
+|Optional: 2 x USB3 SSDs for Kubernetes Nodes (Enabled for boot from USB). Note, these are enclosures, you need the m2 drives as well.| ![usb3 ssd](Resources/usb-ssd.jpg) |
 
 ## Creating Raspberry Pi Boot SD Cards
 
