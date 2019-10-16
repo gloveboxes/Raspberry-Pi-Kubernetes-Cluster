@@ -11,7 +11,7 @@
 
 |Items||
 |-----|----|
-|![](/resources/rpi4.png) | 1 x Raspberry Pi for Kubernetes Master. I used Raspberry 3B Plus.<br/><br/>2 x Raspberry Pis for Kubernetes Nodes: I used Raspberry Pi 4 4GBs.<br/><br/>3 x SD Cards (min 16GB, smaller if using USB3 SSD drives for nodes.<br/><br/>3 Power supplies, one for each Raspberry Pi.|
+| ![rpi4](./resources/rpi4.png) | 1 x Raspberry Pi for Kubernetes Master. I used Raspberry 3B Plus.<br/><br/>2 x Raspberry Pis for Kubernetes Nodes: I used Raspberry Pi 4 4GBs.<br/><br/>3 x SD Cards (min 16GB, smaller if using USB3 SSD drives for nodes.<br/><br/>3 Power supplies, one for each Raspberry Pi.|
 |1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![](resources/switch.png) |
 |1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![](resources/rack.jpg) |
 |Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips | ![](resources/blinkt.jpg) |
