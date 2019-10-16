@@ -1,6 +1,6 @@
-# Azure Functions on a Raspberry Pi Kubernetes Cluster
+# Raspberry Pi Kubernetes Cluster
 
-|Author|Dave Glover, Microsoft Australia|
+|Author|[Dave Glover, Microsoft Australia](https://developer.microsoft.com/en-us/advocates/dave-glover)|
 |----|---|
 |Platform| Raspberry Pi, Raspbian Buster, Kernel 4.19|
 |Date|October 2019|
@@ -71,7 +71,6 @@ The installation will performance the following operations:
 
 ## Kubernetes Node Set Up
 
-
 Ensure the k8smaster and the Raspberry Pi that will be the first Kubernetes node are powered on and connected to the Network Switch. The DHCP Server running on the k8smaster will allocate an IP Address to the Raspberry Pi that will be the Kubernetes node.
 
 ![](Resources/k8s-first-node.png)
@@ -120,3 +119,20 @@ From your web browser, link to:
 
 ![Kubernetes Dashboard](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/KubernetesDashboard.png)
 
+## Kubernetes Cluster Persistence Storage
+
+NFS Server installed on k8snode1.local
+
+1. Set up by Kubernetes Master and k8snode1.local installation.
+2. Further description coming
+
+* [Kubernetes NFS-Client Provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client)
+* [kubernetes-incubator/external-storage](https://github.com/kubernetes-incubator/external-storage/blob/master/nfs-client/deploy/deployment-arm.yaml)
+
+See yaml definitions for more details
+
+* ./kubeset/persistent-volume-claim.yaml
+* ./kubeset/persistent-volume.yaml
+* ./kubeset/nfs-client-deployment-arm.yaml
+
+![](Resources/nfs-server.png)
