@@ -65,8 +65,8 @@ The installation will performance the following operations:
 6. Reconnect as **ssh pi@k8smaster.local**
 7. The installation will restart
 8. Kubernetes will be installed
-9. [Flannel CNI](https://kubernetes.io/docs/concepts/cluster-administration/networking/#the-kubernetes-network-model) (Cluster Networking) installed
-10. [MetalLB LoadBalance](https://metallb.universe.tf/) installed
+9. [Flannel CNI](https://kubernetes.io/docs/concepts/cluster-administration/networking/#the-kubernetes-network-model) (Cluster Networking) installation
+10. [MetalLB LoadBalance](https://metallb.universe.tf/) installation
 11. Kubernetes Dashboard installation and configuration for admin access
 
 ## Kubernetes Node Set Up
