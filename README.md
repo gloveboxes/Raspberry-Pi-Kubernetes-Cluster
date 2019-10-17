@@ -1,4 +1,4 @@
-# Raspberry Pi Kubernetes Cluster
+# Part 1: Raspberry Pi Kubernetes Cluster - Intelligence on the Edge
 
 |Author|[Dave Glover, Microsoft Australia](https://developer.microsoft.com/en-us/advocates/dave-glover)|
 |----|---|
@@ -10,9 +10,12 @@
 
 ![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/rpi-kube-cluster.jpg)
 
-## Kubernetes Network Topology
+## Introduction
 
-![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/network.png)
+This project forms part of a three part **Intelligence on the Edge** series. The following topics will follow:
+
+* Part 2: Bringing Python and .NET Azure Functions and Machine Learning models to the Edge. Including Pod placement and working with hardware.  
+* Part 3: Deploying and managing Intelligence on the Edge with Azure IoT Edge.
 
 ## Parts List
 
@@ -43,7 +46,48 @@
 
 3. On **ALL** SD Cards add an empty file named **ssh**. This enabled SSH for the Raspberry Pi when it boots up.
 
+## Kubernetes Network Topology
+
+The Kubernetes Master is also responsible for:
+
+1. Allocating IP Addresses to the Kubernetes Nodes.
+2. Bridging network traffic between the external WiFi network and the internal cluster Ethernet network.
+
+![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/network.png)
+
+## Static Route to the Cluster Subnet (192.168.100.0/24)
+
+1. The Kubernetes Cluster runs isolated on the **Network Switch** and operates on subnet 192.168.100.0/24.
+2. A static route needs to be configured either on the **Network Router** (or on your computer) to define the entry point (gateway) into the Cluster subnet (192.168.100.0/24).
+3. The gateway into the cluster is the IP Address of the WiFi adapter on the Kubernetes Master Raspberry Pi. In the following diagram the gateway into the cluster is the address allocated by the **Network Router** to the Kubernetes Master WiFi adapter which is 192.168.0.55.
+
+Most **Network Routers** allow you to configure a static router. The following is an example configured on a Linksys Router.
+
+![](resources/static-route-linksys.png)
+
+### Alternative: Set Local Static Route to Cluster Subnet (192.168.100.0/24)
+
+If you don't have access to configure the Network Router you can set a static route on your local computer.
+
+### Windows
+
+From "Run as Administrator" Command Prompt
+
+```bash
+route add 192.168.100.0 mask 255.255.255.0 192.168.0.55
+```
+
+### macOS and Linux
+
+**NOT WORKING RESEARCH SOME MORE**
+
+```bash
+route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.0.55
+```
+
 ## Kubernetes Master Installation
+
+
 
 ![](Resources/k8s-master.png)
 
