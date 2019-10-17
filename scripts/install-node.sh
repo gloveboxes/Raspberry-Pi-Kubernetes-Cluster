@@ -121,7 +121,7 @@ while $RUNNING; do
     FANSHIM)
         INSTALL_FAN_SHIM=false
         while true; do
-            read -p "Do you wish to Install Fan SMIM Support [yes(y), no(n), or quit(q)] ?" yn
+            read -p "Do you wish to Install Pimoroni Fan SMIM Support [yes(y), no(n), or quit(q)] ?" yn
             case $yn in
                 [Yy]* ) INSTALL_FAN_SHIM=true; break;;
                 [Qq]* ) RUNNING=false; exit 1;;
