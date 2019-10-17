@@ -55,6 +55,11 @@ The Kubernetes Master is also responsible for:
 
 ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/network.png)
 
+## Naming Conventions
+
+1. Kubernetes Master: k8smaster.local
+2. Kubernetes Nodes: k8snode1..n
+
 ## Kubernetes Master Installation
 
 ![](Resources/k8s-master.png)
