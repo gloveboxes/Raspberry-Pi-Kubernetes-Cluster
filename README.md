@@ -31,7 +31,7 @@ This project forms part of a three part **Intelligence on the Edge** series. The
 ## Creating Raspberry Pi Boot SD Cards
 
 1. Using [balena Etcher](https://www.balena.io/etcher/), flash 3 x SD Cards with [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/)
-2. On **ONE** SD Card, add the a **wpa_supplicant.conf** file with your WiFi Routers WiFi settings. This card with be used for the Kuberetes Master.
+2. On **one** SD Card, add the a **wpa_supplicant.conf** file with your WiFi Routers WiFi settings. This card with be used for the Kuberetes Master.
 
     ```text
     ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -44,7 +44,7 @@ This project forms part of a three part **Intelligence on the Edge** series. The
     }
     ```
 
-3. On **ALL** SD Cards add an empty file named **ssh**. This enables SSH for the Raspberry Pi when it boots up.
+3. On **all** SD Cards add an empty file named **ssh**. This enables SSH for the Raspberry Pi when it boots up.
 
 ## Kubernetes Network Topology
 
@@ -64,30 +64,58 @@ The Kubernetes Master is also responsible for:
 
 ![](Resources/k8s-master.png)
 
-SSH to what will you will become the Kubernetes Master and run the following command:
+### Installation Process
+
+Ensure the Raspberry Pi to be configured as a Kubernetes Master is connected by **Ethernet** and the WiFi Router
+
+#### Step 1: Connect to the Raspberry Pi to be Configured as the Kubernetes Master
+
+1. From your desktop computer, start a SSH Session to the Raspberry Pi. `ssh pi@raspberrypi.local`.
+
+#### Step 2: Start the Installation Process
+
+1. Run the following command from the SSH terminal you started in step 1.
 
 ```bash
 bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
 ```
 
-The installation **setup.sh** bash script will first install **git** on the Raspberry Pi, this git repository will then cloned to the device, and then you will be prompted to install the Kubernetes Master or Node. Select **Master**
+2. Select **M**aster set up.
 
-The installation will performance the following operations:
+#### Step 2: Prerequisites and Optimizations
+
+No user action required.
 
 1. The Raspberry Pi will be renamed to **k8smaster**
 2. Various optimizations/prerequisites set (tmpfs, GPU memory, 64bit kernel enabled, swap diabled, cgroups for k8s, iptables set to legacy mode)
 3. Network settings configured (Static address for eth0, and packet routing defined)
 4. DHCP Server and Docker installed
-5. The Raspberry pi will reboot after Docker installation
-6. Reconnect as **ssh pi@k8smaster.local**
-7. The installation will restart
-8. Kubernetes will be installed
-9. [Flannel CNI](https://kubernetes.io/docs/concepts/cluster-administration/networking/#the-kubernetes-network-model) (Cluster Networking) installation
-10. [MetalLB LoadBalance](https://metallb.universe.tf/) installation
-11. Kubernetes Dashboard installation and configuration for admin access
-12. You need to take a note, and save (somewhere) the **kubeadm join 192.168.100.1:6443 --token ... --discovery-token-ca-cert-hash ...** command. This will be displayed on the terminal screen. You will need this information to join the Kubernetes Nodes to the Kubernetes Master.
 
-## Kubernetes Node Set Up
+#### Step 3: Docker Installation
+
+No user action required.
+
+1. Docker is installed and the Raspberry Pi will reboot.
+
+#### Step 4: Kubernetes Installation
+
+1. Reconnect to the Raspberry Pi as `ssh pi@k8smaster.local`
+2. The installation will restart
+3. Kubernetes will be installed
+
+#### Step 5: Kubernetes Master Configuraton
+
+No user action required.
+
+1. [Flannel CNI](https://kubernetes.io/docs/concepts/cluster-administration/networking/#the-kubernetes-network-model) (Cluster Networking) installation
+2. [MetalLB LoadBalance](https://metallb.universe.tf/) installation
+3. Kubernetes Dashboard installation and configuration for admin access
+
+#### Step 6: Record Kubernetes Node Join Token
+
+1. You need to take a note, and save the **kubeadm join 192.168.100.1:6443 --token ... --discovery-token-ca-cert-hash ...** command. This will be displayed on the terminal screen. You will need this information to join the Kubernetes Nodes to the Kubernetes Master.
+
+## Kubernetes Node Installation
 
 Ensure the k8smaster and the Raspberry Pi that will be the first Kubernetes node are powered on and connected to the Network Switch. The DHCP Server running on the k8smaster will allocate an IP Address to the Raspberry Pi that will be the Kubernetes node.
 
@@ -95,7 +123,7 @@ Ensure the k8smaster and the Raspberry Pi that will be the first Kubernetes node
 
 ### Installation Process
 
-Ensure the Raspberry Pi to be configured as a Kubernetes Node is connected by **Ethernet** to same the **Network Switch** the Kubernetes Master is connected to. 
+Ensure the Raspberry Pi to be configured as a Kubernetes Node is connected by **Ethernet** to same the **Network Switch** the Kubernetes Master is connected to.
 
 Power on the Raspberry Pi, and IP Address will be allocated from the DHCP Server running in the Kubernetes Master you just configured.
 
