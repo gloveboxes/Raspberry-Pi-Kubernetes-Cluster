@@ -3,11 +3,6 @@
 sed --in-place '/~\/kube-setup\/scripts\/install-kube-master.sh/d' ~/.bashrc
 echo "~/kube-setup/scripts/install-kube-master.sh" >> ~/.bashrc
 
-# Rename your pi
-echo -e "\nYour Raspberry Pi/Kubernetes Master has been named 'k8smaster'\n"
-echo -e "Access by ssh pi@k8smaster.local\n"
-sudo raspi-config nonint do_hostname 'k8smaster'
-
 # Install utilities
 sudo apt install -y bmon 
 
@@ -47,5 +42,9 @@ curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
 # perform system upgrade
 sudo apt update && sudo apt dist-upgrade -y
 
-echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue."
+# Rename your pi
+echo -e "\nYour Raspberry Pi/Kubernetes Master has been renamed 'k8smaster'\n"
+echo -e "Remember to use system name when reconnecting  pi@k8smaster.local\n"
+sudo raspi-config nonint do_hostname 'k8smaster'
+
 sudo reboot
