@@ -3,10 +3,9 @@
 sed --in-place '/~\/Raspberry-Pi-Kubernetes-Cluster-master\/scripts\/install-kube-master.sh/d' ~/.bashrc
 echo "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/install-kube-master.sh" >> ~/.bashrc
 
-sudo apt update
+echo -e "\nInstalling bmon (bandwidth monitor) utility\n"
 
-# Install utilities
-sudo apt install -y bmon 
+sudo apt update && sudo apt install -y bmon 
 
 # Network set up, set up packet passthrough
 ./setup-networking.sh
