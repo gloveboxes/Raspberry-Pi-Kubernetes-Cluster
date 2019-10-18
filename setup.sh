@@ -12,7 +12,7 @@ rm master.zip
 
 # cd ~/kube-setup/scripts
 
-cd ~/Raspberry-Pi-Kubernetes-Cluster-master/
+cd ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts
 sudo chmod +x *.sh
 
 while true; do
