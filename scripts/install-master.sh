@@ -3,6 +3,8 @@
 sed --in-place '/~\/kube-setup\/scripts\/install-kube-master.sh/d' ~/.bashrc
 echo "~/kube-setup/scripts/install-kube-master.sh" >> ~/.bashrc
 
+sudo apt update
+
 # Install utilities
 sudo apt install -y bmon 
 

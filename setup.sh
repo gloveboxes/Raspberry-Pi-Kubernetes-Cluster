@@ -1,8 +1,18 @@
-sudo apt update && sudo apt install -y git
+#!/bin/bash
 
-git clone https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster.git ~/kube-setup
 
-cd ~/kube-setup/scripts
+cd ~/
+
+wget https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip
+
+unzip master.zip
+rm master.zip
+
+# git clone https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster.git ~/kube-setup
+
+# cd ~/kube-setup/scripts
+
+cd ~/Raspberry-Pi-Kubernetes-Cluster-master/
 sudo chmod +x *.sh
 
 while true; do
