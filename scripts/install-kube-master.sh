@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo -e "\nInstalling Kubernetes\n"
+
 # Install Kubernetes
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
@@ -18,6 +20,9 @@ mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
+
+echo -e "\nInstalling Flannel\n"
+
 # Install Flannel
 echo -e "\n\nInstalling Flannel CNI\n"
 sudo sysctl net.bridge.bridge-nf-call-iptables=1
@@ -28,12 +33,16 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134
 kubectl apply -f https://raw.githubusercontent.com/google/metallb/v0.8.1/manifests/metallb.yaml
 kubectl apply -f ../kubesetup/metallb/metallb.yml
 
+echo -e "\nInstalling MetalLB LoadBalancer\n"
+
 # Install Kubernetes Dashboard
 # https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 # https://medium.com/@kanrangsan/creating-admin-user-to-access-kubernetes-dashboard-723d6c9764e4
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
 kubectl apply -f ../kubesetup/dashboard/dashboard-admin-user.yml
 kubectl apply -f ../kubesetup/dashboard/dashboard-admin-role-binding.yml
+
+echo -e "\nInstalling Persistent Storage Support\n"
 
 ## Enable Persistent Storage
 kubectl apply -f ../kubesetup/persistent-storage/nfs-client-deployment-arm.yaml
@@ -43,7 +52,7 @@ kubectl apply -f ../kubesetup/persistent-storage/persistent-volume-claim.yaml
 kubectl apply -f ../kubesetup/persistent-storage/nginx-test-pod.yaml
 
 ## Remove install restart after reboot
-sed --in-place '/~\/kube-setup\/scripts\/install-kube-master.sh/d' ~/.bashrc
+sed --in-place '/~\/Raspberry-Pi-Kubernetes-Cluster-master\/scripts\/install-kube-master.sh/d' ~/.bashrc
 
 echo -e "\nMake a note of the kubecntl join and token displayed above. \nYou will need for joing Kubernettes nodes to this master."
 echo -e "\n\nUseful Commands:"
