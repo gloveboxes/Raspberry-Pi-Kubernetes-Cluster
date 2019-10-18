@@ -14,9 +14,12 @@ kubeadm config images pull
 
 
 echo -e "\nInitialising Kubernetes Master - This will take a few minutes. Be patient:)\n"
+echo -e "\nYou will need to make a note of the Kubernetes kubeadm join token displayed as part of the initialisation process:)\n"
 
 # Set up Kubernetes Master Node
 sudo kubeadm init --apiserver-advertise-address=192.168.100.1 --pod-network-cidr=10.244.0.0/16 --token-ttl 0
+
+echo -e "\nYou will need to make a note of the Kubernetes kubeadm join token displayed as part of the initialisation process:)\n"
 
 # make kubectl generally avaiable
 mkdir -p $HOME/.kube
@@ -57,7 +60,7 @@ kubectl apply -f ../kubesetup/persistent-storage/nginx-test-pod.yaml
 ## Remove install restart after reboot
 sed --in-place '/~\/Raspberry-Pi-Kubernetes-Cluster-master\/scripts\/install-kube-master.sh/d' ~/.bashrc
 
-echo -e "\nMake a note of the kubecntl join and token displayed above. \nYou will need for joing Kubernettes nodes to this master."
+echo -e "\nMake a note of the kubeadm join and token displayed above. \nYou will need for joing Kubernettes nodes to this master."
 echo -e "\n\nUseful Commands:"
 echo -e "\nwatch kubectl get pods --namespace=kube-system -o wide"
 echo -e "\nkubectl get pods --namespace=metallb-system -o wide"
