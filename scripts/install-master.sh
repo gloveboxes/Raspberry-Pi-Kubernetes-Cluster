@@ -28,7 +28,7 @@ sudo dphys-swapfile swapoff
 sudo dphys-swapfile uninstall
 sudo systemctl disable dphys-swapfile
 
-echo -e "\nReduing GPU Memory to minimum - 16MB\n"
+echo -e "\nReducing GPU Memory to minimum - 16MB\n"
 
 # maximise memory by reducing gpu memory
 echo "gpu_mem=16" | sudo tee -a /boot/config.txt
