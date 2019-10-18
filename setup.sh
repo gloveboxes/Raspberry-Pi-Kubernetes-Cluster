@@ -5,6 +5,7 @@ cd ~/
 
 wget https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip
 
+sudo rm -r -f ~/Raspberry-Pi-Kubernetes-Cluster-master
 unzip -qq master.zip
 rm master.zip
 
