@@ -14,7 +14,7 @@ sudo apt install -y bmon
 # DHCP Server install and initialise
 ./install-dhcp-server.sh
 
-echo -e "\nSetting iptables to legacy more - patch required for Kubernetes on Debian 10\n"
+echo -e "\nSetting iptables to legacy mode - patch required for Kubernetes on Debian 10\n"
 
 # Set iptables in legacy mode - required for Kube compatibility
 # https://github.com/kubernetes/kubernetes/issues/71305
