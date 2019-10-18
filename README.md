@@ -66,7 +66,10 @@ The Kubernetes Master is also responsible for:
 
 ### Installation Process
 
-Ensure the Raspberry Pi to be configured as a Kubernetes Master is connected by **Ethernet** and the WiFi Router
+Ensure the Raspberry Pi to be configured as a Kubernetes Master is:
+
+1. Connected by **Ethernet** to the **Network Switch**, and the **Network Switch** is power on.
+2. The **WiFi Router** is in range and powered on.
 
 #### Step 1: Connect to the Raspberry Pi to be Configured as the Kubernetes Master
 

@@ -35,6 +35,12 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-b
 kubectl apply -f ../kubesetup/dashboard/dashboard-admin-user.yml
 kubectl apply -f ../kubesetup/dashboard/dashboard-admin-role-binding.yml
 
+## Enable Persistent Storage
+kubectl apply -f ../kubesetup/persistent-storage/nfs-client-deployment-arm.yaml
+kubectl apply -f ../kubesetup/persistent-storage/persistent-volume.yaml
+kubectl apply -f ../kubesetup/persistent-storage/persistent-volume-claim.yaml
+kubectl apply -f ../kubesetup/persistent-storage/nginx-test-pod.yaml
+
 ## Remove install restart after reboot
 sed --in-place '/~\/kube-setup\/scripts\/install-kube-master.sh/d' ~/.bashrc
 
@@ -42,3 +48,5 @@ echo -e "\nMake a note of the kubecntl join and token displayed above. \nYou wil
 echo -e "\n\nUseful Commands:"
 echo -e "\nwatch kubectl get pods --namespace=kube-system -o wide"
 echo -e "\nkubectl get pods --namespace=metallb-system -o wide"
+
+sudo reboot
