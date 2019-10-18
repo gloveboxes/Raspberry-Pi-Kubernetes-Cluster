@@ -49,7 +49,7 @@ echo -e "\nEnabling cgroup support for Kubernetes\n"
 # enable cgroups for Kubernetes
 sudo sed -i 's/$/ ipv6.disable=1 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1/' /boot/cmdline.txt
 
-echo -e "\nInstall Docker\n"
+echo -e "\nInstalling Docker\n"
 # Install Docker
 curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
 
