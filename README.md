@@ -136,6 +136,7 @@ Repeat for each Raspberry Pi that you intent to be Kubernetes Nodes.
 
 1. From your desktop computer, start a SSH Session to the k8smaster. `ssh pi@k8smaster.local`.
 2. From the SSH Session you just started to the k8smaster device start another session to Raspberry Pi to be configured as a Kubernetes Node. `ssh pi@raspberry.local`
+3. Remove any existing known host reference to raspberrypi.local `ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "raspberrypi.local"`
 
 #### Step 2: Start the Installation Process
 

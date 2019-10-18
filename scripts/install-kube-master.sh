@@ -37,6 +37,7 @@ kubectl apply -f ../kubesetup/dashboard/dashboard-admin-role-binding.yml
 
 ## Enable Persistent Storage
 kubectl apply -f ../kubesetup/persistent-storage/nfs-client-deployment-arm.yaml
+kubectl apply -f ../kubesetup/persistent-storage/storage-class.yaml
 kubectl apply -f ../kubesetup/persistent-storage/persistent-volume.yaml
 kubectl apply -f ../kubesetup/persistent-storage/persistent-volume-claim.yaml
 kubectl apply -f ../kubesetup/persistent-storage/nginx-test-pod.yaml
