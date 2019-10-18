@@ -5,7 +5,7 @@ cd ~/
 
 wget https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip
 
-unzip master.zip
+unzip -qq master.zip
 rm master.zip
 
 # git clone https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster.git ~/kube-setup
