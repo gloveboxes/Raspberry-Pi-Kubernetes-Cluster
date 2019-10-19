@@ -285,3 +285,34 @@ See yaml definitions for more details
 * ./kubeset/nfs-client-deployment-arm.yaml
 
 ![](Resources/nfs-server.png)
+
+## Useful Commands
+
+### List DHCP Leases
+
+```bash
+dhcp-lease-list
+```
+
+### Regenerate Kubernetes Token
+
+[kubeadm token](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-token/)
+
+### Show Kubeadm Token
+
+https://stackoverflow.com/questions/40009831/cant-find-kubeadm-token-after-initializing-master
+
+```bash
+cat /etc/kubernetes/pki/tokens.csv
+```
+
+kubeadm token list
+kubeadm token create <copied token from previous command output>** --print-join-command
+
+## Resetting Kubernetes Master or Node
+
+````bash
+sudo kubeadm reset && \
+sudo systemctl daemon-reload && \
+sudo systemctl restart kubelet.service
+````

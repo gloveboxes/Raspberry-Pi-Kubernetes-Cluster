@@ -32,9 +32,9 @@ echo -e "\nReducing GPU Memory to minimum - 16MB\n"
 # maximise memory by reducing gpu memory
 echo "gpu_mem=16" | sudo tee -a /boot/config.txt
 
-echo -e "\nEnabling 64 Bit Linux Kernel\n"
+# echo -e "\nEnabling 64 Bit Linux Kernel\n"
 # use 64 bit kernel
-echo "arm_64bit=1" | sudo tee -a /boot/config.txt
+# echo "arm_64bit=1" | sudo tee -a /boot/config.txt
 
 echo -e "\nMoving /tmp and /var/log to tmpfs - reduce SD Card wear\n"
 
