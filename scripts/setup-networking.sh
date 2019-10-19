@@ -3,7 +3,7 @@
 echo -e "\nEnabling IPV4 Packet Forwarding\n"
 
 # Enable IP V4 Packet Routing
-sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
+sudo sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf > /dev/null
 sudo sysctl -p
 
 echo -e "\nSetting static IP Address on Ethernet Port\n"
