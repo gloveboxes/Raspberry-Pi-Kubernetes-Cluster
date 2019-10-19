@@ -108,6 +108,8 @@ while $RUNNING; do
 
         echo -e "\nYou will need to make a note of the Kubernetes kubeadm join token displayed as part of the initialisation process:)\n"
 
+        kubeadm token list
+
         echo "BREAK" > $STATE
 
     ;;
