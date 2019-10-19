@@ -64,7 +64,7 @@ while $RUNNING; do
         echo -e "\nRenamed your Raspberry Pi Kubernetes Master to k8smaster.local\n"
         sudo raspi-config nonint do_hostname 'k8smaster'
 
-        echo -e "\nThe system will reboot. Log back in, as pi@k8smaster.local.\nSet up will automatically continue.\n"
+        echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
 
         sudo reboot
     ;;
@@ -75,7 +75,7 @@ while $RUNNING; do
         curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
 
         echo "KUBERNETES" > $STATE
-        echo -e "\nThe system will reboot. Log back in, as pi@k8smaster.local.\nSet up will automatically continue.\n"
+        echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
         sudo reboot        
     ;;
 
