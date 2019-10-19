@@ -27,15 +27,15 @@ while $RUNNING; do
 
         # Set iptables in legacy mode - required for Kube compatibility
         # https://github.com/kubernetes/kubernetes/issues/71305
-        sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
-        sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
+        sudo update-alternatives --set iptables /usr/sbin/iptables-legacy > /dev/null
+        sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy > /dev/null
 
         echo -e "\nDiabling Linux swap file - Required for Kubernetes\n"
 
         #disable swap
-        sudo dphys-swapfile swapoff
-        sudo dphys-swapfile uninstall
-        sudo systemctl disable dphys-swapfile
+        sudo dphys-swapfile swapoff > /dev/null
+        sudo dphys-swapfile uninstall > /dev/null
+        sudo systemctl disable dphys-swapfile > /dev/null
 
         echo -e "\nSetting GPU Memory to minimum - 16MB"
         echo -e "Enabling 64 Bit Linux Kernel\n"
