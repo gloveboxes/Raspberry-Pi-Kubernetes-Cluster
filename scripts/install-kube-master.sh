@@ -2,6 +2,9 @@
 
 echo -e "\nInstalling Kubernetes\n"
 
+# let the system settle before kicking off kube install
+sleep 10
+
 # Install Kubernetes
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
