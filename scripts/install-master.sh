@@ -90,6 +90,15 @@ while $RUNNING; do
     KUBERNETES)
         echo -e "\nInstalling Kubernetes\n"
 
+        docker --version
+        
+        if [ $? -ne 0 ]
+        then
+          echo "DOCKER" > $STATE
+          echo -e "\nDocker not found. Retryng Docker install.\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
+          sudo reboot   
+        fi
+
         # let the system settle before kicking off kube install
         sleep 10
 
