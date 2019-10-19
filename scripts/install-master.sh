@@ -163,4 +163,6 @@ while $RUNNING; do
   esac
 done
 
+cd ~/
+
 sed --in-place '/~\/Raspberry-Pi-Kubernetes-Cluster-master\/scripts\/install-master.sh/d' ~/.bashrc
