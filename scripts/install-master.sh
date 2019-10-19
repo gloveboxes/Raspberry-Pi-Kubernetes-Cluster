@@ -88,8 +88,8 @@ while $RUNNING; do
         # Install Kubernetes
         curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
         echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-        sudo apt-get update -q
-        sudo apt-get install -qq -y kubeadm
+        sudo apt-get update -qq >/dev/null
+        sudo apt-get install -qq -y kubeadm >/dev/null
 
         # Preload the Kubernetes images
         echo -e "\nPulling Kubernetes Images - this will take a few minutes depending on network speed.\n"
