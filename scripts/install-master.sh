@@ -74,9 +74,17 @@ while $RUNNING; do
         # Install Docker
         curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
 
-        echo "KUBERNETES" > $STATE
-        echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
-        sudo reboot        
+        if [ $? -eq 0 ]
+        then
+          echo "KUBERNETES" > $STATE
+          echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
+          sudo reboot   
+        else
+          echo "Installation of Docker failed. Check internet connection" >&2
+          echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will retry installing Docker.\n"
+          sudo reboot
+        fi
+     
     ;;
 
     KUBERNETES)
