@@ -9,9 +9,9 @@ sudo sysctl -p
 echo -e "\nSetting static IP Address on Ethernet Port\n"
 
 # Ethernet static IP
-echo 'interface eth0' | sudo tee -a /etc/dhcpcd.conf
-echo 'static ip_address=192.168.100.1/24' | sudo tee -a /etc/dhcpcd.conf
-echo 'noipv6' | sudo tee -a /etc/dhcpcd.conf
+echo 'interface eth0' | sudo tee -a /etc/dhcpcd.conf > /dev/null
+echo 'static ip_address=192.168.100.1/24' | sudo tee -a /etc/dhcpcd.conf > /dev/null
+echo 'noipv6' | sudo tee -a /etc/dhcpcd.conf > /dev/null
 
 # stop and restart eth0 network interface
 sudo ip link set eth0 down && sudo ip link set eth0 up 

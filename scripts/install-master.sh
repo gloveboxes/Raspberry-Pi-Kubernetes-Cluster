@@ -40,16 +40,16 @@ while $RUNNING; do
         echo -e "\nSetting GPU Memory to minimum - 16MB"
         echo -e "Enabling 64 Bit Linux Kernel\n"
 
-        echo "gpu_mem=16" | sudo tee -a /boot/config.txt
-        echo "arm_64bit=1" | sudo tee -a /boot/config.txt
+        echo "gpu_mem=16" | sudo tee -a /boot/config.txt > /dev/null
+        echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
 
         echo -e "\nMoving /tmp and /var/log to tmpfs - reduce SD Card wear\n"
 
         # Disk optimisations - move temp to ram.
         # Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. 
         # Note you will lose the contents of these directories on reboot.
-        echo "tmpfs /tmp  tmpfs defaults,noatime 0 0" | sudo tee -a /etc/fstab && \
-        echo "tmpfs /var/log  tmpfs defaults,noatime,size=30m 0 0" | sudo tee -a /etc/fstab
+        echo "tmpfs /tmp  tmpfs defaults,noatime 0 0" | sudo tee -a /etc/fstab > /dev/null
+        echo "tmpfs /var/log  tmpfs defaults,noatime,size=30m 0 0" | sudo tee -a /etc/fstab > /dev/null
 
         echo -e "\nEnabling cgroup support for Kubernetes\n"
         # enable cgroups for Kubernetes
