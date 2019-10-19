@@ -3,7 +3,7 @@
 echo -e "\nInstalling and configuring DHCP Server\n"
 
 # Install DHCP Server
-sudo apt-get install -y -qq isc-dhcp-server >/dev/null
+sudo apt-get install -y -qq isc-dhcp-server
 sudo service isc-dhcp-server stop
 
 # bind IPV4 to eth0

@@ -15,7 +15,7 @@ while $RUNNING; do
 
         echo -e "\nUpdating and installing utilities\n"
 
-        sudo apt-get update >/dev/null && sudo apt-get install -y -qq bmon >/dev/null
+        sudo apt-get update && sudo apt-get install -y -qq bmon
 
         # Network set up, set up packet passthrough
         ./setup-networking.sh
@@ -37,8 +37,8 @@ while $RUNNING; do
         sudo dphys-swapfile uninstall
         sudo systemctl disable dphys-swapfile
 
-        echo -e "\nSetting GPU Memory to minimum - 16MB\n"
-        echo -e "\nEnabling 64 Bit Linux Kernel\n"
+        echo -e "\nSetting GPU Memory to minimum - 16MB"
+        echo -e "Enabling 64 Bit Linux Kernel\n"
 
         echo "gpu_mem=16" | sudo tee -a /boot/config.txt
         echo "arm_64bit=1" | sudo tee -a /boot/config.txt
@@ -57,7 +57,7 @@ while $RUNNING; do
 
         echo -e "\nUpdating Operating System\n"
         # perform system upgrade
-        sudo apt-get dist-upgrade -y -qq >/dev/null
+        sudo apt-get dist-upgrade -y -qq
 
         echo "DOCKER" > $STATE
 
@@ -88,8 +88,8 @@ while $RUNNING; do
         # Install Kubernetes
         curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
         echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-        sudo apt-get update -qq >/dev/null
-        sudo apt-get install -qq -y kubeadm >/dev/null
+        sudo apt-get update -qq
+        sudo apt-get install -qq -y kubeadm
 
         # Preload the Kubernetes images
         echo -e "\nPulling Kubernetes Images - this will take a few minutes depending on network speed.\n"
