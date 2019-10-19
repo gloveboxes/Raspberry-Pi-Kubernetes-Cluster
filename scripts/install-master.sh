@@ -15,7 +15,7 @@ while $RUNNING; do
 
         echo -e "\nUpdating and installing utilities\n"
 
-        sudo apt update && sudo apt install -y -qq bmon 
+        sudo apt update >/dev/null && sudo apt install -y -qq bmon >/dev/null
 
         # Network set up, set up packet passthrough
         ./setup-networking.sh
@@ -57,7 +57,7 @@ while $RUNNING; do
 
         echo -e "\nUpdating Operating System\n"
         # perform system upgrade
-        sudo apt dist-upgrade -y
+        sudo apt dist-upgrade -y -qq >/dev/null
 
         echo "DOCKER" > $STATE
 
