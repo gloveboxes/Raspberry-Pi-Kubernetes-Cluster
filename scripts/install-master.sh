@@ -1,7 +1,7 @@
 #!/bin/bash
 
 sed --in-place '/~\/Raspberry-Pi-Kubernetes-Cluster-master\/scripts\/install-kube-master.sh/d' ~/.bashrc
-echo "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/install-kube-master.sh" >> ~/.bashrc
+
 
 echo -e "\nInstalling bmon (bandwidth monitor) utility\n"
 
@@ -34,7 +34,7 @@ echo "gpu_mem=16" | sudo tee -a /boot/config.txt
 
 # echo -e "\nEnabling 64 Bit Linux Kernel\n"
 # use 64 bit kernel
-# echo "arm_64bit=1" | sudo tee -a /boot/config.txt
+echo "arm_64bit=1" | sudo tee -a /boot/config.txt
 
 echo -e "\nMoving /tmp and /var/log to tmpfs - reduce SD Card wear\n"
 
@@ -48,6 +48,14 @@ echo -e "\nEnabling cgroup support for Kubernetes\n"
 # enable cgroups for Kubernetes
 sudo sed -i 's/$/ ipv6.disable=1 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1/' /boot/cmdline.txt
 
+echo -e "\nUpdating Operating System\n"
+# perform system upgrade
+# sudo apt dist-upgrade -y
+
+sudo raspi-config nonint do_hostname 'k8smaster'
+
+sudo reboot
+
 echo -e "\nInstalling Docker\n"
 # Install Docker
 curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
@@ -60,5 +68,8 @@ sudo apt dist-upgrade -y
 echo -e "\nYour Raspberry Pi/Kubernetes Master has been renamed 'k8smaster'\n"
 echo -e "Remember to use system name when reconnecting  pi@k8smaster.local\n"
 sudo raspi-config nonint do_hostname 'k8smaster'
+
+
+echo "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/install-kube-master.sh" >> ~/.bashrc
 
 sudo reboot
