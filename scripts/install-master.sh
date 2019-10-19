@@ -74,6 +74,7 @@ while $RUNNING; do
         # Install Docker
         curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
 
+        sudo docker --version
         if [ $? -eq 0 ]
         then
           echo "KUBERNETES" > $STATE
@@ -91,12 +92,12 @@ while $RUNNING; do
         echo -e "\nInstalling Kubernetes\n"
 
         docker --version
-        
+
         if [ $? -ne 0 ]
         then
           echo "DOCKER" > $STATE
-          echo -e "\nDocker not found. Retryng Docker install.\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
-          sudo reboot   
+          echo -e "\nDocker not found. Retrying Docker installation.\n"
+          continue
         fi
 
         # let the system settle before kicking off kube install
