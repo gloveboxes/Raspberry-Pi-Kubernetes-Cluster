@@ -38,7 +38,7 @@ while $RUNNING; do
         sudo systemctl disable dphys-swapfile > /dev/null
 
         echo -e "\nSetting GPU Memory to minimum - 16MB\n"
-        echo -e "Enabling 64 Bit Linux Kernel\n"
+        echo -e "\nEnabling 64 Bit Linux Kernel\n"
 
         echo "gpu_mem=16" | sudo tee -a /boot/config.txt > /dev/null
         echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
@@ -120,7 +120,7 @@ while $RUNNING; do
         echo -e "\nInitialising Kubernetes Master - This will take a few minutes. Be patient:)\n"
 
         # Set up Kubernetes Master Node
-        sudo kubeadm init --apiserver-advertise-address=192.168.100.1 --pod-network-cidr=10.244.0.0/16 --token-ttl 0
+        sudo kubeadm init --apiserver-advertise-address=192.168.100.1 --pod-network-cidr=10.244.0.0/16 --token-ttl 0 --skip-token-print
 
         # make kubectl generally avaiable
         mkdir -p $HOME/.kube
