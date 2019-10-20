@@ -8,26 +8,37 @@
 
 ## Raspberry Pi Kubernetes Cluster
 
+I wanted to refresh my Kubernetes skills and what better way to do this than to build a Raspberry Pi Kubernetes Cluster for Intelligent Edge projects.
+
+It is a very capable system, and for now I've tested with [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover) written in Python and C#, [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) models, and [NGINX](https://www.nginx.com/).
+
+It will soon be running [Azure IoT Edge on Kubernetes](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-kubernetes) and looking forward to firing up the recently announced [dapr.io](https://dapr.io?WT.mc_id=github-blog-dglover) event-driven, portable runtime for building microservices on cloud and edge.
+
+This project forms part of a three part **Intelligence on the Edge** series. The followup topics will include:
+
+* Bringing Python and .NET Azure Functions and Machine Learning models to the Edge. Including Pod placement and working with hardware.
+* Deploying and managing Intelligence on the Edge with Azure IoT Edge.
+
 ![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/rpi-kube-cluster.jpg)
 
-## Introduction
+## System Configuration
 
-<!-- Great way to learn Kubernetes
-Services installed
-Flannel CNI
-MetalLb LoadBalancer
-Kubernetes Dashboard -->
+The Kubernetes installation is fully scripted, and along with Kubernetes itself, the following services are are installed and configured:
 
-This project forms part of a three part **Intelligence on the Edge** series. The following topics will follow:
+1. Flannel CNI
+2. MetalLb LoadBalancer
+3. Kubernetes Dashboard
+4. Persistent Storage on NFS
 
-* Part 2: Bringing Python and .NET [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover) and Machine Learning models to the Edge. Including Pod placement and working with hardware.  
-* Part 3: Deploying and managing Intelligence on the Edge with [Azure IoT Edge](https://azure.microsoft.com/en-au/services/iot-edge?WT.mc_id=github-blog-dglover).
+## Shopping List
 
-## Parts List
+The following parts list assumes a cluster built from a minimum of three Raspberry Pis.
 
 |Items||
 |-----|----|
-| 1 x Raspberry Pi for Kubernetes Master. I used a Raspberry 3B Plus.<br/><br/>2 x Raspberry Pis for Kubernetes Nodes: I used two Raspberry Pi 4 4GBs. <br/><br/>Note, Raspberry Pi 4s make great Kubernetes Nodes, but Raspberry Pi 3s and 2s will work well too.<br/><br/>3 x SD Cards (min 16GB, recommend 32GB, but can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.<br/><br/>3 Power supplies, one for each Raspberry Pi.|![rpi4](Resources/rpi4.png) |
+| 1 x Raspberry Pi for Kubernetes Master.<br/><ul><li>I used a Raspberry 3B Plus, I had one spare, it has dual band WiFi, and Gigabit Ethernet over USB 2.0 port (300Mbps), fast enough.</li></ul><br/>2 x Raspberry Pis for Kubernetes Nodes<ul><li>I used two Raspberry Pi 4 4GBs.</li><li>Raspberry Pi 4s make great Kubernetes Nodes, but Raspberry Pi 3s and 2s work very well too.</li></ul> | ![rpi4](Resources/rpi4.png)
+|3 x SD Cards, one for each Raspberry Pi in the cluster.<ul><li>Minimum 16GB, recommend 32GB</li><li>Can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.</li><li>Unsure what SD Card to buy, then check out these [SD Card recommendations](https://www.androidcentral.com/best-sd-cards-raspberry-pi-4)</li></ul> | ![](resources/sd-cards.png) |
+|3 x Power supplies, one for each Raspberry Pi.|![](resources/power-supply.jpg)|
 |1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![network switch](Resources/switch.png) |
 |3 x Ethernet Patch Cables (I used 25cm patch cables to reduce clutter.) | ![patch cables](Resources/patch-cable.jpg)|
 |Optional: 1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![raspberry pi rack](Resources/rack.jpg) |
