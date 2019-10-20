@@ -72,8 +72,12 @@ while $RUNNING; do
     DOCKER)
         echo -e "\nInstalling Docker\n"
         # Install Docker
-        curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
-
+        sudo docker --version
+        if [ $? -ne 0 ]
+        then
+          curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
+        fi
+        
         sudo docker --version
         if [ $? -eq 0 ]
         then
