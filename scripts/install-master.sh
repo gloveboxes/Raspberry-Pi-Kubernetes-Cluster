@@ -37,7 +37,7 @@ while $RUNNING; do
         sudo dphys-swapfile uninstall > /dev/null
         sudo systemctl disable dphys-swapfile > /dev/null
 
-        echo -e "\nSetting GPU Memory to minimum - 16MB"
+        echo -e "\nSetting GPU Memory to minimum - 16MB\n"
         echo -e "Enabling 64 Bit Linux Kernel\n"
 
         echo "gpu_mem=16" | sudo tee -a /boot/config.txt > /dev/null
@@ -109,7 +109,7 @@ while $RUNNING; do
 
         # Install Kubernetes
         curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-        echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+        echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list > /dev/null
         sudo apt-get update -qq > /dev/null
         sudo apt-get install -qq -y kubeadm > /dev/null
 
