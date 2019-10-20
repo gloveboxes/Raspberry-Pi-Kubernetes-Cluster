@@ -5,12 +5,18 @@
 |Platform| Raspberry Pi, Raspbian Buster, Kernel 4.19|
 |Date|October 2019|
 | Acknowledgements | Inspired by [Alex Ellis' work with his Raspberry Pi Zero Docker Cluster](https://blog.alexellis.io/visiting-pimoroni/) |
+|Skill Level| This guide assumes you have experience with Raspberry Pis. |
 
 ## Raspberry Pi Kubernetes Cluster
 
+This guide targets building a Raspberry Pi Kubernetes cluster on Raspbian Buster (Debian 10 based).  
+
 I wanted to refresh my Kubernetes skills and what better way to do this than to build a Raspberry Pi Kubernetes Cluster for Intelligent Edge projects.
 
-It is a very capable system, and for now I've tested with [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover) written in Python and C#, [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) models, and [NGINX](https://www.nginx.com/).
+It is a very capable system, and for now I have tested with [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover) written in Python and C#, [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) Machine Learning models, and [NGINX](https://www.nginx.com/) Web Server.
+
+
+![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/rpi-kube-cluster.jpg)
 
 It will soon be running [Azure IoT Edge on Kubernetes](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-kubernetes) and looking forward to firing up the recently announced [dapr.io](https://dapr.io?WT.mc_id=github-blog-dglover) event-driven, portable runtime for building microservices on cloud and edge.
 
@@ -19,20 +25,21 @@ This project forms part of a three part **Intelligence on the Edge** series. The
 * Bringing Python and .NET Azure Functions and Machine Learning models to the Edge. Including Pod placement and working with hardware.
 * Deploying and managing Intelligence on the Edge with Azure IoT Edge.
 
-![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/rpi-kube-cluster.jpg)
 
 ## System Configuration
 
-The Kubernetes installation is fully scripted, and along with Kubernetes itself, the following services are are installed and configured:
+The Kubernetes Master and Node installation is fully scripted, and along with Kubernetes itself, the following services are are installed and configured:
 
-1. Flannel CNI
-2. MetalLb LoadBalancer
-3. Kubernetes Dashboard
-4. Persistent Storage on NFS
+1. [Flannel](https://github.com/coreos/flannel) Container Network Interface (CNI) Plugin.
+2. [MetalLb](https://metallb.universe.tf/) LoadBalancer. MetalLB is a load-balancer implementation for bare metal Kubernetes clusters, using standard routing protocols.
+3. [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/).
+4. [Kubernetes Persistent Volumes](https://kubernetes.io/docs/concepts/storage/persistent-volumes/) Storage on NFS.
+5. NFS Server (running on Kubernetes Cluster Node 1).
+6. NGINX Web Server.
 
-## Shopping List
+## Parts List
 
-The following parts list assumes a cluster built from a minimum of three Raspberry Pis.
+The following list assumes a Kubernetes cluster built with a minimum of three Raspberry Pis.
 
 |Items||
 |-----|----|
@@ -42,13 +49,16 @@ The following parts list assumes a cluster built from a minimum of three Raspber
 |1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![network switch](Resources/switch.png) |
 |3 x Ethernet Patch Cables (I used 25cm patch cables to reduce clutter.) | ![patch cables](Resources/patch-cable.jpg)|
 |Optional: 1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![raspberry pi rack](Resources/rack.jpg) |
-|Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips. The BlinkT LED Strip can be a great way to visualize pod state. | ![blinlt](Resources/blinkt.jpg).|
+|Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips. The BlinkT LED Strip can be a great way to visualize pod activity. | ![blinlt](Resources/blinkt.jpg).|
 |Optional: 2 x USB3 SSDs for Kubernetes Nodes, or similar, ie something small. Installation script sets up Raspberry Pi Boot from USB3 SSD. Note, these are [SSD Enclosures](https://www.amazon.com.au/Wavlink-10Gbps-Enclosure-Aluminum-Include/dp/B07D54JH16/ref=sr_1_8?keywords=usb+3+ssd&qid=1571218898&s=electronics&sr=1-8), you need the M.2 drives as well.| ![usb3 ssd](Resources/usb-ssd.jpg) |
 
-## Creating Raspberry Pi Boot SD Cards
+## Flashing Raspbian Buster Lite Boot SD Cards
+
+I strongly recommend building your Kubernetes cluster on Raspbian Buster Lite. Raspbian Lite is headless, takes less space, and leaves more resources available for your applications. You must enable **SSH** for each SD Card, and add a **WiFi profile** for the Kubernetes Master SD Card.
 
 1. Using [balena Etcher](https://www.balena.io/etcher/), flash 3 x SD Cards with [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/)
-2. On **one** SD Card, add the a **wpa_supplicant.conf** file with your WiFi Routers WiFi settings. This card with be used for the Kuberetes Master.
+2. On **all** SD Cards add an empty file named **ssh**. This enables SSH for the Raspberry Pi when it boots up.
+3. On the Kubernetes Master SD Card, add a **wpa_supplicant.conf** file with your WiFi Routers WiFi settings.
 
     ```text
     ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
@@ -61,7 +71,7 @@ The following parts list assumes a cluster built from a minimum of three Raspber
     }
     ```
 
-3. On **all** SD Cards add an empty file named **ssh**. This enables SSH for the Raspberry Pi when it boots up.
+
 
 ## Kubernetes Network Topology
 
