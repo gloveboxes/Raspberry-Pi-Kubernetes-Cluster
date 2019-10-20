@@ -44,7 +44,7 @@ The following list assumes a Kubernetes cluster built with a minimum of three Ra
 |Items||
 |-----|----|
 | 1 x Raspberry Pi for Kubernetes Master.<br/><ul><li>I used a Raspberry 3B Plus, I had one spare, it has dual band WiFi, and Gigabit Ethernet over USB 2.0 port (300Mbps), fast enough.</li></ul><br/>2 x Raspberry Pis for Kubernetes Nodes<ul><li>I used two Raspberry Pi 4 4GBs.</li><li>Raspberry Pi 4s make great Kubernetes Nodes, but Raspberry Pi 3s and 2s work very well too.</li></ul> | ![rpi4](Resources/rpi4.png)
-|3 x SD Cards, one for each Raspberry Pi in the cluster.<ul><li>Minimum 16GB, recommend 32GB</li><li>Can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.</li><li>Unsure what SD Card to buy, then check out these [SD Card recommendations](https://www.androidcentral.com/best-sd-cards-raspberry-pi-4)</li></ul> | ![](resources/sd-cards.png) |
+|3 x SD Cards, one for each Raspberry Pi in the cluster.<ul><li>Minimum 16GB, recommend 32GB</li><li>Can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.</li><li>Unsure what SD Card to buy, then check out these [SD Card recommendations](https://www.androidcentral.com/best-sd-cards-raspberry-pi-4)</li></ul> | ![](Resources/sd-cards.png) |
 |3 x Power supplies, one for each Raspberry Pi.|![](resources/power-supply.jpg)|
 |1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![network switch](Resources/switch.png) |
 |3 x Ethernet Patch Cables (I used 25cm patch cables to reduce clutter.) | ![patch cables](Resources/patch-cable.jpg)|
@@ -56,8 +56,17 @@ The following list assumes a Kubernetes cluster built with a minimum of three Ra
 
 I strongly recommend building your Kubernetes cluster on Raspbian Buster Lite. Raspbian Lite is headless, takes less space, and leaves more resources available for your applications. You must enable **SSH** for each SD Card, and add a **WiFi profile** for the Kubernetes Master SD Card.
 
+There are plenty of guides for flashing Raspbian Lite SD Cards. Here are a couple of useful references:
+
+* [Setting up a Raspberry Pi headless](https://www.raspberrypi.org/documentation/configuration/wireless/headless.md)
+* If you've not set up a Raspberry Pi before then this is a great guide. ["HEADLESS RASPBERRY PI 3 B+ SSH WIFI SETUP (MAC + WINDOWS)"](https://desertbot.io/blog/headless-raspberry-pi-3-bplus-ssh-wifi-setup). The Instructions outlined for macOS will work on Linux.
+
+### Summary of Installation Process
+
 1. Using [balena Etcher](https://www.balena.io/etcher/), flash 3 x SD Cards with [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/)
-2. On **all** SD Cards add an empty file named **ssh**. This enables SSH for the Raspberry Pi when it boots up.
+2. On each SD Card create an empty file named **ssh**, this enables SSH login on the Raspberry Pi.
+    * **Windows:** From Powershell, open the drive labeled _boot_, most likely the _d:_ drive, and type `echo $null > ssh; exit`. From the Windows Command Prompt, open drive labeled _boot_, most like the _d:_ drive, and type `type NUL > ssh & exit`.
+    * **macOS and Linux:** Open terminal from drive labeled _boot_, type `touch ssh && exit`.
 3. On the Kubernetes Master SD Card, add a **wpa_supplicant.conf** file with your WiFi Routers WiFi settings.
 
     ```text
