@@ -77,7 +77,7 @@ while $RUNNING; do
         then
           curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
         fi
-        
+
         sudo docker --version
         if [ $? -eq 0 ]
         then
@@ -85,9 +85,9 @@ while $RUNNING; do
           echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
           sudo reboot   
         else
-          echo "Installation of Docker failed. Check internet connection" >&2
-          echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will retry installing Docker.\n"
-          sudo reboot
+          echo "Installation of Docker failed. Check internet connection." >&2
+          echo -e "\nRetrying Docker installation in 20 seconds\n"
+          sleep 20
         fi
      
     ;;
