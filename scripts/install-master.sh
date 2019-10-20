@@ -118,7 +118,6 @@ while $RUNNING; do
         kubeadm config images pull
 
         echo -e "\nInitialising Kubernetes Master - This will take a few minutes. Be patient:)\n"
-        echo -e "\nYou will need to make a note of the Kubernetes kubeadm join token displayed as part of the initialisation process:)\n"
 
         # Set up Kubernetes Master Node
         sudo kubeadm init --apiserver-advertise-address=192.168.100.1 --pod-network-cidr=10.244.0.0/16 --token-ttl 0
@@ -128,9 +127,12 @@ while $RUNNING; do
         sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
         sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-        echo -e "\nYou will need to make a note of the Kubernetes kubeadm join token displayed as part of the initialisation process:)\n"
+        kubeadm token create --print-join-command > ~/k8s-join-token
+        cat ~/k8s-join-token
 
-        kubeadm token list
+        echo -e "The Kubernetes Node join token is saved to ~/k8s-join-token for convenience.\n"
+        echo -e "This may represent a security risk.\n"
+        echo -e "Delete if not comfortable with this."
 
         echo "KUBESETUP" > $STATE
 
