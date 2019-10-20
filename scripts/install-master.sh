@@ -13,6 +13,22 @@ while $RUNNING; do
 
     INIT)
 
+        while true; do
+            echo ""
+            read -p "Enable 64 Bit Kernel (Raspberry Pi 3 or better)? ([Y]es, [N]o), or [Q]uit: " kernel64bit
+            case $kernel64bit in
+                [Yy]* ) break;;
+                [Nn]* ) break;;
+                [Qq]* ) exit 1;;
+                * ) echo "Please answer [Y]es, [N]o), or [Q]uit.";;
+            esac
+        done
+
+        if [ $kernel64bit = 'Y' ] || [ $kernel64bit = 'y' ]; then  
+            echo -e "\nEnabling 64 Bit Linux Kernel\n" 
+            echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
+        fi
+
         echo -e "\nUpdating and installing utilities\n"
 
         sudo apt-get update > /dev/null && sudo apt-get install -y -qq bmon > /dev/null
@@ -38,10 +54,8 @@ while $RUNNING; do
         sudo systemctl disable dphys-swapfile > /dev/null
 
         echo -e "\nSetting GPU Memory to minimum - 16MB\n"
-        echo -e "\nEnabling 64 Bit Linux Kernel\n"
-
         echo "gpu_mem=16" | sudo tee -a /boot/config.txt > /dev/null
-        echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
+
 
         echo -e "\nMoving /tmp and /var/log to tmpfs - reduce SD Card wear\n"
 

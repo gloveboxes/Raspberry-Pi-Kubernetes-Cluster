@@ -12,6 +12,12 @@
 
 ## Introduction
 
+<!-- Great way to learn Kubernetes
+Services installed
+Flannel CNI
+MetalLb LoadBalancer
+Kubernetes Dashboard -->
+
 This project forms part of a three part **Intelligence on the Edge** series. The following topics will follow:
 
 * Part 2: Bringing Python and .NET [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover) and Machine Learning models to the Edge. Including Pod placement and working with hardware.  
@@ -312,7 +318,5 @@ kubeadm token create <copied token from previous command output>** --print-join-
 ## Resetting Kubernetes Master or Node
 
 ````bash
-sudo kubeadm reset && \
-sudo systemctl daemon-reload && \
-sudo systemctl restart kubelet.service
+sudo kubeadm reset && sudo systemctl daemon-reload && sudo systemctl restart kubelet.service
 ````
