@@ -71,7 +71,7 @@ while $RUNNING; do
 
         echo -e "\nUpdating Operating System\n"
         # perform system upgrade
-        sudo apt-get upgrade -y -qq
+        sudo apt upgrade -y
 
         echo "DOCKER" > $STATE
 
