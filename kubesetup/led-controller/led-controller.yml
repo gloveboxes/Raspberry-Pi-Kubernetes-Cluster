@@ -44,7 +44,7 @@ spec:
     spec:
       containers:
       - name: led-controller
-        image: glovebox/led-controller:arm32v7-0.5
+        image: glovebox/led-controller:arm32v7-0.6
         imagePullPolicy: Always
         securityContext:
           privileged: true

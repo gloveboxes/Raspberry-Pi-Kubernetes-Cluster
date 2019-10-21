@@ -183,9 +183,9 @@ bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubern
 
 #### Step 3: Number the Kubernetes Node
 
-You will be prompted to number the Kubernetes Node. Ensure you have one node numbered **1** as NFS Server will be installed on Node **1** and is required for Kubernetes Persistent Storage.
+You will be prompted to number the Kubernetes Node. Number from 1 to n, where n is the number of Kubernetes Nodes you plan to provision.
 
-#### Step 4: Enable Boot from SSD
+#### Step 4: Enable Boot from USB3 SSD
 
 Is you have USB3 attached SSD Storage then select this option. The installation script assumes the USB SSD Drive is located at **/dev/sda**. The scripts starts **fdisk**, you need to create a clean disk partition. Follow these steps:
 
@@ -295,10 +295,9 @@ Click the following link to open the Kubernetes Dashboard. Select **Token** auth
 
 ## Kubernetes Cluster Persistence Storage
 
-NFS Server installed on k8snode1.local
+NFS Server installed on k8smaster.local
 
-1. Set up by Kubernetes Master and k8snode1.local installation.
-2. Provisioned by Kubernetes Master installation script.
+2. Installed and provisioned by Kubernetes Master installation script.
 3. The following diagram describes how persistent storage is configured in the cluster.
 
     ![persistent storage](Resources/nfs-server.png)

@@ -222,6 +222,9 @@ while $RUNNING; do
         # disable wifi on the node board as network will be over Ethernet
         echo "dtoverlay=disable-wifi" | sudo tee -a /boot/config.txt
 
+        # Disable hdmi to reduce power consumption
+        sudo sed -i -e '$i \/usr/bin/tvservice -o\n' /etc/rc.local
+
         # Disk optimisations - move temp to ram.
         # Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. 
         # Note you will lose the contents of these directories on reboot.

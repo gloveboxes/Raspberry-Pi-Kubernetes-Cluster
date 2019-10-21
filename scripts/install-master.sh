@@ -51,6 +51,8 @@ while $RUNNING; do
         echo -e "\nSetting GPU Memory to minimum - 16MB\n"
         echo "gpu_mem=16" | sudo tee -a /boot/config.txt > /dev/null
 
+        # Disable hdmi to reduce power consumption
+        sudo sed -i -e '$i \/usr/bin/tvservice -o\n' /etc/rc.local
 
         echo -e "\nMoving /tmp and /var/log to tmpfs - reduce SD Card wear\n"
 
@@ -181,7 +183,7 @@ while $RUNNING; do
         while : ;
         do
           echo -e "\nInstalling Kubernetes\n"
-          sudo apt-get update -qq > /dev/null && sudo apt-get install -qq -y kubeadm > /dev/null
+          sudo apt-get update -qq && sudo apt-get install -qq -y kubeadm
           if [ $? -eq 0 ]
           then
             break
@@ -268,6 +270,11 @@ while $RUNNING; do
   esac
 done
 
-cd ~/
+cat ~/k8s-join-token
 
+echo -e "The Kubernetes Node join token is saved to ~/k8s-join-token for convenience.\n"
+echo -e "This may represent a security risk.\n"
+echo -e "Delete if not comfortable with this."
+
+cd ~/
 sed --in-place '/~\/Raspberry-Pi-Kubernetes-Cluster-master\/scripts\/install-master.sh/d' ~/.bashrc
