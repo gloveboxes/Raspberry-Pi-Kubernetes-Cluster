@@ -15,12 +15,11 @@ while $RUNNING; do
 
         while true; do
             echo ""
-            read -p "Enable 64 Bit Kernel (Raspberry Pi 3 or better)? ([Y]es, [N]o), or [Q]uit: " kernel64bit
+            read -p "Enable 64 Bit Kernel (Raspberry Pi 3 or better)? ([Y]es, [N]o): " kernel64bit
             case $kernel64bit in
                 [Yy]* ) break;;
                 [Nn]* ) break;;
-                [Qq]* ) exit 1;;
-                * ) echo "Please answer [Y]es, [N]o), or [Q]uit.";;
+                * ) echo "Please answer [Y]es, [N]o).";;
             esac
         done
 
@@ -42,9 +41,12 @@ while $RUNNING; do
             fi
         done
 
+        echo -e "\nUpdating the Raspberry Pi System\n"
+
+        sudo apt-get update > /dev/null && sudo apt upgrade -y 
+
         RPINAME="k8snode${NodeNumber}"
         echo -e "\nNaming this Raspberry Pi/Kubernetes Node ${RPINAME}\n"
-        sudo raspi-config nonint do_hostname $RPINAME
 
         if [ $NodeNumber == 1 ]; then 
             echo "NFS" > $STATE
@@ -54,6 +56,9 @@ while $RUNNING; do
 
         # not 100% necessary but it is safer
         echo -e "\nThe system will reboot. Log back in, remember to use new system name.\nssh pi@${RPINAME}.local\nSet up will automatically continue.\n"
+        
+        sudo raspi-config nonint do_hostname $RPINAME
+        
         sudo reboot
         
     ;;
@@ -161,7 +166,7 @@ while $RUNNING; do
             cd fanshim-python-master
             sudo ./install.sh
             cd examples
-            sudo ./install-service.sh --on-threshold 70 --off-threshold 60 --delay 2
+            sudo ./install-service.sh --on-threshold 70 --off-threshold 55 --delay 2
         fi
     ;;
 

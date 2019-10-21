@@ -301,7 +301,7 @@ NFS Server installed on k8snode1.local
 2. Provisioned by Kubernetes Master installation script.
 3. The following diagram describes how persistent storage is configured in the cluster.
 
-    ![](Resources/nfs-server.png)
+    ![persistent storage](Resources/nfs-server.png)
 
 ## Useful Commands
 
@@ -331,7 +331,6 @@ sudo kubeadm reset && sudo systemctl daemon-reload && sudo systemctl restart kub
 
 1. [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
 2. [Creating admin user to access Kubernetes dashboard](https://medium.com/@kanrangsan/creating-admin-user-to-access-kubernetes-dashboard-723d6c9764e4)
-
 
 ### Kubernetes Persistent Storage
 
