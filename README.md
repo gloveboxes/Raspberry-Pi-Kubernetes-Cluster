@@ -5,7 +5,7 @@
 |Platform| Raspberry Pi, Raspbian Buster, Kernel 4.19|
 |Date|October 2019|
 | Acknowledgements | Inspired by [Alex Ellis' work with his Raspberry Pi Zero Docker Cluster](https://blog.alexellis.io/visiting-pimoroni/) |
-|Skill Level| This guide assumes you have experience with Raspberry Pis. |
+|Skill Level| This guide assumes you have some Raspberry Pi and networking experience. |
 
 ## Raspberry Pi Kubernetes Cluster
 
@@ -22,8 +22,8 @@ It will soon be running [Azure IoT Edge on Kubernetes](https://docs.microsoft.co
 
 This project forms part of a three part **Intelligence on the Edge** series. The followup topics will include:
 
-* Bringing Python and .NET Azure Functions and Machine Learning models to the Edge. Including Pod placement and working with hardware.
-* Deploying and managing Intelligence on the Edge with Azure IoT Edge.
+* Bringing Python and .NET [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover) and [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) Machine Learning models to the Edge. Including Pod placement and working with hardware.
+* Deploying and managing Intelligence on the Edge with Azure IoT Edge on Kubernetes.
 
 
 ## System Configuration
@@ -67,7 +67,7 @@ There are plenty of guides for flashing Raspbian Lite SD Cards. Here are a coupl
 2. On each SD Card create an empty file named **ssh**, this enables SSH login on the Raspberry Pi.
     * **Windows:** From Powershell, open the drive labeled _boot_, most likely the _d:_ drive, and type `echo $null > ssh; exit`. From the Windows Command Prompt, open drive labeled _boot_, most like the _d:_ drive, and type `type NUL > ssh & exit`.
     * **macOS and Linux:** Open terminal from drive labeled _boot_, type `touch ssh && exit`.
-3. On the Kubernetes Master SD Card, add a **wpa_supplicant.conf** file with your WiFi Routers WiFi settings.
+3. On the Kubernetes Master SD Card, add a **wpa_supplicant.conf** file to the SD Card _boot_ drive with your WiFi Routers WiFi settings.
 
     ```text
     ctrl_interface=DIR=/var/run/wpa_supplicant GROUP=netdev
