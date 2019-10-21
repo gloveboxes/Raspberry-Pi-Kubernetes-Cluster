@@ -15,8 +15,7 @@ I wanted to refresh my Kubernetes skills and what better way to do this than to 
 
 It is a very capable system, and for now I have tested with [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover) written in Python and C#, [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) Machine Learning models, and [NGINX](https://www.nginx.com/) Web Server.
 
-
-![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/RaspberryPiKubernetesCluster/master/Resources/rpi-kube-cluster.jpg)
+![Raspberry Pi Kubernetes Cluster](Resources/rpi-kube-cluster.jpg)
 
 It will soon be running [Azure IoT Edge on Kubernetes](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-kubernetes) and looking forward to firing up the recently announced [dapr.io](https://dapr.io?WT.mc_id=github-blog-dglover) event-driven, portable runtime for building microservices on cloud and edge.
 
@@ -24,7 +23,6 @@ This project forms part of a three part **Intelligence on the Edge** series. The
 
 * Bringing Python and .NET [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover) and [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) Machine Learning models to the Edge. Including Pod placement and working with hardware.
 * Deploying and managing Intelligence on the Edge with Azure IoT Edge on Kubernetes.
-
 
 ## System Configuration
 
