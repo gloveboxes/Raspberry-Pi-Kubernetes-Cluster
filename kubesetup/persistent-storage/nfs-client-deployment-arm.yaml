@@ -32,11 +32,11 @@ spec:
             - name: PROVISIONER_NAME
               value: fuseim.pri/ifs
             - name: NFS_SERVER
-              value: k8snode1.local
+              value: k8smaster.local
             - name: NFS_PATH
               value: /home/pi/nfsshare
       volumes:
         - name: nfs-client-root
           nfs:
-            server: k8snode1.local
+            server: k8smaster.local
             path: /home/pi/nfsshare

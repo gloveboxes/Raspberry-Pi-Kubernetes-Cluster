@@ -48,11 +48,12 @@ while $RUNNING; do
         RPINAME="k8snode${NodeNumber}"
         echo -e "\nNaming this Raspberry Pi/Kubernetes Node ${RPINAME}\n"
 
-        if [ $NodeNumber == 1 ]; then 
-            echo "NFS" > $STATE
-        else
-            echo "SSD" > $STATE
-        fi
+        echo "SSD" > $STATE
+        # if [ $NodeNumber == 1 ]; then 
+        #     echo "NFS" > $STATE
+        # else
+        #     echo "SSD" > $STATE
+        # fi
 
         # not 100% necessary but it is safer
         echo -e "\nThe system will reboot. Log back in, remember to use new system name.\nssh pi@${RPINAME}.local\nSet up will automatically continue.\n"

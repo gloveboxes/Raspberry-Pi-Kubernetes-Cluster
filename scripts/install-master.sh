@@ -73,7 +73,7 @@ while $RUNNING; do
         # perform system upgrade
         sudo apt upgrade -y
 
-        echo "DOCKER" > $STATE
+        echo "NFS" > $STATE
 
         echo -e "\nRenamed your Raspberry Pi Kubernetes Master to k8smaster.local\n"
         sudo raspi-config nonint do_hostname 'k8smaster'
@@ -81,6 +81,35 @@ while $RUNNING; do
         echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
 
         sudo reboot
+    ;;
+
+    NFS)
+        echo -e "\nInstalling NFS Server on k8snode1 for use as Cluster Storage Class and Persistent Storage\n"
+        # https://sysadmins.co.za/setup-a-nfs-server-and-client-on-the-raspberry-pi/
+        # https://vitux.com/install-nfs-server-and-client-on-ubuntu/
+        
+        sudo apt-get install -y nfs-kernel-server > /dev/null
+
+        # Make the nfs directory to be shared
+        mkdir -p ~/nfsshare
+        sudo chown nobody:nogroup /home/pi/nfsshare
+        # ‘777’ permission, everyone can read, write and execute the file
+        sudo chmod 777 /home/pi/nfsshare
+        echo "Hello, World!" > /home/pi/nfsshare/index.html
+
+        # available to * (all) IP address on the cluster
+        echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports  > /dev/null
+ 
+        # reload exports
+        sudo exportfs -ra
+
+        # Restart the NFS Server
+        sudo systemctl restart nfs-kernel-server
+
+        # show what's being shared
+        showmount -e localhost
+
+        echo "DOCKER" > $STATE
     ;;
 
     DOCKER)

@@ -17,4 +17,4 @@ spec:
     - nfsvers=4.1
   nfs:
     path: /home/pi/nfsshare
-    server: k8snode1.local
+    server: k8smaster.local
