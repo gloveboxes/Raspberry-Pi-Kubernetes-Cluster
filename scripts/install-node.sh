@@ -68,7 +68,7 @@ while $RUNNING; do
         # https://sysadmins.co.za/setup-a-nfs-server-and-client-on-the-raspberry-pi/
         # https://vitux.com/install-nfs-server-and-client-on-ubuntu/
         
-        sudo apt install -y nfs-kernel-server
+        sudo apt-get install -y nfs-kernel-server > /dev/null
 
         # Make the nfs directory to be shared
         mkdir -p ~/nfsshare
@@ -78,7 +78,7 @@ while $RUNNING; do
         echo "Hello, World!" > /home/pi/nfsshare/index.html
 
         # available to * (all) IP address on the cluster
-        echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports
+        echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports  > /dev/null
  
         # reload exports
         sudo exportfs -ra
@@ -105,7 +105,8 @@ while $RUNNING; do
             esac
         done
 
-        echo "UPDATE" > $STATE
+        # echo "UPDATE" > $STATE  - Update happens in INIT now - so skip UPDATE
+        echo "FANSHIM" > $STATE
 
         if [ "$BOOT_USB3" = true ]; then
             echo -e "\np = print partitions, \nd = delete a partition, \nn = new partition -> create a primary partition, \nw = write the partition information to disk, \nq = quit\n"
@@ -203,15 +204,38 @@ while $RUNNING; do
 
     DOCKER)
         echo -e "\nInstalling Docker\n"
+        sleep 4
         # Install Docker
-        curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
+        sudo docker --version
+        if [ $? -ne 0 ]
+        then
+          curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
+        fi
 
-        echo "KUBERNETES" > $STATE
-        echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue.\n"
-        sudo reboot        
+        sudo docker --version
+        if [ $? -eq 0 ]
+        then
+          echo "KUBERNETES" > $STATE
+          echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
+          sudo reboot   
+        else
+          echo "Installation of Docker failed. Check internet connection." >&2
+          echo -e "\nRetrying Docker installation in 20 seconds\n"
+          sleep 20
+        fi     
     ;;
 
     KUBERNETES)
+
+        docker --version
+
+        if [ $? -ne 0 ]
+        then
+          echo "DOCKER" > $STATE
+          echo -e "\nDocker not found. Retrying Docker installation.\n"
+          continue
+        fi
+        
         echo -e "\nInstalling Kubernetes\n"
         # Install Kubernetes
         curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
