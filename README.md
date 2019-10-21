@@ -91,10 +91,10 @@ The Kubernetes Master is also responsible for:
 
 ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/network.png)
 
-## Naming Conventions
+## Naming Conventions Used
 
-1. Kubernetes Master: k8smaster.local
-2. Kubernetes Nodes: k8snode1..n
+1. The Kubernetes Master will be named **k8smaster.local**
+2. The Kubernetes Nodes will be named **k8snode1..n**
 
 ## Kubernetes Master Installation
 
@@ -121,20 +121,19 @@ bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubern
 
 2. Select **M**aster set up.
 
-#### Step 2: Prerequisites and Optimizations
+#### Step 2: Configure Prerequisites
 
-No user action required.
-
-1. The Raspberry Pi will be renamed to **k8smaster**
-2. Various optimizations/prerequisites set (tmpfs, GPU memory, 64bit kernel enabled, swap diabled, cgroups for k8s, iptables set to legacy mode)
-3. Network settings configured (Static address for eth0, and packet routing defined)
-4. DHCP Server and Docker installed
+1. Various optimizations/prerequisites set (tmpfs, GPU memory, 64bit kernel enabled, swap diabled, cgroups for k8s, iptables set to legacy mode)
+2. Network settings configured (Static address for eth0, and packet routing defined)
+3. DHCP Server installed
+4. The Raspberry Pi will be renamed to **k8smaster**
+5. The Raspberry Pi is rebooted.
 
 #### Step 3: Docker Installation
 
-No user action required.
-
-1. Docker is installed and the Raspberry Pi will reboot.
+1. Reconnect to the Raspberry Pi as `ssh pi@k8smaster.local`
+2. Docker is installed
+3. The Raspberry Pi is rebooted.
 
 #### Step 4: Kubernetes Installation
 
@@ -144,15 +143,13 @@ No user action required.
 
 #### Step 5: Kubernetes Master Configuraton
 
-No user action required.
-
 1. [Flannel CNI](https://kubernetes.io/docs/concepts/cluster-administration/networking/#the-kubernetes-network-model) (Cluster Networking) installation
 2. [MetalLB LoadBalance](https://metallb.universe.tf/) installation
-3. Kubernetes Dashboard installation and configuration for admin access
+3. [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) installation and configured for [admin access](https://medium.com/@kanrangsan/creating-admin-user-to-access-kubernetes-dashboard-723d6c9764e4)
 
-#### Step 6: Record Kubernetes Node Join Token
+#### Step 6: Kubernetes Node Join Token Created
 
-1. You need to take a note, and save the **kubeadm join 192.168.100.1:6443 --token ... --discovery-token-ca-cert-hash ...** command. This will be displayed on the terminal screen. You will need this information to join the Kubernetes Nodes to the Kubernetes Master.
+1. A Kubernetes Node Join token is created and saved to _~/k8s-join-token_ on the Kubernetes Master. You will need this token to join new Kubernetes Nodes to the Master.
 
 ## Kubernetes Node Installation
 
@@ -272,15 +269,7 @@ route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.0.55
 
 ## Kubernetes Dashboard
 
-Acknowledgements:
-
-* [Creating admin user to access Kubernetes dashboard](https://medium.com/@kanrangsan/creating-admin-user-to-access-kubernetes-dashboard-723d6c9764e4)
-
-References:
-
-* [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
-
-#### Step 1: Create Dashboard Access Token
+### Step 1: Create Dashboard Access Token
 
 This assumes you have installed **kubectl** and copied .kube config file to your desktop computer. 
 
@@ -288,7 +277,7 @@ This assumes you have installed **kubectl** and copied .kube config file to your
 kubectl -n kube-system describe secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}')
 ```
 
-#### Step 2: Start the Kubernetes Proxy
+### Step 2: Start the Kubernetes Proxy
 
 On Desktop computer, in a terminal window start the Kubernetes Proxy
 
@@ -296,7 +285,7 @@ On Desktop computer, in a terminal window start the Kubernetes Proxy
 kubectl proxy
 ```
 
-#### Step 3: Browse to the Kubernetes Dashboard
+### Step 3: Browse to the Kubernetes Dashboard
 
 Click the following link to open the Kubernetes Dashboard. Select **Token** authentication, paste in the token you created from **Step 1** and connect.
 
@@ -309,18 +298,10 @@ Click the following link to open the Kubernetes Dashboard. Select **Token** auth
 NFS Server installed on k8snode1.local
 
 1. Set up by Kubernetes Master and k8snode1.local installation.
-2. Further description coming
+2. Provisioned by Kubernetes Master installation script.
+3. The following diagram describes how persistent storage is configured in the cluster.
 
-* [Kubernetes NFS-Client Provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client)
-* [kubernetes-incubator/external-storage](https://github.com/kubernetes-incubator/external-storage/blob/master/nfs-client/deploy/deployment-arm.yaml)
-
-See yaml definitions for more details
-
-* ./kubeset/persistent-volume-claim.yaml
-* ./kubeset/persistent-volume.yaml
-* ./kubeset/nfs-client-deployment-arm.yaml
-
-![](Resources/nfs-server.png)
+    ![](Resources/nfs-server.png)
 
 ## Useful Commands
 
@@ -330,23 +311,29 @@ See yaml definitions for more details
 dhcp-lease-list
 ```
 
-### Regenerate Kubernetes Token
-
-[kubeadm token](https://kubernetes.io/docs/reference/setup-tools/kubeadm/kubeadm-token/)
-
-### Show Kubeadm Token
-
-https://stackoverflow.com/questions/40009831/cant-find-kubeadm-token-after-initializing-master
-
-```bash
-cat /etc/kubernetes/pki/tokens.csv
-```
-
-kubeadm token list
-kubeadm token create <copied token from previous command output>** --print-join-command
-
-## Resetting Kubernetes Master or Node
+### Resetting Kubernetes Master or Node
 
 ````bash
 sudo kubeadm reset && sudo systemctl daemon-reload && sudo systemctl restart kubelet.service
 ````
+
+## References and Acknowledgements
+
+1. Setting [iptables to legacy mode](https://github.com/kubernetes/kubernetes/issues/71305) on Raspbian Buster/Debian 10 for Kubernetes kube-proxy. Configured in installation scripts.
+
+    ```bash
+    sudo update-alternatives --set iptables /usr/sbin/iptables-legacy > /dev/null
+    sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy > /dev/null
+    ```
+2. [Kubernetes Secrets](https://www.tutorialspoint.com/kubernetes/kubernetes_secrets.htm)
+
+### Kubernetes Dashboard
+
+1. [Kubernetes Web UI (Dashboard)](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/)
+2. [Creating admin user to access Kubernetes dashboard](https://medium.com/@kanrangsan/creating-admin-user-to-access-kubernetes-dashboard-723d6c9764e4)
+
+
+### Kubernetes Persistent Storage
+
+1. [Kubernetes NFS-Client Provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client)
+2. [kubernetes-incubator/external-storage](https://github.com/kubernetes-incubator/external-storage/blob/master/nfs-client/deploy/deployment-arm.yaml)

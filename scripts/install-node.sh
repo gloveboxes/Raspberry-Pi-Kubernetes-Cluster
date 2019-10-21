@@ -3,8 +3,8 @@
 STATE=~/.KubeNodeInstallState
 RUNNING=true
 
-sed --in-place '/~\/kube-setup\/scripts\/install-node.sh/d' ~/.bashrc
-echo "~/kube-setup/scripts/install-node.sh" >> ~/.bashrc
+sed --in-place '/~\/Raspberry-Pi-Kubernetes-Cluster-master\/scripts\/install-node.sh/d' ~/.bashrc
+echo "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/install-node.sh" >> ~/.bashrc
 
 echo -e "\n\nThis is a mult-stage installer.\nSome stages require a reboot.\nInstallation will automatically restart.\n\n"
 
@@ -12,6 +12,23 @@ while $RUNNING; do
   case $([ -f $STATE ] && cat $STATE) in
 
     INIT)
+
+        while true; do
+            echo ""
+            read -p "Enable 64 Bit Kernel (Raspberry Pi 3 or better)? ([Y]es, [N]o), or [Q]uit: " kernel64bit
+            case $kernel64bit in
+                [Yy]* ) break;;
+                [Nn]* ) break;;
+                [Qq]* ) exit 1;;
+                * ) echo "Please answer [Y]es, [N]o), or [Q]uit.";;
+            esac
+        done
+
+        if [ $kernel64bit = 'Y' ] || [ $kernel64bit = 'y' ]; then  
+            echo -e "\nEnabling 64 Bit Linux Kernel\n" 
+            echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
+        fi
+
         # Rename your pi
         while :
         do
@@ -133,12 +150,18 @@ while $RUNNING; do
         echo "PREREQUISITES" > $STATE
 
         if [ "$INSTALL_FAN_SHIM" = true ]; then
+            sleep 10 # let system settle
             sudo apt install -y python3-pip
-            git clone https://github.com/pimoroni/fanshim-python && \
-            cd fanshim-python && \
-            sudo ./install.sh && \
-            cd examples && \
-            sudo ./install-service.sh --on-threshold 65 --off-threshold 55 --delay 2
+            cd ~/
+
+            wget https://github.com/pimoroni/fanshim-python/archive/master.zip
+            unzip ~/master.zip
+            rm ~/master.zip
+
+            cd fanshim-python-master
+            sudo ./install.sh
+            cd examples
+            sudo ./install-service.sh --on-threshold 70 --off-threshold 60 --delay 2
         fi
     ;;
 
@@ -160,8 +183,6 @@ while $RUNNING; do
         echo "gpu_mem=16" | sudo tee -a /boot/config.txt
         # disable wifi on the node board as network will be over Ethernet
         echo "dtoverlay=disable-wifi" | sudo tee -a /boot/config.txt
-        # use 64 bit kernel
-        echo "arm_64bit=1" | sudo tee -a /boot/config.txt
 
         # Disk optimisations - move temp to ram.
         # Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. 
@@ -208,6 +229,6 @@ done
 
 
 rm $STATE
-sed --in-place '/~\/kube-setup\/scripts\/install-node.sh/d' ~/.bashrc
+sed --in-place '/~\/Raspberry-Pi-Kubernetes-Cluster-master\/scripts\/install-node.sh/d' ~/.bashrc
 
 echo -e "\nFINISHED and ready for 'sudo kubeadm join'\n"
