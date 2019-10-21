@@ -13,6 +13,19 @@ while $RUNNING; do
 
     INIT)
 
+        # Rename your pi
+        while :
+        do
+            echo -e "\nNumber this Raspberry Pi/Kubernetes Node. The first node should be numbered should be numbered 1"
+            echo -e "as it will also run the NFS Server for Cluster Persistent Storage Services.\n"
+            read -p "Enter an Integer, the node will be named k8snodeN: " NodeNumber
+            if [[ -z "$NodeNumber" || -n ${NodeNumber//[0-9]/} ]]; then
+                echo "Not a number!"
+            else
+                break;
+            fi
+        done
+
         while true; do
             echo ""
             read -p "Enable 64 Bit Kernel (Raspberry Pi 3 or better)? ([Y]es, [N]o): " kernel64bit
@@ -28,22 +41,9 @@ while $RUNNING; do
             echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
         fi
 
-        # Rename your pi
-        while :
-        do
-            echo -e "\nNumber this Raspberry Pi/Kubernetes Node. The first node should be numbered should be numbered 1"
-            echo -e "as it will also run the NFS Server for Cluster Persistent Storage Services.\n"
-            read -p "Enter an Integer, the node will be named k8snodeN: " NodeNumber
-            if [[ -z "$NodeNumber" || -n ${NodeNumber//[0-9]/} ]]; then
-                echo "Not a number!"
-            else
-                break;
-            fi
-        done
-
         echo -e "\nUpdating the Raspberry Pi System\n"
 
-        sudo apt-get update > /dev/null && sudo apt upgrade -y 
+        sudo apt-get update && sudo apt-get upgrade -y 
 
         RPINAME="k8snode${NodeNumber}"
         echo -e "\nNaming this Raspberry Pi/Kubernetes Node ${RPINAME}\n"
