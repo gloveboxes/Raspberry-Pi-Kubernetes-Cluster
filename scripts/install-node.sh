@@ -44,6 +44,12 @@ while $RUNNING; do
         echo -e "\nUpdating the Raspberry Pi System\n"
 
         sudo apt-get update && sudo apt-get upgrade -y 
+        if [ $? -ne 0 ]
+        then
+            echo -e "\nUpdate failed. Retrying in 10 seconds\n"
+            sleep 10
+            continue
+        fi
 
         RPINAME="k8snode${NodeNumber}"
         echo -e "\nNaming this Raspberry Pi/Kubernetes Node ${RPINAME}\n"
