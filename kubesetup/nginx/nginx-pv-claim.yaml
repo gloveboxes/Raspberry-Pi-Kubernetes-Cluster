@@ -3,7 +3,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: glovebox-claim
+  name: nginx-claim
 spec:
   storageClassName: managed-nfs-storage
   accessModes:
@@ -11,3 +11,6 @@ spec:
   resources:
     requests:
       storage: 3Gi
+  selector: 
+    matchLabels: 
+      storage-tier: nfs

@@ -336,3 +336,8 @@ sudo kubeadm reset && sudo systemctl daemon-reload && sudo systemctl restart kub
 
 1. [Kubernetes NFS-Client Provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client)
 2. [kubernetes-incubator/external-storage](https://github.com/kubernetes-incubator/external-storage/blob/master/nfs-client/deploy/deployment-arm.yaml)
+
+### NFS Persistent Storage
+
+# https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client
+# https://github.com/kubernetes-incubator/external-storage/blob/master/nfs-client/deploy/deployment-arm.yaml

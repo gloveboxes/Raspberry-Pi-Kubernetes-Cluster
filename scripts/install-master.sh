@@ -14,24 +14,19 @@ while $RUNNING; do
     INIT)
 
         while true; do
-            echo ""
-            read -p "Enable 64 Bit Kernel (Raspberry Pi 3 or better)? ([Y]es, [N]o), or [Q]uit: " kernel64bit
-            case $kernel64bit in
-                [Yy]* ) break;;
-                [Nn]* ) break;;
-                [Qq]* ) exit 1;;
-                * ) echo "Please answer [Y]es, [N]o), or [Q]uit.";;
-            esac
+          echo ""
+          read -p "Enable 64 Bit Kernel (Raspberry Pi 3 or better)? ([Y]es, [N]o): " kernel64bit
+          case $kernel64bit in
+            [Yy]* ) break;;
+            [Nn]* ) break;;
+            * ) echo "Please answer [Y]es, or [N]o).";;
+          esac
         done
 
         if [ $kernel64bit = 'Y' ] || [ $kernel64bit = 'y' ]; then  
-            echo -e "\nEnabling 64 Bit Linux Kernel\n" 
-            echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
+          echo -e "\nEnabling 64 Bit Linux Kernel\n" 
+          echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
         fi
-
-        echo -e "\nUpdating and installing utilities\n"
-
-        sudo apt-get update > /dev/null && sudo apt-get install -y -qq bmon > /dev/null
 
         # Network set up, set up packet passthrough
         ./setup-networking.sh
@@ -69,10 +64,19 @@ while $RUNNING; do
         # enable cgroups for Kubernetes
         sudo sed -i 's/$/ ipv6.disable=1 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1/' /boot/cmdline.txt
 
-        echo -e "\nUpdating Operating System\n"
         # perform system upgrade
-        sudo apt upgrade -y
-
+        while : ;
+        do
+          echo -e "\nUpdating Operating System\n"
+          sudo apt-get update > /dev/null && sudo apt-get install -y -qq bmon > /dev/null && sudo apt upgrade -y
+          if [ $? -eq 0 ]
+          then
+            break
+          else
+            echo -e "\nSystem Update Failed. Check Internet connection. Retrying in 20 seconds."
+            sleep 20
+          fi        
+        done
         echo "NFS" > $STATE
 
         echo -e "\nRenamed your Raspberry Pi Kubernetes Master to k8smaster.local\n"
@@ -84,26 +88,36 @@ while $RUNNING; do
     ;;
 
     NFS)
-        echo -e "\nInstalling NFS Server on k8snode1 for use as Cluster Storage Class and Persistent Storage\n"
+        
         # https://sysadmins.co.za/setup-a-nfs-server-and-client-on-the-raspberry-pi/
         # https://vitux.com/install-nfs-server-and-client-on-ubuntu/
         
-        sudo apt-get install -y nfs-kernel-server > /dev/null
-        if [ $? -ne 0 ]
-        then
-          sleep 10
-          continue
-        fi
+        while : ;
+        do
+          echo -e "\nInstalling NFS Server on k8snode1 for use as Cluster Storage Class and Persistent Storage\n"
+          sudo apt-get install -y nfs-kernel-server
+          if [ $? -eq 0 ]
+          then
+            break
+          else
+            echo -e "\nnfs-kernel-server installation failed. Check Internet connection. Retrying in 20 seconds."
+            sleep 20
+          fi
+        done
 
         # Make the nfs directory to be shared
         mkdir -p ~/nfsshare
-        sudo chown nobody:nogroup /home/pi/nfsshare
-        # ‘777’ permission, everyone can read, write and execute the file
-        sudo chmod 777 /home/pi/nfsshare
-        echo "Hello, World!" > /home/pi/nfsshare/index.html
+        mkdir -p ~/nfsshare/nginx
+
+        # Change ownership recurse
+        sudo chown -R nobody:nogroup /home/pi/nfsshare
+        # ‘777’ permission, everyone can read, write and execute the file, recurse
+        sudo chmod -R 777 /home/pi/nfsshare
+        echo "Hello, World!" > /home/pi/nfsshare/nginx/index.html
 
         # available to * (all) IP address on the cluster
         echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports  > /dev/null
+        echo "/home/pi/nfsshare/nginx *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports  > /dev/null
  
         # reload exports
         sudo exportfs -ra
@@ -123,49 +137,59 @@ while $RUNNING; do
         sudo docker --version
         if [ $? -ne 0 ]
         then
-          curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
+          while : ;
+          do
+            curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
+            if [ $? -eq 0 ]
+            then
+              break
+            else
+              echo -e "\nDocker installation failed. Check internet connection. Retrying in 20 seconds.\n"
+              sleep 20
+            fi
+          done
         fi
 
         sudo docker --version
-        if [ $? -eq 0 ]
-        then
-          echo "KUBERNETES" > $STATE
-          echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
-          sudo reboot   
-        else
-          echo "Installation of Docker failed. Check internet connection." >&2
-          echo -e "\nRetrying Docker installation in 20 seconds\n"
-          sleep 20
-        fi
+
+        echo "KUBERNETES" > $STATE
+        echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
+        sudo reboot
      
     ;;
 
     KUBERNETES)
-        echo -e "\nInstalling Kubernetes\n"
-
-        docker --version
-
-        if [ $? -ne 0 ]
-        then
-          echo "DOCKER" > $STATE
-          echo -e "\nDocker not found. Retrying Docker installation.\n"
-          sleep 10
-          continue
-        fi
 
         # let the system settle before kicking off kube install
         sleep 10
 
         # Install Kubernetes
-        curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+        while : ;
+        do
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          if [ $? -eq 0 ]
+          then
+            break
+          else
+            echo -e "\nGet Kuberetes key failed. Check internet connection. Retrying in 20 seconds.\n"
+            sleep 20
+          fi
+        done
+
         echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list > /dev/null
         
-        sudo apt-get update -qq > /dev/null && sudo apt-get install -qq -y kubeadm > /dev/null
-        if [ $? -ne 0 ]
-        then
-          sleep 10
-          continue
-        fi
+        while : ;
+        do
+          echo -e "\nInstalling Kubernetes\n"
+          sudo apt-get update -qq > /dev/null && sudo apt-get install -qq -y kubeadm > /dev/null
+          if [ $? -eq 0 ]
+          then
+            break
+          else
+            echo -e "\nKubernetes installation failed. Check internet connection. Retrying in 20 seconds.\n"
+            sleep 20
+          fi
+        done
 
         # Preload the Kubernetes images
         echo -e "\nPulling Kubernetes Images - this will take a few minutes depending on network speed.\n"
@@ -222,9 +246,12 @@ while $RUNNING; do
       ## Enable Persistent Storage
       kubectl apply -f ./persistent-storage/nfs-client-deployment-arm.yaml
       kubectl apply -f ./persistent-storage/storage-class.yaml
-      kubectl apply -f ./persistent-storage/persistent-volume.yaml
-      kubectl apply -f ./persistent-storage/persistent-volume-claim.yaml
-      kubectl apply -f ./persistent-storage/nginx-test-pod.yaml
+
+      ## Install nginx
+
+      kubectl apply -f ./nginx/nginx-pv.yaml
+      kubectl apply -f ./nginx/nginx-pv-claim.yaml
+      kubectl apply -f ./nginx/nginx-deployment.yaml
 
 
       echo "BREAK" > $STATE
