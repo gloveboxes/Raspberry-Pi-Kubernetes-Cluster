@@ -43,13 +43,17 @@ while $RUNNING; do
 
         echo -e "\nUpdating the Raspberry Pi System\n"
 
-        sudo apt-get update && sudo apt-get upgrade -y 
-        if [ $? -ne 0 ]
-        then
-            echo -e "\nUpdate failed. Retrying in 10 seconds\n"
-            sleep 10
-            continue
-        fi
+        while : ;
+        do
+            sudo apt-get update && sudo apt-get upgrade -y 
+            if [ $? -eq 0 ]
+            then
+                break;
+            else
+                echo -e "\nUpdate failed. Retrying system update in 10 seconds\n"
+                sleep 10
+            fi
+        done
 
         RPINAME="k8snode${NodeNumber}"
         echo -e "\nNaming this Raspberry Pi/Kubernetes Node ${RPINAME}\n"
@@ -173,6 +177,7 @@ while $RUNNING; do
 
             if [ $? -ne 0 ]
             then
+                echo "\nFanSHIM installation failed. Retrying in 10 Seconds\n"
                 sleep 10
                 continue
             fi
@@ -184,7 +189,15 @@ while $RUNNING; do
             rm ~/master.zip
 
             cd fanshim-python-master
+
             sudo ./install.sh
+            if [ $? -ne 0 ]
+            then
+                echo "\nFanSHIM installation failed. Retrying in 10 Seconds\n"
+                sleep 10
+                continue
+            fi
+
             cd examples
             sudo ./install-service.sh --on-threshold 70 --off-threshold 55 --delay 2
         fi
@@ -252,13 +265,6 @@ while $RUNNING; do
     KUBERNETES)
 
         docker --version
-
-        if [ $? -ne 0 ]
-        then
-          echo "DOCKER" > $STATE
-          echo -e "\nDocker not found. Retrying Docker installation.\n"
-          continue
-        fi
         
         echo -e "\nInstalling Kubernetes\n"
         # Install Kubernetes
@@ -268,6 +274,7 @@ while $RUNNING; do
 
         if [ $? -ne 0 ]
         then
+            echo -e "\nKubernetes Installation failed. Retrying in 10 Seconds.\n"
           sleep 10
           continue
         fi
