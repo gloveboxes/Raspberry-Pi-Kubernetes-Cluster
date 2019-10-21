@@ -89,6 +89,11 @@ while $RUNNING; do
         # https://vitux.com/install-nfs-server-and-client-on-ubuntu/
         
         sudo apt-get install -y nfs-kernel-server > /dev/null
+        if [ $? -ne 0 ]
+        then
+          sleep 10
+          continue
+        fi
 
         # Make the nfs directory to be shared
         mkdir -p ~/nfsshare
@@ -144,6 +149,7 @@ while $RUNNING; do
         then
           echo "DOCKER" > $STATE
           echo -e "\nDocker not found. Retrying Docker installation.\n"
+          sleep 10
           continue
         fi
 
@@ -153,8 +159,13 @@ while $RUNNING; do
         # Install Kubernetes
         curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
         echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list > /dev/null
-        sudo apt-get update -qq > /dev/null
-        sudo apt-get install -qq -y kubeadm > /dev/null
+        
+        sudo apt-get update -qq > /dev/null && sudo apt-get install -qq -y kubeadm > /dev/null
+        if [ $? -ne 0 ]
+        then
+          sleep 10
+          continue
+        fi
 
         # Preload the Kubernetes images
         echo -e "\nPulling Kubernetes Images - this will take a few minutes depending on network speed.\n"

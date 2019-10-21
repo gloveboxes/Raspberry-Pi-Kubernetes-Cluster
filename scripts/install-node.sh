@@ -70,6 +70,11 @@ while $RUNNING; do
         # https://vitux.com/install-nfs-server-and-client-on-ubuntu/
         
         sudo apt-get install -y nfs-kernel-server > /dev/null
+        if [ $? -ne 0 ]
+        then
+          sleep 10
+          continue
+        fi
 
         # Make the nfs directory to be shared
         mkdir -p ~/nfsshare
@@ -159,6 +164,13 @@ while $RUNNING; do
         if [ "$INSTALL_FAN_SHIM" = true ]; then
             sleep 10 # let system settle
             sudo apt install -y python3-pip
+
+            if [ $? -ne 0 ]
+            then
+                sleep 10
+                continue
+            fi
+
             cd ~/
 
             wget https://github.com/pimoroni/fanshim-python/archive/master.zip
@@ -210,7 +222,12 @@ while $RUNNING; do
         sudo docker --version
         if [ $? -ne 0 ]
         then
-          curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
+            curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
+            if [ $? -ne 0 ]
+            then
+                sleep 10
+                continue
+            fi
         fi
 
         sudo docker --version
@@ -241,8 +258,13 @@ while $RUNNING; do
         # Install Kubernetes
         curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
         echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-        sudo apt-get update -q
-        sudo apt-get install -qy kubeadm
+        sudo apt-get update -q && sudo apt-get install -qy kubeadm
+
+        if [ $? -ne 0 ]
+        then
+          sleep 10
+          continue
+        fi
 
         echo "BREAK" > $STATE
     ;;
