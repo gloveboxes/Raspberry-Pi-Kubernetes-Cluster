@@ -45,7 +45,7 @@ The following list assumes a Kubernetes cluster built with a minimum of three Ra
 |-----|----|
 | 1 x Raspberry Pi for Kubernetes Master.<br/><ul><li>I used a Raspberry 3B Plus, I had one spare, it has dual band WiFi, and Gigabit Ethernet over USB 2.0 port (300Mbps), fast enough.</li></ul><br/>2 x Raspberry Pis for Kubernetes Nodes<ul><li>I used two Raspberry Pi 4 4GBs.</li><li>Raspberry Pi 4s make great Kubernetes Nodes, but Raspberry Pi 3s and 2s work very well too.</li></ul> | ![rpi4](Resources/rpi4.png)
 |3 x SD Cards, one for each Raspberry Pi in the cluster.<ul><li>Minimum 16GB, recommend 32GB</li><li>Can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.</li><li>Unsure what SD Card to buy, then check out these [SD Card recommendations](https://www.androidcentral.com/best-sd-cards-raspberry-pi-4)</li></ul> | ![](Resources/sd-cards.png) |
-|3 x Power supplies, one for each Raspberry Pi.|![](resources/power-supply.jpg)|
+|3 x Power supplies, one for each Raspberry Pi.|![](Resources/power-supply.jpg)|
 |1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![network switch](Resources/switch.png) |
 |3 x Ethernet Patch Cables (I used 25cm patch cables to reduce clutter.) | ![patch cables](Resources/patch-cable.jpg)|
 |Optional: 1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![raspberry pi rack](Resources/rack.jpg) |
@@ -233,7 +233,7 @@ sudo kubeadm join 192.168.100.1:6443 --token ... --discovery-token-ca-cert-hash 
 
 Most **Network Routers** allow you to configure a static router. The following is an example configured on a Linksys Router.
 
-![](resources/static-route-linksys.png)
+![](Resources/static-route-linksys.png)
 
 ### Alternative: Set Local Static Route to Cluster Subnet (192.168.100.0/24)
 
