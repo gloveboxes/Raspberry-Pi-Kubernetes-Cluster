@@ -13,22 +13,41 @@ spec:
   selector:
     app: led-controller
 ---
-apiVersion: v1
-kind: Pod
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   name: led-controller
   labels:
-    app: led-controller
+   app: led-controller
 spec:
-  containers:
-  - name: led-controller
-    image: glovebox/led-python:0.5.1-arm32v7
-    ports:
-    - containerPort: 80
-    securityContext:
-      privileged: true
-  nodeSelector:
-    kubernetes.io/hostname: k8snode2 
-    # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-    # kubectl label nodes k8snode2 name=k8snode2  
-    # kubectl label nodes k8snode1 name=k8snode1
+  replicas: 2
+  selector:
+    matchLabels:
+      app: led-controller
+  template:
+    metadata:
+      labels:
+        app: led-controller
+    spec:
+      # ensure of pods on different nodes
+      # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+      affinity:
+          podAntiAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                - key: led-controller
+                  operator: In
+                  values:
+                  - led-controller
+              topologyKey: "kubernetes.io/hostname"
+    spec:
+      containers:
+      - name: led-controller
+        image: glovebox/led-controller:arm32v7-0.5
+        imagePullPolicy: Always
+        securityContext:
+          privileged: true
+        ports:
+        - containerPort: 80
+          protocol: TCP
