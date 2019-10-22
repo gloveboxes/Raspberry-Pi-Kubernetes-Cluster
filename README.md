@@ -11,9 +11,9 @@
 
 ## Building a Raspberry Pi Kubernetes Cluster
 
-Building a Kubernetes _Intelligent Edge Device_ on Raspberry Pi is fun, an awesome way to impress your friends, and a great learning experience, skills you can use for edge. Skills you develop on the _edge_ can be used in the _cloud_ with [Azure Kubernetes Service](https://azure.microsoft.com/en-au/services/kubernetes-service/?WT.mc_id=devto-blog-dglover).
+Building a Kubernetes _Intelligent Edge Device_ on Raspberry Pi is fun, an awesome way to impress your friends, and a great learning experience, skills you develop on the _edge_ can be used in the _cloud_ with [Azure Kubernetes Service](https://azure.microsoft.com/en-au/services/kubernetes-service/?WT.mc_id=devto-blog-dglover).
 
-The Kubernetes cluster is built with Raspberry Pi 4 nodes and is very capable. I have tested with Python and C# [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover), [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) Machine Learning models, and [NGINX](https://www.nginx.com/) Web Server.
+The Kubernetes cluster is built with Raspberry Pi 4 nodes and is very capable. It has been tested with Python and C# [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover), [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) Machine Learning models, and [NGINX](https://www.nginx.com/) Web Server.
 
 This project forms the basis for a four-part _Intelligence on the Edge_ series. The followup topics will include:
 
