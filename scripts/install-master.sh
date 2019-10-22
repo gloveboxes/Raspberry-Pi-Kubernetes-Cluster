@@ -208,11 +208,6 @@ while $RUNNING; do
         sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
         kubeadm token create --print-join-command > ~/k8s-join-node.sh
-        cat ~/k8s-join-node.sh
-
-        echo -e "The Kubernetes Node join token is saved to ~/k8s-join-token for convenience.\n"
-        echo -e "This may represent a security risk.\n"
-        echo -e "Delete if not comfortable with this."
 
         echo "KUBESETUP" > $STATE
 
@@ -273,12 +268,6 @@ while $RUNNING; do
     ;;
   esac
 done
-
-cat ~/k8s-join-node.sh
-
-echo -e "The Kubernetes Node join token is saved to ~/k8s-join-token for convenience.\n"
-echo -e "This may represent a security risk.\n"
-echo -e "Delete if not comfortable with this."
 
 cd ~/
 sed --in-place '/~\/Raspberry-Pi-Kubernetes-Cluster-master\/scripts\/install-master.sh/d' ~/.bashrc

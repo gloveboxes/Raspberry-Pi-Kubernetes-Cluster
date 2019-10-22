@@ -1,8 +1,8 @@
 # Part 1: Raspberry Pi Kubernetes Cluster - Intelligence on the Edge
 
-![Raspberry Pi Kubernetes Cluster](Resources/rpi-kube-cluster.jpg)
+![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/rpi-kube-cluster.jpg)
 
-|Author|[Dave Glover, Microsoft Australia](https://developer.microsoft.com/en-us/advocates/dave-glover)|
+|Author|[Dave Glover, Microsoft Australia](https://developer.microsoft.com/en-us/advocates/dave-glover?WT.mc_id=github-blog-dglover)|
 |----|---|
 |Platform| Raspberry Pi, Raspbian Buster, Kernel 4.19|
 |Date|October 2019|
@@ -13,19 +13,21 @@
 
 Building a Kubernetes Cluster on Raspberry Pi is a fun, awesome way to impress your tech friends and a great learning experience.
 
-There were lots of gotchas on the way to making this work. The project is heavily documented, as are the installation scripts.
+There were lots of gotchas on the way to making this all work. The project is heavily documented, as are the installation scripts.
 
-The Kubernetes cluster is very capable and near unstoppable. I have tested with Python and C# [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover), [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) Machine Learning models, and [NGINX](https://www.nginx.com/) Web Server.
+The Kubernetes cluster is built with Raspberry Pi 4 nodes, it is very capable, and near unstoppable. I have tested with Python and C# [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover), [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) Machine Learning models, and [NGINX](https://www.nginx.com/) Web Server.
 
 This project is the basis for a four-part _Intelligence on the Edge_ series. The followup topics will include:
 
 * Python and .NET [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover), and interacting with hardware.
 
-* Deploying and managing _Intelligence on the Edge_ with [Azure IoT Edge on Kubernetes](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-kubernetes).
+* Deploying and managing _Intelligence on the Edge_ with [Azure IoT Edge on Kubernetes](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-kubernetes?WT.mc_id=github-blog-dglover).
 
 * Getting started with the [dapr.io](https://dapr.io?WT.mc_id=github-blog-dglover), an event-driven, portable runtime for building microservices on cloud and edge.
 
 ## System Configuration
+
+![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/network.png)
 
 The Kubernetes Master and Node installations are fully scripted, and along with Kubernetes itself, the following services are installed and configured:
 
@@ -42,14 +44,14 @@ The following list assumes a Kubernetes cluster built with a minimum of three Ra
 
 |Items||
 |-----|----|
-| 1 x Raspberry Pi for Kubernetes Master.<br/><ul><li>I used a Raspberry 3B Plus, I had one spare, it has dual-band WiFi, and Gigabit Ethernet over USB 2.0 port (300Mbps), fast enough.</li></ul><br/>2 x Raspberry Pis for Kubernetes Nodes<ul><li>I used two Raspberry Pi 4 4GBs.</li><li>Raspberry Pi 4s make great Kubernetes Nodes, but Raspberry Pi 3s and 2s work very well too.</li></ul> | ![rpi4](Resources/rpi4.png)
-|3 x SD Cards, one for each Raspberry Pi in the cluster.<ul><li>Minimum 16GB, recommend 32GB</li><li>Can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.</li><li>Unsure what SD Card to buy, then check out these [SD Card recommendations](https://www.androidcentral.com/best-sd-cards-raspberry-pi-4)</li></ul> | ![](Resources/sd-cards.png) |
-|3 x Power supplies, one for each Raspberry Pi.|![](Resources/power-supply.jpg)|
-|1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![network switch](Resources/switch.png) |
-|3 x Ethernet Patch Cables (I used 25cm patch cables to reduce clutter.) | ![patch cables](Resources/patch-cable.jpg)|
-|Optional: 1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![raspberry pi rack](Resources/rack.jpg) |
-|Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips. The BlinkT LED Strip can be a great way to visualize pod activity. | ![blinlt](Resources/blinkt.jpg)|
-|Optional: 2 x USB3 SSDs for Kubernetes Nodes, or similar, ie something small. Installation script sets up Raspberry Pi Boot from USB3 SSD. Note, these are [SSD Enclosures](https://www.amazon.com.au/Wavlink-10Gbps-Enclosure-Aluminum-Include/dp/B07D54JH16/ref=sr_1_8?keywords=usb+3+ssd&qid=1571218898&s=electronics&sr=1-8), you need the M.2 drives as well.| ![usb3 ssd](Resources/usb-ssd.jpg) |
+| 1 x Raspberry Pi for Kubernetes Master.<br/><ul><li>I used a Raspberry 3B Plus, I had one spare, it has dual-band WiFi, and Gigabit Ethernet over USB 2.0 port (300Mbps), fast enough.</li></ul><br/>2 x Raspberry Pis for Kubernetes Nodes<ul><li>I used two Raspberry Pi 4 4GBs.</li><li>Raspberry Pi 4s make great Kubernetes Nodes, but Raspberry Pi 3s and 2s work very well too.</li></ul> | ![rpi4](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/rpi4.png)
+|3 x SD Cards, one for each Raspberry Pi in the cluster.<ul><li>Minimum 16GB, recommend 32GB. The new U3 Series from SanDisk are very fast!</li><li>Can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.</li><li>Unsure what SD Card to buy, then check out these [SD Card recommendations](https://www.androidcentral.com/best-sd-cards-raspberry-pi-4)</li></ul> | ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/sd-cards.png) |
+|3 x Power supplies, one for each Raspberry Pi.|![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/power-supply.jpg)|
+|1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![network switch](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/switch.png) |
+|3 x Ethernet Patch Cables (I used 25cm patch cables to reduce clutter.) | ![patch cables](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/patch-cable.jpg)|
+|Optional: 1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![raspberry pi rack](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/rack.jpg) |
+|Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips. The BlinkT LED Strip can be a great way to visualize pod activity. | ![blinlt](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/blinkt.jpg)|
+|Optional: 2 x USB3 SSDs for Kubernetes Nodes, or similar, ie something small. Installation script sets up Raspberry Pi Boot from USB3 SSD. Note, these are [SSD Enclosures](https://www.amazon.com.au/Wavlink-10Gbps-Enclosure-Aluminum-Include/dp/B07D54JH16/ref=sr_1_8?keywords=usb+3+ssd&qid=1571218898&s=electronics&sr=1-8), you need the M.2 drives as well.| ![usb3 ssd](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/usb-ssd.jpg) |
 
 ## Flashing Raspbian Buster Lite Boot SD Cards
 
@@ -80,8 +82,6 @@ There are plenty of guides for flashing Raspbian Lite SD Cards. Here are a coupl
     }
     ```
 
-
-
 ## Kubernetes Network Topology
 
 The Kubernetes Master is also responsible for:
@@ -101,7 +101,7 @@ The following naming conventions are enforced in the installation scripts:
 
 ## Kubernetes Master Installation
 
-![](Resources/k8s-master.png)
+![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/k8s-master.png)
 
 ### Installation Process
 
@@ -112,7 +112,7 @@ Ensure the Raspberry Pi to be configured as a **Kubernetes Master** is:
 
 #### Step 1: Connect to the Raspberry Pi to be Configured as the Kubernetes Master
 
-1. From your desktop computer, start an SSH Session to the Raspberry Pi. `ssh pi@raspberrypi.local`.
+1. From your desktop computer, start an SSH Session to the Raspberry Pi, `ssh pi@raspberrypi.local`, the default password is **raspberry**.
 
 #### Step 2: Start the Installation Process
 
@@ -154,7 +154,7 @@ bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubern
 
 Ensure the k8smaster and the Raspberry Pi that will be the first Kubernetes node are **powered on** and connected to the **Network Switch**. The DHCP Server running on the k8smaster will allocate an IP Address to the Raspberry Pi that will become the Kubernetes node.
 
-![](Resources/k8s-first-node.png)
+![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/k8s-first-node.png)
 
 ### Kubernetes Node Installation Process
 
@@ -162,8 +162,8 @@ Repeat for each Raspberry Pi that you intend to be Kubernetes Nodes.
 
 #### Step 1: Connect to the Raspberry Pi to be Configured as a Node
 
-1. From your desktop computer, start an SSH Session to the k8smaster. `ssh pi@k8smaster.local`.
-2. From the SSH session you just started, start an SSH session to Raspberry Pi to be configured as a Kubernetes Node. `ssh pi@raspberry.local`
+1. From your desktop computer, start an SSH Session to the k8smaster `ssh pi@k8smaster.local`
+2. From the SSH session you just started, start an SSH session to the Raspberry Pi to be configured as a Kubernetes Node. `ssh pi@raspberry.local`, the default password is **raspberry**.
 
 #### Step 2: Start the Installation Process
 
@@ -225,7 +225,7 @@ bash -c "sudo $(ssh k8smaster.local 'cat ~/k8s-join-node.sh')"
 
 Most **Network Routers** allow you to configure a static router. The following is an example configured on a Linksys Router.
 
-![](Resources/static-route-linksys.png)
+![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/static-route-linksys.png)
 
 ### Alternative: Set Local Static Route to Cluster Subnet (192.168.100.0/24)
 
@@ -294,7 +294,7 @@ NFS Server installed on k8smaster.local
 2. Installed and provisioned by Kubernetes Master installation script.
 3. The following diagram describes how persistent storage is configured in the cluster.
 
-    ![persistent storage](Resources/nfs-server.png)
+    ![persistent storage](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/nfs-server.png)
 
 ## Useful Commands
 
