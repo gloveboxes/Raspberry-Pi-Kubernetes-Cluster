@@ -163,7 +163,7 @@ while $RUNNING; do
     KUBERNETES)
 
         # let the system settle before kicking off kube install
-        sleep 10
+        sleep 4
 
         # Install Kubernetes
         while : ;
@@ -207,8 +207,8 @@ while $RUNNING; do
         sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
         sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-        kubeadm token create --print-join-command > ~/k8s-join-token
-        cat ~/k8s-join-token
+        echo kubeadm token create --print-join-command) > ~/k8s-join-node.sh
+        cat ~/k8s-join-node.sh
 
         echo -e "The Kubernetes Node join token is saved to ~/k8s-join-token for convenience.\n"
         echo -e "This may represent a security risk.\n"
@@ -242,6 +242,10 @@ while $RUNNING; do
       kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta4/aio/deploy/recommended.yaml
       kubectl apply -f ./dashboard/dashboard-admin-user.yml
       kubectl apply -f ./dashboard/dashboard-admin-role-binding.yml
+      
+      ## Simplifies getting Kubernetes Dashboard Token
+      cp ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/get-dashboard-token.sh ~/
+      sudo chmod +x ~/get-dashboard-token.sh
 
       echo -e "\nInstalling Persistent Storage Support\n"
 
@@ -270,7 +274,7 @@ while $RUNNING; do
   esac
 done
 
-cat ~/k8s-join-token
+cat ~/k8s-join-node.sh
 
 echo -e "The Kubernetes Node join token is saved to ~/k8s-join-token for convenience.\n"
 echo -e "This may represent a security risk.\n"

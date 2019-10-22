@@ -59,13 +59,7 @@ while $RUNNING; do
         echo -e "\nNaming this Raspberry Pi/Kubernetes Node ${RPINAME}\n"
 
         echo "SSD" > $STATE
-        # if [ $NodeNumber == 1 ]; then 
-        #     echo "NFS" > $STATE
-        # else
-        #     echo "SSD" > $STATE
-        # fi
 
-        # not 100% necessary but it is safer
         echo -e "\nThe system will reboot. Log back in, remember to use new system name.\nssh pi@${RPINAME}.local\nSet up will automatically continue.\n"
         
         sudo raspi-config nonint do_hostname $RPINAME
@@ -73,41 +67,7 @@ while $RUNNING; do
         sudo reboot
         
     ;;
-
-    NFS)
-        echo -e "\nInstalling NFS Server on k8snode1 for use as Cluster Storage Class and Persistent Storage\n"
-        # https://sysadmins.co.za/setup-a-nfs-server-and-client-on-the-raspberry-pi/
-        # https://vitux.com/install-nfs-server-and-client-on-ubuntu/
-        
-        sudo apt-get install -y nfs-kernel-server > /dev/null
-        if [ $? -ne 0 ]
-        then
-          sleep 10
-          continue
-        fi
-
-        # Make the nfs directory to be shared
-        mkdir -p ~/nfsshare
-        sudo chown nobody:nogroup /home/pi/nfsshare
-        # ‘777’ permission, everyone can read, write and execute the file
-        sudo chmod 777 /home/pi/nfsshare
-        echo "Hello, World!" > /home/pi/nfsshare/index.html
-
-        # available to * (all) IP address on the cluster
-        echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports  > /dev/null
- 
-        # reload exports
-        sudo exportfs -ra
-
-        # Restart the NFS Server
-        sudo systemctl restart nfs-kernel-server
-
-        # show what's being shared
-        showmount -e localhost
-
-        echo "SSD" > $STATE
-    ;;
-
+   
     SSD)
         BOOT_USB3=false
         while true; do
@@ -121,7 +81,6 @@ while $RUNNING; do
             esac
         done
 
-        # echo "UPDATE" > $STATE  - Update happens in INIT now - so skip UPDATE
         echo "FANSHIM" > $STATE
 
         if [ "$BOOT_USB3" = true ]; then
@@ -132,30 +91,12 @@ while $RUNNING; do
             sudo mount /dev/sda1 /media/usbdrive
             sudo rsync -avx / /media/usbdrive
             sudo sed -i '$s/$/ root=\/dev\/sda1 rootfstype=ext4 rootwait/' /boot/cmdline.txt
-            echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue.\n"
+            
+            echo -e "\nThe system will reboot. Log back in as pi@$(hostname).local.\nThe set up will continue automatically.\n"
+  
             sudo reboot
         fi
     ;;
-
-    UPDATE)
-        OS_UPDATE=false
-        while true; do
-            read -p "Do you wish to update the Raspberry Pi Operating System (Recommended) [yes(y), no(n), or quit(q)] ?" yn
-            case $yn in
-                [Yy]* ) OS_UPDATE=true; break;;
-                [Qq]* ) RUNNING=false; exit 1;;
-                [Nn]* ) break;;
-                * ) echo "Please answer yes(y), no(n), or quit(q).";;
-            esac
-        done
-
-        echo "FANSHIM" > $STATE
-        if [ "$OS_UPDATE" = true ]; then
-            sudo apt update && sudo apt upgrade -y 
-            echo -e "\nThe system will reboot. Log back in, remember to use new system name. Set up will automatically continue.\n"
-            sudo reboot
-        fi
-    ;;    
 
     FANSHIM)
         INSTALL_FAN_SHIM=false
@@ -239,30 +180,28 @@ while $RUNNING; do
 
     DOCKER)
         echo -e "\nInstalling Docker\n"
-        sleep 4
         # Install Docker
         sudo docker --version
         if [ $? -ne 0 ]
         then
+          while : ;
+          do
             curl -sSL get.docker.com | sh && sudo usermod $USER -aG docker
-            if [ $? -ne 0 ]
+            if [ $? -eq 0 ]
             then
-                sleep 10
-                continue
+              break
+            else
+              echo -e "\nDocker installation failed. Check internet connection. Retrying in 20 seconds.\n"
+              sleep 20
             fi
+          done
         fi
 
         sudo docker --version
-        if [ $? -eq 0 ]
-        then
-          echo "KUBERNETES" > $STATE
-          echo -e "\nThe system will reboot. Log back in as pi@k8smaster.local.\nSet up will automatically continue.\n"
-          sudo reboot   
-        else
-          echo "Installation of Docker failed. Check internet connection." >&2
-          echo -e "\nRetrying Docker installation in 20 seconds\n"
-          sleep 20
-        fi     
+
+        echo "KUBERNETES" > $STATE
+        echo -e "\nThe system will reboot. Log back in as pi@$(hostname).local.\nThe set up will continue automatically.\n"
+        sudo reboot   
     ;;
 
     KUBERNETES)
@@ -271,16 +210,51 @@ while $RUNNING; do
         
         echo -e "\nInstalling Kubernetes\n"
         # Install Kubernetes
-        curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-        echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
-        sudo apt-get update -q && sudo apt-get install -qy kubeadm
+        while : ;
+        do
+          curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+          if [ $? -eq 0 ]
+          then
+            break
+          else
+            echo -e "\nGet Kuberetes key failed. Check internet connection. Retrying in 20 seconds.\n"
+            sleep 20
+          fi
+        done
 
-        if [ $? -ne 0 ]
-        then
-            echo -e "\nKubernetes Installation failed. Retrying in 10 Seconds.\n"
-          sleep 10
-          continue
-        fi
+        echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+        while : ;
+        do
+          echo -e "\nInstalling Kubernetes\n"
+          sudo apt-get update -qq && sudo apt-get install -qq -y kubeadm
+          if [ $? -eq 0 ]
+          then
+            break
+          else
+            echo -e "\nKubernetes installation failed. Check internet connection. Retrying in 20 seconds.\n"
+            sleep 20
+          fi
+        done
+
+        echo "JOINNODE" > $STATE
+    ;;
+
+    JOINNODE)
+
+        echo -e "\nJoining this Kubernetes Node to the Kubernetes Master."
+        echo -e "You will be prompted to trust k8smaster.local, type 'yes', then type the password 'raspberry'\n"
+
+        while : ;
+        do
+            bash -c "sudo $(ssh k8smaster.local 'cat ~/k8s-join-node.sh')"
+            if [ $? -eq 0 ]
+            then
+                break
+            else
+                echo -e "\nKubernetes join failed. Try again.\n"
+            fi
+        done
 
         echo "BREAK" > $STATE
     ;;
