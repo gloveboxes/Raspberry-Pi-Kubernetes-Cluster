@@ -10,8 +10,7 @@ echo $1
 if [[ -z "$1" || -n ${NodeNumber//[0-9]/} ]]; 
 then
     echo "Node number needs to be passed to bash script. Either number missing or not a number!"
-else
-    exit 1;
+    exit 1
 fi
 
 while : ;
