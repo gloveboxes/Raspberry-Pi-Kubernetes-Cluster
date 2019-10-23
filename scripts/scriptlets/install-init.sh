@@ -4,9 +4,6 @@ if [ -f "$CHECKPOINT" ]; then
     echo "Update already completed"
 fi
 
-echo "node number passed"
-echo $1
-
 if [[ -z "$1" || -n ${NodeNumber//[0-9]/} ]]; 
 then
     echo "Node number needs to be passed to bash script. Either number missing or not a number!"
@@ -30,7 +27,7 @@ echo -e "\nEnabling 64bit Linux Kernel\n"
 echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
 
 
-echo -e "iptables to legacy mode, swap off, gpu mem min, disable wifi, tmpfs optimisations, cgroups for kube\n"
+echo -e "iptables to legacy mode"
 sudo update-alternatives --set iptables /usr/sbin/iptables-legacy
 sudo update-alternatives --set ip6tables /usr/sbin/ip6tables-legacy
 
