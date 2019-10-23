@@ -15,3 +15,5 @@ then
         fi
     done
 fi
+
+sudo reboot
