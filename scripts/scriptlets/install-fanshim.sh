@@ -1,7 +1,7 @@
 CHECKPOINT='~/.node-FanSHIM-completed'
 
 if [ -f "$CHECKPOINT" ]; then
-    echo "Update already completed"
+    echo "Fan SHIM already installed"
     exit 0
 fi
 
