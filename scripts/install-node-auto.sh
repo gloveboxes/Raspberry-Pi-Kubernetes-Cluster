@@ -1,5 +1,9 @@
 #!/bin/bash
 
+kernel64bit=false
+ipaddress=''
+k8snodeNumber=''
+
 function valid_ip()
 {
     local  ip=$1
@@ -21,21 +25,17 @@ function valid_ip()
 function wait_for_restart () {
   sleep 2
   while : ; do
-    ping  $1 -c 1
+    ping  $1 -c 2
     if [ $? -eq 0 ]
     then
       break
     else
-       echo -e "Waiting."
+       echo -e "Waiting for host $1"
        sleep 2
     fi
   done
   sleep 10
 }
-
-kernel64bit=false
-ipaddress=''
-k8snodeNumber=''
 
 
 while getopts i:n:xh flag; do
@@ -56,9 +56,9 @@ while getopts i:n:xh flag; do
       echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"
       exit 0
       ;;   
-    ?)
+    *)
       echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"
-      exit 1;                                                                                                                                                                                                ?)                                                                                                                                                                                                       echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"                                                                                                                exit;
+      exit 1;
       ;;
   esac
 done
@@ -114,7 +114,7 @@ sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cl
 
 echo -e "Updating System, configuraing prerequistes, renaming, rebooting"
 
-if $kernel64bit ;
+if $kernel64bit
 then
   echo -e "\nEnabling 64bit Linux Kernel\n"
   sshpass -p "raspberry" ssh $hostname 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
@@ -122,24 +122,13 @@ fi
 
 exit 1
 
+# Update, set config, rename and reboot
 sshpass -p "raspberry" ssh $hostname "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-init.sh $k8snodeNumber"
-
-ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
-
-hostname="k8snode$k8snodeNumber.local"
-echo $hostname
-
-ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
 
 wait_for_restart $hostname
 
-ssh-keyscan -H $hostname >> ~/.ssh/known_hosts
-
 echo "Installing FanSHIM"
 sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-fanshim.sh'
-
-# echo "Installing Prerequisites"
-# sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-prerequisites.sh'
 
 echo "Installing Docker"
 sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-docker.sh'
