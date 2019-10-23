@@ -54,7 +54,11 @@ while getopts i:n:xh flag; do
       ;;
     h)
       echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"
-      ;;                                                                                                                                                                                                   ?)                                                                                                                                                                                                       echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"                                                                                                                exit;
+      exit 0
+      ;;   
+    ?)
+      echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"
+      exit 1;                                                                                                                                                                                                ?)                                                                                                                                                                                                       echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"                                                                                                                exit;
       ;;
   esac
 done
@@ -63,19 +67,25 @@ echo $ipaddress
 echo $k8snodeNumber
 echo $kernel64bit
 
+if [ -z "$ipaddress" ] || [ -z "$k8snodeNumber"]
+then
+  echo -e "\nExpected -i IP Address and -n Kubernetes Node Number. Optional: -x Enable Linux 64bit Kernel"
+  exit 1
+fi
+
 # Valdate IP Address
 if valid_ip $ipaddress
 then
   echo 'good ip address'
 else
   echo "invalid IP Adress entered. Try again"
-  exit
+  exit 1
 fi
 
 # Validate node number is numeric
 if [[ -z "$k8snodeNumber" || -n ${NodeNumber//[0-9]/} ]];
 then
-    echo "Node number not numeric!"
+    echo "Kubernetes Node number not numeric!"
     exit 1
 fi
 
