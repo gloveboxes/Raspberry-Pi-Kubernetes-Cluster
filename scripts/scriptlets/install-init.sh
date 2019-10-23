@@ -57,4 +57,6 @@ sudo sed -i 's/$/ ipv6.disable=1 cgroup_enable=cpuset cgroup_enable=memory cgrou
 
 sudo raspi-config nonint do_hostname "k8snode$1"
 
+echo "" > CHECKPOINT
+
 sudo reboot

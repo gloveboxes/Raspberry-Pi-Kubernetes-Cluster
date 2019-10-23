@@ -1,3 +1,10 @@
+CHECKPOINT='~/.node-FanSHIM-completed'
+
+if [ -f "$CHECKPOINT" ]; then
+    echo "Update already completed"
+    exit 0
+fi
+
 sleep 2 # let system settle
 
 while : ;
@@ -42,3 +49,5 @@ fi
 
 cd examples
 sudo ./install-service.sh --on-threshold 65 --off-threshold 55 --delay 2
+
+echo "" > CHECKPOINT
