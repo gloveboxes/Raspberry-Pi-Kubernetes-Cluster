@@ -23,9 +23,10 @@ do
     fi
 done
 
+# Now set in calling script
 # enable 64bit
-echo -e "\nEnabling 64bit Linux Kernel\n"
-echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
+# echo -e "\nEnabling 64bit Linux Kernel\n"
+# echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null
 
 
 echo -e "iptables to legacy mode"
