@@ -50,4 +50,4 @@ fi
 cd examples
 sudo ./install-service.sh --on-threshold 65 --off-threshold 55 --delay 2
 
-echo "" > CHECKPOINT
+echo "" > $CHECKPOINT
