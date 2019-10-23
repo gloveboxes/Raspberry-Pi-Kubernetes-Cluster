@@ -33,7 +33,38 @@ function wait_for_restart () {
   sleep 10
 }
 
-if valid_ip $1
+kernel64bit=false
+ipaddress=''
+k8snodeNumber=''
+
+
+while getopts i:n:xh flag; do
+  case $flag in
+    i)
+      echo "-i used: $OPTARG";
+      ipaddress=$OPTARG
+      ;;
+    n)
+      echo "-n used: $OPTARG";
+      k8snodeNumber=$OPTARG
+      ;;
+    x)
+      echo "-x used";
+      kernel64bit=true
+      ;;
+    h)
+      echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"
+      ;;                                                                                                                                                                                                   ?)                                                                                                                                                                                                       echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"                                                                                                                exit;
+      ;;
+  esac
+done
+
+echo $ipaddress
+echo $k8snodeNumber
+echo $kernel64bit
+
+# Valdate IP Address
+if valid_ip $ipaddress
 then
   echo 'good ip address'
 else
@@ -41,14 +72,14 @@ else
   exit
 fi
 
-
-if [[ -z "$2" || -n ${NodeNumber//[0-9]/} ]];
+# Validate node number is numeric
+if [[ -z "$k8snodeNumber" || -n ${NodeNumber//[0-9]/} ]];
 then
-    echo "Node number needs to be passed to bash script. Either number missing or not a number!"
+    echo "Node number not numeric!"
     exit 1
 fi
 
-hostname=$1
+hostname=$ipaddress
 
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
 
@@ -72,11 +103,18 @@ sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cl
 sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/*.sh'
 
 echo -e "Updating System, configuraing prerequistes, renaming, rebooting"
-sshpass -p "raspberry" ssh $hostname "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-init.sh $2"
+
+if $kernel64bit ;
+then
+  echo -e "\nEnabling 64bit Linux Kernel\n"
+  sshpass -p "raspberry" ssh $hostname 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
+fi
+
+sshpass -p "raspberry" ssh $hostname "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-init.sh $k8snodeNumber"
 
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
 
-hostname="k8snode$2.local"
+hostname="k8snode$k8snodeNumber.local"
 echo $hostname
 
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
