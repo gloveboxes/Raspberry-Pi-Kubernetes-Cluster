@@ -2,7 +2,7 @@ sleep 2 # let system settle
 
 while : ;
 do
-    sudo apt install -y python3-pip
+    sudo apt-get install -y python3-pip
     if [ $? -eq 0 ]
     then
         break
