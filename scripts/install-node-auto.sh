@@ -120,6 +120,8 @@ then
   sshpass -p "raspberry" ssh $hostname 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
 fi
 
+exit 1
+
 sshpass -p "raspberry" ssh $hostname "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-init.sh $k8snodeNumber"
 
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
