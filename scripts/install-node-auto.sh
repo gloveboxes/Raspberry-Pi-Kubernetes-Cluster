@@ -3,6 +3,7 @@
 kernel64bit=false
 ipaddress=''
 k8snodeNumber=''
+fanSHIM=false
 
 function valid_ip()
 {
@@ -38,47 +39,43 @@ function wait_for_restart () {
 }
 
 
-while getopts i:n:xh flag; do
+while getopts i:n:fxh flag; do
   case $flag in
     i)
-      echo "-i used: $OPTARG";
       ipaddress=$OPTARG
       ;;
     n)
-      echo "-n used: $OPTARG";
       k8snodeNumber=$OPTARG
       ;;
+    f)
+      fanSHIM=true
+      ;;
     x)
-      echo "-x used";
       kernel64bit=true
       ;;
     h)
-      echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"
+      echo "Startup options -i Node IP Address, -n Node Number, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel"
       exit 0
       ;;   
     *)
-      echo "Startup options -i Node IP Address, -n Node Number, -x Enable Linux 64bit Kernel"
+      echo "Startup options -i Node IP Address, -n Node Number, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel"
       exit 1;
       ;;
   esac
 done
 
-echo $ipaddress
-echo $k8snodeNumber
-echo $kernel64bit
-
 if [ -z "$ipaddress" ] || [ -z "$k8snodeNumber"]
 then
-  echo -e "\nExpected -i IP Address and -n Kubernetes Node Number. Optional: -x Enable Linux 64bit Kernel"
+  echo -e "\nExpected -i IP Address and -n Kubernetes Node Number."
   exit 1
 fi
 
-# Valdate IP Address
+# Validate IP Address
 if valid_ip $ipaddress
 then
   echo 'good ip address'
 else
-  echo "invalid IP Adress entered. Try again"
+  echo "invalid IP Address entered. Try again"
   exit 1
 fi
 
@@ -120,15 +117,16 @@ then
   sshpass -p "raspberry" ssh $hostname 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
 fi
 
-exit 1
-
 # Update, set config, rename and reboot
 sshpass -p "raspberry" ssh $hostname "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-init.sh $k8snodeNumber"
 
 wait_for_restart $hostname
 
-echo "Installing FanSHIM"
-sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-fanshim.sh'
+if $FanSHIM
+then
+  echo "Installing FanSHIM"
+  sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-fanshim.sh'
+fi
 
 echo "Installing Docker"
 sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-docker.sh'
@@ -138,6 +136,5 @@ wait_for_restart $hostname
 echo "Installing Kubernetes"
 sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-kubernetes.sh'
 
-sleep 6
 echo "Joining Node to Kubernetes Master"
 sshpass -p "raspberry" ssh $hostname 'sudo ~/k8s-join-node.sh'
