@@ -207,7 +207,7 @@ while $RUNNING; do
         sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
         sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-        kubeadm token create --print-join-command > ~/k8s-join-node.sh
+        echo "sudo $(kubeadm token create --print-join-command)" > ~/k8s-join-node.sh
 
         echo "KUBESETUP" > $STATE
 
