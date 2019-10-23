@@ -9,8 +9,8 @@ do
     then
         break
     else
-        echo -e "\nGet Kuberetes key failed. Check internet connection. Retrying in 20 seconds.\n"
-        sleep 20
+        echo -e "\nGet Kuberetes key failed. Check internet connection. Retrying in 10 seconds.\n"
+        sleep 10
     fi
 done
 
@@ -24,7 +24,7 @@ do
     then
         break
     else
-        echo -e "\nKubernetes installation failed. Check internet connection. Retrying in 20 seconds.\n"
-        sleep 20
+        echo -e "\nKubernetes installation failed. Check internet connection. Retrying in 10 seconds.\n"
+        sleep 10
     fi
 done
