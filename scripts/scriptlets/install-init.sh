@@ -2,6 +2,7 @@ CHECKPOINT='~/.node-init-completed'
 
 if [ -f "$CHECKPOINT" ]; then
     echo "Update already completed"
+    exit 0
 fi
 
 if [[ -z "$1" || -n ${NodeNumber//[0-9]/} ]]; 
@@ -55,7 +56,5 @@ echo "tmpfs /var/log  tmpfs defaults,noatime,size=30m 0 0" | sudo tee -a /etc/fs
 sudo sed -i 's/$/ ipv6.disable=1 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1/' /boot/cmdline.txt
 
 sudo raspi-config nonint do_hostname "k8snode$1"
-
-touch $CHECKPOINT
 
 sudo reboot
