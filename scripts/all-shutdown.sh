@@ -18,8 +18,13 @@ function runCommand() {
     devices=$(dhcp-lease-list --parsable 2>/dev/null |  egrep -o 'IP.*|' | awk '{print $2 ":"  $4}')
     for i in $devices
     do 
-        ipaddress=$(echo $i | cut -f1 -d:)
-        sshpass -p "raspberry" ssh $ipaddress 'sudo halt -p'
+        hostname=$(echo $i | cut -f1 -d:)
+        echo "Shutting down $ipaddress"
+
+        ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
+        ssh-keyscan -H $hostname >> ~/.ssh/known_hosts
+
+        sshpass -p "raspberry" ssh $hostname 'sudo halt'
     done
 }
 
