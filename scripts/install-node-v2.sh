@@ -22,6 +22,9 @@ do
     ipaddress=$(echo $i | cut -f1 -d:)
     hostname=$(echo $i | cut -f2 -d:)
 
+    echo "IP Address $ipaddress"
+    echo "Hostname $hostname"
+
     if [ "$hostname" = "raspberrypi" ]; then
         getNextNodeNumber
         ./install-node-auto $ipaddress $nodeCount -f -x
