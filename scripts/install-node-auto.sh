@@ -64,7 +64,7 @@ while getopts i:n:fxh flag; do
   esac
 done
 
-if [ -z "$ipaddress" ] || [ -z "$k8snodeNumber"]
+if [ -z "$ipaddress" ] || [ -z "$k8snodeNumber" ]
 then
   echo -e "\nExpected -i IP Address and -n Kubernetes Node Number."
   echo -e "Startup options -i Node IP Address, -n Node Number, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel\n"
