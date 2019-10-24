@@ -67,6 +67,7 @@ done
 if [ -z "$ipaddress" ] || [ -z "$k8snodeNumber"]
 then
   echo -e "\nExpected -i IP Address and -n Kubernetes Node Number."
+  echo -e "Startup options -i Node IP Address, -n Node Number, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel\n"
   exit 1
 fi
 
@@ -109,7 +110,7 @@ sshpass -p "raspberry" ssh $hostname 'sudo rm master.zip'
 sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
 sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/*.sh'
 
-echo -e "Updating System, configuraing prerequistes, renaming, rebooting"
+echo -e "Updating System, configuring prerequisites, renaming, rebooting"
 
 if $kernel64bit
 then
@@ -138,3 +139,5 @@ sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/s
 
 echo "Joining Node to Kubernetes Master"
 sshpass -p "raspberry" ssh $hostname 'sudo ~/k8s-join-node.sh'
+
+echo -e "\nInstallation Completed!\n"
