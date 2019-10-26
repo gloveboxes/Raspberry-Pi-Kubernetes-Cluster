@@ -89,10 +89,14 @@ fi
 
 hostname=$ipaddress
 
-ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
-
 wait_for_restart $hostname
 
+# delete existing kubernetes node
+kubectl delete node k8snode$k8snodeNumber
+
+# Remove any existing ssh finger prints for the device
+ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "k8snode$k8snodeNumber.local"
+ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
 # Generate ssh fingerprint
 # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
 ssh-keyscan -H $hostname >> ~/.ssh/known_hosts
@@ -101,11 +105,11 @@ sshpass -p "raspberry" scp ~/k8s-join-node.sh $hostname:~/
 
 echo "Adding execute rights to k8s-join-node.sh"
 sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/k8s-join-node.sh'
+
 echo "Downloading installation bootstrap"
 sshpass -p "raspberry" ssh $hostname 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
 sshpass -p "raspberry" ssh $hostname 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
 sshpass -p "raspberry" ssh $hostname 'sudo unzip -qq master.zip'
-echo "Unzipping Bootstrap"
 sshpass -p "raspberry" ssh $hostname 'sudo rm master.zip'
 sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
 sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/*.sh'
