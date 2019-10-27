@@ -34,8 +34,10 @@ function wait_for_restart () {
     ping  $1 -c 2
     if [ $? -eq 0 ]
     then
+
       while :
       do
+        # Check you can successfully execute a command on the remote system
         execute_command $hostname 'uname -a'
         if [ $? -eq 0 ]
         then
@@ -53,7 +55,6 @@ function wait_for_restart () {
   done
   sleep 10
 }
-
 
 
 while getopts i:n:fxh flag; do
