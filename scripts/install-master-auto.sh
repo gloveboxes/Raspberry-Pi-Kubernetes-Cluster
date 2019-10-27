@@ -25,7 +25,7 @@ function valid_ip()
 
 
 function remote_cmd() {
-    sshpass -p "raspberry" ssh pi@$hostname $2
+    sshpass -p "raspberry" ssh pi@$hostname $1
 }
 
 
