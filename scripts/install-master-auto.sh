@@ -145,25 +145,25 @@ wait_for_ready
 remote_cmd "$SCRIPTS_DIR/master/install-dhcp-server.sh"
 
 # Install NFS
-remote_cmd "$SCRIPTS_DIR/master/install-nfs.sh
+remote_cmd "$SCRIPTS_DIR/master/install-nfs.sh"
 
 echo "Installing Docker"
-remote_cmd '$SCRIPTS_DIR/common/install-docker.sh'
+remote_cmd "$SCRIPTS_DIR/common/install-docker.sh"
 
 wait_for_ready
 
 echo "Installing Kubernetes"
-remote_cmd '$SCRIPTS_DIR/common/install-kubernetes.sh'
+remote_cmd "$SCRIPTS_DIR/common/install-kubernetes.sh"
 
 
 echo "Initializing Kubernetes"
-remote_cmd '$SCRIPTS_DIR/master/kubernetes-init.sh'
+remote_cmd "$SCRIPTS_DIR/master/kubernetes-init.sh"
 
 echo "Setting Up Kubernetes"
-remote_cmd '$SCRIPTS_DIR/master/kubernetes-setup.sh'
+remote_cmd "$SCRIPTS_DIR/master/kubernetes-setup.sh"
 
 if $fanSHIM
 then
   echo "Installing FanSHIM"
-  remote_cmd '$SCRIPTS_DIR/common/install-fanshim.sh'
+  remote_cmd "$SCRIPTS_DIR/common/install-fanshim.sh"
 fi
