@@ -121,9 +121,9 @@ remote_cmd 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
 remote_cmd 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
 remote_cmd 'sudo unzip -qq master.zip'
 remote_cmd 'sudo rm master.zip'
-remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
-remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
-remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
+#remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
+#remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
+#remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 
 echo -e "Updating System, configuring prerequisites, renaming, rebooting"
 
@@ -134,10 +134,10 @@ then
 fi
 
 # Static network IP on eth0 , set up packet passthrough to wlan
-#remote_cmd "$SCRIPTS_DIR/master/setup-networking.sh"
+remote_cmd "$SCRIPTS_DIR/master/setup-networking.sh"
 
 # Update, set config, rename and reboot
-#remote_cmd "$SCRIPTS_DIR/master/install-init.sh"
+remote_cmd "$SCRIPTS_DIR/master/install-init.sh"
 
 wait_for_ready
 
@@ -145,25 +145,25 @@ wait_for_ready
 remote_cmd "$SCRIPTS_DIR/master/install-dhcp-server.sh"
 
 # Install NFS
-# remote_cmd "$SCRIPTS_DIR/master/install-nfs.sh"
+remote_cmd "$SCRIPTS_DIR/master/install-nfs.sh"
 
 echo "Installing Docker"
-#remote_cmd "$SCRIPTS_DIR/common/install-docker.sh"
+remote_cmd "$SCRIPTS_DIR/common/install-docker.sh"
 
 wait_for_ready
 
 echo "Installing Kubernetes"
-#remote_cmd "$SCRIPTS_DIR/common/install-kubernetes.sh"
+remote_cmd "$SCRIPTS_DIR/common/install-kubernetes.sh"
 
 
 echo "Initializing Kubernetes"
-#remote_cmd "$SCRIPTS_DIR/master/kubernetes-init.sh"
+remote_cmd "$SCRIPTS_DIR/master/kubernetes-init.sh"
 
 echo "Setting Up Kubernetes"
-#remote_cmd "$SCRIPTS_DIR/master/kubernetes-setup.sh"
+remote_cmd "$SCRIPTS_DIR/master/kubernetes-setup.sh"
 
 if $fanSHIM
 then
   echo "Installing FanSHIM"
-  #remote_cmd "$SCRIPTS_DIR/common/install-fanshim.sh"
+  remote_cmd "$SCRIPTS_DIR/common/install-fanshim.sh"
 fi
