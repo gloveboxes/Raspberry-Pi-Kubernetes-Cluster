@@ -134,10 +134,10 @@ then
 fi
 
 # Static network IP on eth0 , set up packet passthrough to wlan
-remote_cmd "$SCRIPTS_DIR/master/setup-networking.sh"
+#remote_cmd "$SCRIPTS_DIR/master/setup-networking.sh"
 
 # Update, set config, rename and reboot
-remote_cmd "$SCRIPTS_DIR/master/install-init.sh"
+#remote_cmd "$SCRIPTS_DIR/master/install-init.sh"
 
 wait_for_ready
 
