@@ -52,7 +52,7 @@ function GetIpAddress() {
     while :
     do
         echo ""
-        read -p "Enter the Raspberry Pi IP Address for the new Kubernetes Master: " $ipaddress
+        read -p "Enter the Raspberry Pi IP Address for the new Kubernetes Master: " ipaddress
         if valid_ip $ipaddress
         then
             break
