@@ -5,7 +5,7 @@
 
 while : ;
 do
-    echo -e "\nInstalling NFS Server on k8snode1 for use as Cluster Storage Class and Persistent Storage\n"
+    echo -e "\nInstalling NFS Server for use as Cluster Storage Class and Persistent Storage\n"
     sudo apt-get install -y nfs-kernel-server
     if [ $? -eq 0 ]
     then
@@ -37,5 +37,4 @@ sudo exportfs -ra
 sudo systemctl restart nfs-kernel-server
 
 # show what's being shared
-showmount -e localhost
-
+# showmount -e localhost

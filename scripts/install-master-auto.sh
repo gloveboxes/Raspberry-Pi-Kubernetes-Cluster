@@ -111,24 +111,24 @@ hostname=$ipaddress
 wait_for_network
 
 # Remove any existing ssh finger prints for the device
-echo "deleting existing key for $hostname"
+echo -e "\nDeleting existing SSH Fingerprint for $hostname\n"
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
 ssh-keyscan -H $hostname >> ~/.ssh/known_hosts  # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
 
 wait_for_ready
 
-echo "Downloading installation bootstrap"
+echo -e "\nDownloading installation bootstrap\n"
 remote_cmd 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
 remote_cmd 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
 remote_cmd 'sudo unzip -qq master.zip'
 remote_cmd 'sudo rm master.zip'
 
-echo "Setting Execution Permissions for installation scripts"
+echo -e "\nSetting Execution Permissions for installation scripts\n"
 remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 
-echo -e "Updating System, configuring prerequisites, renaming, rebooting"
+echo -e "\nUpdating System, configuring prerequisites, renaming, rebooting\n"
 
 if $kernel64bit
 then
@@ -155,18 +155,18 @@ remote_cmd "$SCRIPTS_DIR/common/install-docker.sh"
 
 wait_for_ready
 
-echo "Installing Kubernetes"
+echo -e "\nInstalling Kubernetes\n"
 remote_cmd "$SCRIPTS_DIR/common/install-kubernetes.sh"
 
 
-echo "Initializing Kubernetes"
+echo -e "\nInitializing Kubernetes\n"
 remote_cmd "$SCRIPTS_DIR/master/kubernetes-init.sh"
 
-echo "Setting Up Kubernetes"
+echo -e "\nSetting Up Kubernetes\n"
 remote_cmd "$SCRIPTS_DIR/master/kubernetes-setup.sh"
 
 if $fanSHIM
 then
-  echo "Installing FanSHIM"
+  echo -e "\nInstalling FanSHIM\n"
   remote_cmd "$SCRIPTS_DIR/common/install-fanshim.sh"
 fi
