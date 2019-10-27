@@ -56,7 +56,7 @@ function GetIpAddress() {
         if valid_ip $ipaddress
         then
             ping $ipaddress -c 2 > /dev/null
-            if $? -eq 0
+            if [ $? -eq 0 ]
             then
                 break
             else
