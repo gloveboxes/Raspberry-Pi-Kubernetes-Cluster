@@ -151,34 +151,36 @@ bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubern
 
 ## Kubernetes Node Installation
 
-Ensure the k8smaster and the Raspberry Pi that will be the first Kubernetes node are **powered on** and connected to the **Network Switch**. The DHCP Server running on the k8smaster will allocate an IP Address to the Raspberry Pi that will become the Kubernetes node.
+Ensure the k8smaster and all the Raspberry Pis that will be configured are **powered on** and connected to the **Network Switch**. The DHCP Server running on the k8smaster will allocate an IP Addresses to the Raspberry Pis to become the Kubernetes nodes.
 
 ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/k8s-first-node.png)
 
-### Kubernetes Node Installation Process
 
-Repeat for each Raspberry Pi that you intend to be Kubernetes Nodes.
 
 #### Step 1: Connect to the Raspberry Pi to be Configured as a Node
 
 1. From your desktop computer, start an SSH Session to the k8smaster `ssh pi@k8smaster.local`
-2. From the SSH session you just started, start an SSH session to the Raspberry Pi to be configured as a Kubernetes Node. `ssh pi@raspberry.local`, the default password is **raspberry**.
 
 #### Step 2: Start the Installation Process
 
 1. Run the following command from the SSH terminal you started in step 1.
 
-```bash
-bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
-```
+    ```bash
+    bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
+    ```
 
 2. Select **N**ode set up.
 
-#### Step 3: Number the Kubernetes Node
+3. Configure Installation Options
 
-You will be prompted to number the Kubernetes Node. Number from 1 to n, where n is the number of Kubernetes Nodes you plan to provision. You will be prompted to enable the 64bit kernel, the system will be updated, renamed, and rebooted. 
+    * Enable 64bit Linux Kernel
+    * Install [Pimoroni Fan SHIM](https://shop.pimoroni.com/products/fan-shim) Support
 
-#### Step 4: Enable Boot from USB3 SSD
+    The automated installation will start.
+    <!-- * Enable Boot From USB -->
+
+
+<!-- #### Step 4: Enable Boot from USB3 SSD
 
 If you have USB3 attached SSD Storage then select this option. The installation script assumes the USB SSD Drive is located at **/dev/sda**. The scripts starts **fdisk**, you need to create a clean disk partition. Follow these steps:
 
@@ -188,33 +190,7 @@ If you have USB3 attached SSD Storage then select this option. The installation 
 4. w to write new partition table
 5. **fdisk** will close and the SSD dive with be formated and the SD Root root drive copied and the **cmdline.txt** patched to boot from SSD.
 
-This requires a reboot, log back in after the reboot and the installation will continue.
-
-#### Step 5: Install Pimoroni Fan SMIM Support
-
-Recommend an active cooling system for the Raspberry Pi 4. I like the [Pimoroni Fan SMIM](https://shop.pimoroni.com/products/fan-shim) If you have one fitted to your Raspberry Pi 4 then select **yes** to install.
-
-#### Step 6: Perquisites are installed and configured
-
-No user action required
-
-#### Step 7: Docker Installation
-
-No user action required. This requires a reboot, log back in after the reboot and the installation will continue.
-
-#### Step 8: Kubernetes Installation
-
-No user action required
-
-#### Step 9: Join the new node to the Kubernetes Cluster
-
-When you created the Kubernetes Master the Kubernetes Node join command was created was saved to a file named**~/k8s-join-node.sh**.
-
-You can run this command from the new Kubernetes Node with the following command. **Note**, you will be prompted to trust _k8smaster_ and for the _k8smaster_ password.
-
-```bash
-bash -c "sudo $(ssh k8smaster.local 'cat ~/k8s-join-node.sh')"
-```
+This requires a reboot, log back in after the reboot and the installation will continue. -->
 
 ## Setting up a Static Route to the Kubernetes Cluster
 

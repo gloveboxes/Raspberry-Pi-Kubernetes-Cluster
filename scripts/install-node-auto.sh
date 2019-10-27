@@ -38,6 +38,19 @@ function wait_for_restart () {
   sleep 10
 }
 
+function execute_command() {
+  while :
+  do
+    sshpass -p "raspberry" ssh $1 $S2
+    if $? -eq 0
+    then
+      break
+    else
+      sleep 6
+    fi
+  done
+}
+
 
 while getopts i:n:fxh flag; do
   case $flag in
@@ -104,44 +117,44 @@ ssh-keyscan -H $hostname >> ~/.ssh/known_hosts
 sshpass -p "raspberry" scp ~/k8s-join-node.sh $hostname:~/
 
 echo "Adding execute rights to k8s-join-node.sh"
-sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/k8s-join-node.sh'
+execute_command  $hostname 'sudo chmod +x ~/k8s-join-node.sh'
 
 echo "Downloading installation bootstrap"
-sshpass -p "raspberry" ssh $hostname 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
-sshpass -p "raspberry" ssh $hostname 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
-sshpass -p "raspberry" ssh $hostname 'sudo unzip -qq master.zip'
-sshpass -p "raspberry" ssh $hostname 'sudo rm master.zip'
-sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
-sshpass -p "raspberry" ssh $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/*.sh'
+execute_command $hostname 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
+execute_command $hostname 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
+execute_command $hostname 'sudo unzip -qq master.zip'
+execute_command $hostname 'sudo rm master.zip'
+execute_command $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
+execute_command $hostname 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/*.sh'
 
 echo -e "Updating System, configuring prerequisites, renaming, rebooting"
 
 if $kernel64bit
 then
   echo -e "\nEnabling 64bit Linux Kernel\n"
-  sshpass -p "raspberry" ssh $hostname 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
+  execute_command $hostname 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
 fi
 
 # Update, set config, rename and reboot
-sshpass -p "raspberry" ssh $hostname "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-init.sh $k8snodeNumber"
+execute_command $hostname "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-init.sh $k8snodeNumber"
 
 wait_for_restart $hostname
 
-if $FanSHIM
+if $fanSHIM
 then
   echo "Installing FanSHIM"
-  sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-fanshim.sh'
+  execute_command $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-fanshim.sh'
 fi
 
 echo "Installing Docker"
-sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-docker.sh'
+execute_command  $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-docker.sh'
 
 wait_for_restart $hostname
 
 echo "Installing Kubernetes"
-sshpass -p "raspberry" ssh $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-kubernetes.sh'
+execute_command $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-kubernetes.sh'
 
 echo "Joining Node to Kubernetes Master"
-sshpass -p "raspberry" ssh $hostname 'sudo ~/k8s-join-node.sh'
+execute_command $hostname 'sudo ~/k8s-join-node.sh'
 
 echo -e "\nInstallation Completed!\n"
