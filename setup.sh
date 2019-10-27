@@ -5,6 +5,8 @@ cd ~/
 
 wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip
 
+sudo apt update && sudo apt install -y unzip sshpass
+
 sudo rm -r -f ~/Raspberry-Pi-Kubernetes-Cluster-master
 unzip -qq master.zip
 rm master.zip
