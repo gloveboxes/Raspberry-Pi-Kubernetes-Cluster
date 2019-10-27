@@ -53,7 +53,7 @@ function wait_for_restart () {
        sleep 2
     fi
   done
-  sleep 10
+  sleep 4
 }
 
 
