@@ -45,7 +45,7 @@ function execute_command() {
     echo $1
     echo $2
     sshpass -p "raspberry" ssh $1 '$2'
-    if $? -eq 0
+    if [ $? -eq 0 ]
     then
       break
     else
