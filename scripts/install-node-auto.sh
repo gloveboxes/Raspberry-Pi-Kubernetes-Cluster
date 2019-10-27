@@ -41,7 +41,10 @@ function wait_for_restart () {
 function execute_command() {
   while :
   do
-    sshpass -p "raspberry" ssh $1 $S2
+    echo "Execute Command - Parameters"
+    echo $1
+    echo $2
+    sshpass -p "raspberry" ssh $1 $2
     if $? -eq 0
     then
       break
