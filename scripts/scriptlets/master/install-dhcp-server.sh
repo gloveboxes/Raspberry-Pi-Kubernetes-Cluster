@@ -4,7 +4,7 @@
 while : ;
 do
   echo -e "\nInstalling and configuring DHCP Server\n"
-  sudo apt-get update && sudo apt-get install -y -qq isc-dhcp-server > /dev/null
+  sudo apt-get install -y -qq isc-dhcp-server > /dev/null
   if [ $? -eq 0 ]
   then
     break

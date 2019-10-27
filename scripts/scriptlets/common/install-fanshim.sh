@@ -1,4 +1,4 @@
-CHECKPOINT='~/.node-FanSHIM-completed'
+#!/bin/bash
 
 if [ -f "$CHECKPOINT" ]; then
     echo "Fan SHIM already installed"
@@ -49,5 +49,3 @@ fi
 
 cd examples
 sudo ./install-service.sh --on-threshold 65 --off-threshold 55 --delay 2
-
-touch $CHECKPOINT
