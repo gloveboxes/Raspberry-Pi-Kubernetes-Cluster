@@ -55,7 +55,7 @@ function GetIpAddress() {
         read -p "Enter the Raspberry Pi IP Address for the new Kubernetes Master: " ipaddress
         if valid_ip $ipaddress
         then
-            ping $ipaddress -c 2
+            ping $ipaddress -c 2 > /dev/null
             if $? -eq 0
             then
                 break
