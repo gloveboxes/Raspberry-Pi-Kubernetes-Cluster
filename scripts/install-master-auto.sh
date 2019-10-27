@@ -63,38 +63,36 @@ function wait_for_ready () {
 }
 
 
-function getOptions() {
-  while getopts i:n:fxh flag; do
-    case $flag in
-      i)
-        ipaddress=$OPTARG
-        ;;
-      f)
-        echo "Enable Fan SHIM"
-        fanSHIM=true
-        ;;
-      x)
-        echo "Enable 64bit Kernel"
-        kernel64bit=true
-        ;;
-      h)
-        echo "Startup options -i Node IP Address, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel"
-        exit 0
-        ;;   
-      *)
-        echo "Startup options -i Node IP Address, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel"
-        exit 1;
-        ;;
-    esac
-  done
-}
 
-getOptions
+while getopts i:n:fxh flag; do
+  case $flag in
+    i)
+      ipaddress=$OPTARG
+      ;;
+    f)
+      echo "Enable Fan SHIM"
+      fanSHIM=true
+      ;;
+    x)
+      echo "Enable 64bit Kernel"
+      kernel64bit=true
+      ;;
+    h)
+      echo "Startup options -i Master IP Address, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel"
+      exit 0
+      ;;   
+    *)
+      echo "Startup options -i Master IP Address, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel"
+      exit 1;
+      ;;
+  esac
+done
+
 
 if [ -z "$ipaddress" ]
 then
   echo -e "\nExpected -i IP Address."
-  echo -e "Startup options -i Node IP Address, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel\n"
+  echo -e "Startup options -i Master IP Address, Optional: -f Install FanSHIM support, -x Enable Linux 64bit Kernel\n"
   exit 1
 fi
 
