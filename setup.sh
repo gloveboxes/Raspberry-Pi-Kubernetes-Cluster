@@ -6,7 +6,7 @@ cd ~/
 wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip
 
 echo -e "\nInstall unzip and sshpass dependencies\n"
-sudo apt-get update && sudo apt-get --qq install -y unzip sshpass
+sudo apt-get update && sudo apt-get install -y -qq unzip sshpass
 
 sudo rm -r -f ~/Raspberry-Pi-Kubernetes-Cluster-master
 unzip -qq master.zip
