@@ -23,12 +23,28 @@ function valid_ip()
 }
 
 
+function execute_command() {
+    sshpass -p "raspberry" ssh $1 $2
+}
+
+
 function wait_for_restart () {
   sleep 2
   while : ; do
     ping  $1 -c 2
     if [ $? -eq 0 ]
     then
+      while :
+      do
+        execute_command $hostname 'uname -a'
+        if [ $? -eq 0 ]
+        then
+          break
+        else
+          sleep 4
+        fi    
+      done    
+      
       break
     else
        echo -e "Waiting for host $1"
@@ -38,21 +54,6 @@ function wait_for_restart () {
   sleep 10
 }
 
-function execute_command() {
-  while :
-  do
-    echo "Execute Command - Parameters"
-    echo $1
-    echo $2
-    sshpass -p "raspberry" ssh $1 $2
-    if [ $? -eq 0 ]
-    then
-      break
-    else
-      sleep 6
-    fi
-  done
-}
 
 
 while getopts i:n:fxh flag; do
