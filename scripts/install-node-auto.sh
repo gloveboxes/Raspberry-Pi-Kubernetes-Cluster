@@ -44,7 +44,7 @@ function wait_for_restart () {
           sleep 4
         fi    
       done    
-      
+
       break
     else
        echo -e "Waiting for host $1"
@@ -106,17 +106,15 @@ fi
 
 hostname=$ipaddress
 
-wait_for_restart $hostname
-
 # delete existing kubernetes node
 kubectl delete node k8snode$k8snodeNumber
 
 # Remove any existing ssh finger prints for the device
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "k8snode$k8snodeNumber.local"
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
-# Generate ssh fingerprint
-# https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
-ssh-keyscan -H $hostname >> ~/.ssh/known_hosts
+ssh-keyscan -H $hostname >> ~/.ssh/known_hosts  # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
+
+wait_for_restart $hostname
 
 sshpass -p "raspberry" scp ~/k8s-join-node.sh $hostname:~/
 
