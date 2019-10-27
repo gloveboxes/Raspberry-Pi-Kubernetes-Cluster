@@ -1,5 +1,18 @@
 #!/bin/bash
 
+while :
+do
+    echo -e "Updating OS and Installing Utilities"
+    sudo apt-get update && sudo apt-get install -y -qq bmon sshpass > /dev/null && sudo apt-get upgrade -y 
+    if [ $? -eq 0 ]
+    then
+        break
+    else
+        echo -e "\nUpdate failed. Retrying system update in 10 seconds\n"
+        sleep 10
+    fi
+done
+
 echo -e "\nSetting iptables to legacy mode - patch required for Kubernetes on Debian 10\n"
 # Set iptables in legacy mode - required for Kube compatibility
 # https://github.com/kubernetes/kubernetes/issues/71305
@@ -28,20 +41,6 @@ echo "tmpfs /var/log  tmpfs defaults,noatime,size=30m 0 0" | sudo tee -a /etc/fs
 echo -e "\nEnabling cgroup support for Kubernetes\n"
 # enable cgroups for Kubernetes
 sudo sed -i 's/$/ ipv6.disable=1 cgroup_enable=cpuset cgroup_enable=memory cgroup_memory=1/' /boot/cmdline.txt
-
-# perform system upgrade
-while :
-do
-    echo -e "\nUpdating Operating System\n"
-    sudo apt-get update > /dev/null && sudo apt-get install -y -qq bmon > /dev/null && sudo apt upgrade -y
-    if [ $? -eq 0 ]
-    then
-        break
-    else
-        echo -e "\nSystem Update Failed. Check Internet connection. Retrying in 20 seconds."
-        sleep 20
-    fi        
-done
 
 echo -e "\nRenamed the Raspberry Pi Kubernetes Master to k8smaster.local\n"
 sudo raspi-config nonint do_hostname 'k8smaster'

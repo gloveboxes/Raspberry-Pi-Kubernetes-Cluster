@@ -111,6 +111,7 @@ hostname=$ipaddress
 wait_for_network
 
 # Remove any existing ssh finger prints for the device
+echo "deleting existing key for $hostname"
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
 ssh-keyscan -H $hostname >> ~/.ssh/known_hosts  # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
 
@@ -121,9 +122,11 @@ remote_cmd 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
 remote_cmd 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
 remote_cmd 'sudo unzip -qq master.zip'
 remote_cmd 'sudo rm master.zip'
-#remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
-#remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
-#remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
+
+echo "Setting Execution Permissions for installation scripts"
+remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
+remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
+remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 
 echo -e "Updating System, configuring prerequisites, renaming, rebooting"
 

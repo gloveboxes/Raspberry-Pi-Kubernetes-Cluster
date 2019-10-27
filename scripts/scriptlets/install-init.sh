@@ -11,12 +11,12 @@ then
     exit 1
 fi
 
-while : ;
+while :
 do
     sudo apt-get update && sudo apt-get upgrade -y 
     if [ $? -eq 0 ]
     then
-        break;
+        break
     else
         echo -e "\nUpdate failed. Retrying system update in 10 seconds\n"
         sleep 10
