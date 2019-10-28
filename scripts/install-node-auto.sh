@@ -148,14 +148,14 @@ then
   echo "Updating 64bit"
   r=$(sed -n "/arm_64bit=1/=" /boot/config.txt)
   
-  if [ "$r" = "" ]
-  then
+  # if [ "$r" = "" ]
+  # then
     echo -e "\nEnabling 64bit Linux Kernel\n"
     remote_cmd 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
     remote_cmd 'sudo reboot'
 
     wait_for_ready
-  fi
+  # fi
 fi
 
 echo -e "Updating System, configuring prerequisites, renaming, rebooting"
