@@ -131,16 +131,16 @@ remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 # Enable 64bit Kernel
 if $kernel64bit
 then
-  r=$(sed -n "/arm_64bit=1/=" /boot/config.txt)
+  # r=$(sed -n "/arm_64bit=1/=" /boot/config.txt)
 
-  if [ "$r" = "" ]
-  then
+  # if [ "$r" = "" ]
+  # then
     echo -e "\nEnabling 64bit Linux Kernel\n"
     remote_cmd 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
     remote_cmd 'sudo reboot'
 
     wait_for_ready
-  fi
+  # fi
 fi
 
 # Update, set config, rename and reboot

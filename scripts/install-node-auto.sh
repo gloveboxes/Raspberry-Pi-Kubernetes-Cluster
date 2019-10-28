@@ -145,8 +145,7 @@ remote_cmd "sudo chmod +x $SCRIPTS_DIR/node/*.sh"
 # Enable 64bit Kernel
 if $kernel64bit
 then
-  echo "Updating 64bit"
-  r=$(sed -n "/arm_64bit=1/=" /boot/config.txt)
+  # r=$(sed -n "/arm_64bit=1/=" /boot/config.txt)
   
   # if [ "$r" = "" ]
   # then
