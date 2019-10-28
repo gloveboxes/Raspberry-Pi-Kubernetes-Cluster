@@ -33,7 +33,7 @@ function wait_for_network() {
   while :
   do
     # Loop until network response
-    ping $hostname -c 2
+    ping $hostname -c 4
     if [ $? -eq 0 ]
     then
       break
@@ -41,6 +41,7 @@ function wait_for_network() {
       sleep 2
     fi    
   done 
+  sleep 2
 }
 
 
@@ -110,7 +111,7 @@ fi
 
 hostname=$ipaddress
 
-wait_for_ready
+wait_for_network
 
 # Remove any existing ssh finger prints for the device
 echo -e "\nDeleting existing SSH Fingerprint for $hostname\n"

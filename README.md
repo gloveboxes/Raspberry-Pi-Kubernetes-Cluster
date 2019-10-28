@@ -108,15 +108,12 @@ Ensure the Raspberry Pi to be configured as a **Kubernetes Master** is:
 
 1. Connected by **Ethernet** to the **Network Switch**, and the **Network Switch** is power **on**.
 2. The **WiFi Router** is in range and powered on.
-3. If rebuilding the Kubernetes Master and have existing Kubernetes Nodes then disconnect them from the Network Switch as tey can interfer with Kubernetes Master Admin Initialization.
+3. If rebuilding the Kubernetes Master and disconnect existing Kubernetes Nodes from the Network Switch as they can interfere with Kubernetes Master initialization.
 
 #### Step 1: Connect to the Raspberry Pi to be Configured as the Kubernetes Master
 
-1. From your desktop computer, start an SSH Session to the Raspberry Pi, `ssh pi@raspberrypi.local`, the default password is **raspberry**.
-
-#### Step 2: Start the Installation Process
-
-1. Run the following command from the SSH terminal you started in step 1.
+1. From a macOS, Linux, or Windows Bash (Linux Subsystem for Windows)
+2. Run the following command from the SSH terminal you started in step 1.
 
 ```bash
 bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
@@ -155,7 +152,6 @@ bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubern
 Ensure the k8smaster and all the Raspberry Pis that will be configured are **powered on** and connected to the **Network Switch**. The DHCP Server running on the k8smaster will allocate an IP Addresses to the Raspberry Pis to become the Kubernetes nodes.
 
 ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/k8s-first-node.png)
-
 
 
 #### Step 1: Connect to the Raspberry Pi to be Configured as a Node
