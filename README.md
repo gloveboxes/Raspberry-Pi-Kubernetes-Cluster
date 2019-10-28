@@ -64,7 +64,7 @@ There are plenty of guides for flashing Raspbian Lite SD Cards. Here are a coupl
 
 ### Creating Raspbian SD Card Boot Images
 
-1. Using [balena Etcher](https://www.balena.io/etcher/), flash 3 x SD Cards with [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/)
+1. Using [balena Etcher](https://www.balena.io/etcher/), flash 3 x SD Cards with [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/). See introduction to [Installing operating system images](https://www.raspberrypi.org/documentation/installation/installing-images/).
 2. On each SD Card create an empty file named **ssh**, this enables SSH login on the Raspberry Pi.
     * **Windows:** From Powershell, open the drive labeled _boot_, most likely the _d:_ drive, and type `echo $null > ssh; exit`. From the Windows Command Prompt, open drive labeled _boot_, most like the _d:_ drive, and type `type NUL > ssh & exit`.
     * **macOS and Linux:** Open terminal from drive labeled _boot_, type `touch ssh && exit`.
