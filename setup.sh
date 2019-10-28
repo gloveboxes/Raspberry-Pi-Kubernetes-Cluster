@@ -1,20 +1,18 @@
 #!/bin/bash
 
-
 cd ~/
 
 wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip
 
-# echo -e "\nInstall unzip and sshpass dependencies\n"
-# sudo apt-get update && sudo apt-get install -y -qq unzip sshpass
+BOOTSTRAP_DIR=~/Raspberry-Pi-Kubernetes-Cluster-master
+if [ -d "$BOOTSTRAP_DIR" ]; then
+    echo "$BOOTSTRAP_DIR is a directory"
+    echo -e "\nPermission required to remove existing Raspberry Pi Installation Bootstrap Directory"
+    sudo rm -r -f ~/Raspberry-Pi-Kubernetes-Cluster-master
+fi
 
-sudo rm -r -f ~/Raspberry-Pi-Kubernetes-Cluster-master
 unzip -qq master.zip
 rm master.zip
-
-# git clone https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster.git ~/kube-setup
-
-# cd ~/kube-setup/scripts
 
 echo -e "\nSetting Execute Permissions for Installation Scripts\n"
 cd ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts
