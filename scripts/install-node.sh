@@ -18,7 +18,7 @@ function getNextNodeNumber() {
     done
 }
 
-function startNodeInstall() {
+function StartNodeInstall() {
     devices=$(dhcp-lease-list --parsable 2>/dev/null |  egrep -o 'IP.*|' | awk '{print $2 ":"  $4}')
     for i in $devices
     do 
@@ -83,4 +83,4 @@ function EnableFanShim() {
 ListDevices
 Enable64BitKernel
 EnableFanShim
-startNodeInstall
+StartNodeInstall
