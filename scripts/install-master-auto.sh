@@ -48,8 +48,6 @@ function wait_for_network() {
 function wait_for_ready () {
   sleep 4
 
-  wait_for_network
-
   while :
   do
     # Loop until you can successfully execute a command on the remote system
@@ -64,7 +62,6 @@ function wait_for_ready () {
 
   sleep 2
 }
-
 
 
 while getopts i:n:fxh flag; do
@@ -134,10 +131,19 @@ remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 # Enable 64bit Kernel
 if $kernel64bit
 then
-  echo -e "\nEnabling 64bit Linux Kernel\n"
-  remote_cmd 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
-  remote_cmd 'sudo reboot'
-  wait_for_ready
+
+  r=$(sed -n "/arm_64bit=1/=" /boot/config.txt)
+  
+  if [ "$r" = "" ]
+  then
+
+    echo -e "\nEnabling 64bit Linux Kernel\n"
+    remote_cmd 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
+    remote_cmd 'sudo reboot'
+
+    wait_for_ready
+
+  fi
 fi
 
 # Update, set config, rename and reboot
