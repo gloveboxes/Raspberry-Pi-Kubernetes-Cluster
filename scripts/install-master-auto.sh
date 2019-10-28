@@ -130,22 +130,20 @@ remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 
-# Update, set config, rename and reboot
-echo -e "\nUpdating System, configuring prerequisites, renaming, rebooting\n"
-remote_cmd "$SCRIPTS_DIR/master/install-init.sh"
-
-wait_for_ready
-
 # Enable 64bit Kernel
 if $kernel64bit
 then
   echo -e "\nEnabling 64bit Linux Kernel\n"
   remote_cmd 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
-
   remote_cmd 'sudo reboot'
-
   wait_for_ready
 fi
+
+# Update, set config, rename and reboot
+echo -e "\nUpdating System, configuring prerequisites, renaming, rebooting\n"
+remote_cmd "$SCRIPTS_DIR/master/install-init.sh"
+
+wait_for_ready
 
 # Static network IP on eth0 , set up packet passthrough to wlan
 remote_cmd "$SCRIPTS_DIR/master/setup-networking.sh"
