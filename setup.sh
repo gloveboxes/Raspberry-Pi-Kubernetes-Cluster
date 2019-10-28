@@ -6,8 +6,7 @@ wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/ma
 
 BOOTSTRAP_DIR=~/Raspberry-Pi-Kubernetes-Cluster-master
 if [ -d "$BOOTSTRAP_DIR" ]; then
-    echo "$BOOTSTRAP_DIR is a directory"
-    echo -e "\nPermission required to remove existing Raspberry Pi Installation Bootstrap Directory"
+    echo -e "\nPermission required to remove existing Raspberry Pi Installation Bootstrap Directory\n"
     sudo rm -r -f ~/Raspberry-Pi-Kubernetes-Cluster-master
 fi
 
