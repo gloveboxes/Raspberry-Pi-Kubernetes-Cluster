@@ -130,7 +130,7 @@ wait_for_ready $hostname
 sshpass -p "raspberry" scp ~/k8s-join-node.sh $hostname:~/
 
 echo "Adding execute rights to k8s-join-node.sh"
-remote_cmd  $hostname 'sudo chmod +x ~/k8s-join-node.sh'
+remote_cmd  'sudo chmod +x ~/k8s-join-node.sh'
 
 echo "Downloading installation bootstrap"
 remote_cmd 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
@@ -170,7 +170,7 @@ then
 fi
 
 # Install Docker
-remote_cmd  $hostname '$SCRIPTS_DIR/common/install-docker.sh'
+remote_cmd '$SCRIPTS_DIR/common/install-docker.sh'
 
 wait_for_ready $hostname
 
