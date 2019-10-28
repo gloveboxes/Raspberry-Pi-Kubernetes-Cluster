@@ -60,7 +60,7 @@ function GetIpAddress() {
             then
                 break
             else
-                echo "IP Address not found on your network - check address!"
+                echo -e "\nIP Address not found on your network - check address!"
             fi
         else
             echo "invalid IP Address entered. Try again"
