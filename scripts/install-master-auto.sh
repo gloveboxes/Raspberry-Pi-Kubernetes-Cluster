@@ -47,6 +47,8 @@ function wait_for_network() {
 function wait_for_ready () {
   sleep 4
 
+  wait_for_network
+
   while :
   do
     # Loop until you can successfully execute a command on the remote system
@@ -108,7 +110,7 @@ fi
 
 hostname=$ipaddress
 
-wait_for_network
+wait_for_ready
 
 # Remove any existing ssh finger prints for the device
 echo -e "\nDeleting existing SSH Fingerprint for $hostname\n"
@@ -128,21 +130,25 @@ remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 
+# Update, set config, rename and reboot
+echo -e "\nUpdating System, configuring prerequisites, renaming, rebooting\n"
+remote_cmd "$SCRIPTS_DIR/master/install-init.sh"
 
+wait_for_ready
+
+# Enable 64bit Kernel
 if $kernel64bit
 then
   echo -e "\nEnabling 64bit Linux Kernel\n"
   remote_cmd 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
+
+  remote_cmd 'sudo reboot'
+
+  wait_for_ready
 fi
 
 # Static network IP on eth0 , set up packet passthrough to wlan
 remote_cmd "$SCRIPTS_DIR/master/setup-networking.sh"
-
-echo -e "\nUpdating System, configuring prerequisites, renaming, rebooting\n"
-# Update, set config, rename and reboot
-remote_cmd "$SCRIPTS_DIR/master/install-init.sh"
-
-wait_for_ready
 
 # Install DHCP Server
 remote_cmd "$SCRIPTS_DIR/master/install-dhcp-server.sh"
@@ -150,18 +156,21 @@ remote_cmd "$SCRIPTS_DIR/master/install-dhcp-server.sh"
 # Install NFS
 remote_cmd "$SCRIPTS_DIR/master/install-nfs.sh"
 
+# Install Docker
 echo "Installing Docker"
 remote_cmd "$SCRIPTS_DIR/common/install-docker.sh"
 
 wait_for_ready
 
+# Install Kubernetes Master
 echo -e "\nInstalling Kubernetes\n"
 remote_cmd "$SCRIPTS_DIR/common/install-kubernetes.sh"
 
-
+# Initialise Kubernetes Master
 echo -e "\nInitializing Kubernetes\n"
 remote_cmd "$SCRIPTS_DIR/master/kubernetes-init.sh"
 
+# Set Up Kubernetes - Flannel, persistent storage, nginx
 echo -e "\nSetting Up Kubernetes\n"
 remote_cmd "$SCRIPTS_DIR/master/kubernetes-setup.sh"
 

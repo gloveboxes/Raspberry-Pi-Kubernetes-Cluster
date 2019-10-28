@@ -3,7 +3,7 @@
 while :
 do
     echo -e "Updating OS and Installing Utilities"
-    sudo apt-get update && sudo apt-get install -y -qq bmon sshpass > /dev/null && sudo apt-get upgrade -y 
+    sudo apt-get update && sudo apt-get install -y bmon sshpass isc-dhcp-server nfs-kernel-server && sudo apt-get upgrade -y 
     if [ $? -eq 0 ]
     then
         break

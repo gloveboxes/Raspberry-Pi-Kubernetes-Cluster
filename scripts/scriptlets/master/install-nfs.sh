@@ -3,19 +3,6 @@
 # https://sysadmins.co.za/setup-a-nfs-server-and-client-on-the-raspberry-pi/
 # https://vitux.com/install-nfs-server-and-client-on-ubuntu/
 
-while : ;
-do
-    echo -e "\nInstalling NFS Server for use as Cluster Storage Class and Persistent Storage\n"
-    sudo apt-get install -y nfs-kernel-server
-    if [ $? -eq 0 ]
-    then
-        break
-    else
-        echo -e "\nnfs-kernel-server installation failed. Check Internet connection. Retrying in 20 seconds."
-        sleep 20
-    fi
-done
-
 # Make the nfs directory to be shared
 mkdir -p ~/nfsshare
 mkdir -p ~/nfsshare/nginx
