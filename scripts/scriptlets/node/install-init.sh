@@ -11,6 +11,7 @@ then
     exit 1
 fi
 
+echo -e "Updating System\n"
 while :
 do
     sudo apt-get update && sudo apt-get upgrade -y 

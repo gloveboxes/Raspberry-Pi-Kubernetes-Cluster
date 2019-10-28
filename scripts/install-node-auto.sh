@@ -1,5 +1,6 @@
 #!/bin/bash
 
+SCRIPTS_DIR="~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets"
 kernel64bit=false
 ipaddress=''
 k8snodeNumber=''
@@ -23,37 +24,43 @@ function valid_ip()
 }
 
 
-function execute_command() {
+function remote_cmd() {
     sshpass -p "raspberry" ssh pi@$hostname $1
 }
 
 
-function wait_for_restart () {
-  sleep 4
-  while : ; do
-    ping  $1 -c 2
+function wait_for_network() {
+  while :
+  do
+    # Loop until network response
+    ping $hostname -c 4
     if [ $? -eq 0 ]
     then
-
-      while :
-      do
-        # Check you can successfully execute a command on the remote system
-        execute_command 'uname -a'
-        if [ $? -eq 0 ]
-        then
-          break
-        else
-          sleep 4
-        fi    
-      done    
-
       break
     else
-       echo -e "Waiting for host $1"
-       sleep 2
-    fi
-  done
+      sleep 2
+    fi    
+  done 
+  sleep 2
+}
+
+
+function wait_for_ready () {
   sleep 4
+
+  while :
+  do
+    # Loop until you can successfully execute a command on the remote system
+    remote_cmd 'uname -a'
+    if [ $? -eq 0 ]
+    then
+      break
+    else
+      sleep 4
+    fi    
+  done    
+
+  sleep 2
 }
 
 
@@ -113,6 +120,9 @@ kubectl delete node k8snode$k8snodeNumber
 # Remove any existing ssh finger prints for the device
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "k8snode$k8snodeNumber.local"
 ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
+
+wait_for_network
+
 ssh-keyscan -H $hostname >> ~/.ssh/known_hosts  # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
 
 wait_for_restart $hostname
@@ -120,44 +130,54 @@ wait_for_restart $hostname
 sshpass -p "raspberry" scp ~/k8s-join-node.sh $hostname:~/
 
 echo "Adding execute rights to k8s-join-node.sh"
-execute_command  $hostname 'sudo chmod +x ~/k8s-join-node.sh'
+remote_cmd  $hostname 'sudo chmod +x ~/k8s-join-node.sh'
 
 echo "Downloading installation bootstrap"
-execute_command 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
-execute_command 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
-execute_command 'sudo unzip -qq master.zip'
-execute_command 'sudo rm master.zip'
-execute_command 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
-execute_command 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/*.sh'
+remote_cmd 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
+remote_cmd 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
+remote_cmd 'sudo unzip -qq master.zip'
 
-echo -e "Updating System, configuring prerequisites, renaming, rebooting"
+echo -e "\nSetting Execution Permissions for installation scripts\n"
+remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
+remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
+remote_cmd "sudo chmod +x $SCRIPTS_DIR/node/*.sh"
 
+# Enable 64bit Kernel
 if $kernel64bit
 then
-  echo -e "\nEnabling 64bit Linux Kernel\n"
-  execute_command 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
+  r=$(sed -n "/arm_64bit=1/=" /boot/config.txt)
+  
+  if [ "$r" = "" ]
+  then
+    echo -e "\nEnabling 64bit Linux Kernel\n"
+    remote_cmd 'echo "arm_64bit=1" | sudo tee -a /boot/config.txt > /dev/null'
+    remote_cmd 'sudo reboot'
+
+    wait_for_ready
+  fi
 fi
 
+echo -e "Updating System, configuring prerequisites, renaming, rebooting"
 # Update, set config, rename and reboot
-execute_command "~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/install-init.sh $k8snodeNumber"
+remote_cmd "$SCRIPTS_DIR/node/install-init.sh $k8snodeNumber"
 
 wait_for_restart $hostname
 
 if $fanSHIM
 then
   echo "Installing FanSHIM"
-  execute_command '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/common/install-fanshim.sh'
+  remote_cmd '$SCRIPTS_DIR/common/install-fanshim.sh'
 fi
 
-echo "Installing Docker"
-execute_command  $hostname '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/common/install-docker.sh'
+# Install Docker
+remote_cmd  $hostname '$SCRIPTS_DIR/common/install-docker.sh'
 
 wait_for_restart $hostname
 
-echo "Installing Kubernetes"
-execute_command '~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets/common/install-kubernetes.sh'
+# Install Kubernetes
+remote_cmd '$SCRIPTS_DIR/common/install-kubernetes.sh'
 
 echo "Joining Node to Kubernetes Master"
-execute_command 'sudo ~/k8s-join-node.sh'
+remote_cmd 'sudo ~/k8s-join-node.sh'
 
 echo -e "\nInstallation Completed!\n"
