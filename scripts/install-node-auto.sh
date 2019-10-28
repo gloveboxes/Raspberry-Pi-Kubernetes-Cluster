@@ -125,7 +125,7 @@ wait_for_network
 
 ssh-keyscan -H $hostname >> ~/.ssh/known_hosts  # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
 
-wait_for_restart $hostname
+wait_for_ready $hostname
 
 sshpass -p "raspberry" scp ~/k8s-join-node.sh $hostname:~/
 
@@ -161,7 +161,7 @@ echo -e "Updating System, configuring prerequisites, renaming, rebooting"
 # Update, set config, rename and reboot
 remote_cmd "$SCRIPTS_DIR/node/install-init.sh $k8snodeNumber"
 
-wait_for_restart $hostname
+wait_for_ready $hostname
 
 if $fanSHIM
 then
@@ -172,7 +172,7 @@ fi
 # Install Docker
 remote_cmd  $hostname '$SCRIPTS_DIR/common/install-docker.sh'
 
-wait_for_restart $hostname
+wait_for_ready $hostname
 
 # Install Kubernetes
 remote_cmd '$SCRIPTS_DIR/common/install-kubernetes.sh'
