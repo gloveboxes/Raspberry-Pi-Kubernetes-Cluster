@@ -166,18 +166,18 @@ wait_for_ready $hostname
 if $fanSHIM
 then
   echo "Installing FanSHIM"
-  remote_cmd '$SCRIPTS_DIR/common/install-fanshim.sh'
+  remote_cmd "$SCRIPTS_DIR/common/install-fanshim.sh"
 fi
 
 # Install Docker
-remote_cmd '$SCRIPTS_DIR/common/install-docker.sh'
+remote_cmd "$SCRIPTS_DIR/common/install-docker.sh"
 
 wait_for_ready $hostname
 
 # Install Kubernetes
-remote_cmd '$SCRIPTS_DIR/common/install-kubernetes.sh'
+remote_cmd "$SCRIPTS_DIR/common/install-kubernetes.sh"
 
 echo "Joining Node to Kubernetes Master"
-remote_cmd 'sudo ~/k8s-join-node.sh'
+remote_cmd "sudo ~/k8s-join-node.sh"
 
 echo -e "\nInstallation Completed!\n"
