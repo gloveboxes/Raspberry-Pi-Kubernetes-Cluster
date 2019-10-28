@@ -1,6 +1,6 @@
 # Preload the Kubernetes images
-# echo -e "\nPulling Kubernetes Images - this will take a few minutes depending on network speed.\n"
-# kubeadm config images pull
+echo -e "\nPulling Kubernetes Images - this will take a few minutes depending on network speed.\n"
+kubeadm config images pull
 
 echo -e "\nInitialising Kubernetes Master - This will take a few minutes. Be patient:)\n"
 
