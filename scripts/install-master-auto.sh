@@ -128,7 +128,6 @@ remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 
-echo -e "\nUpdating System, configuring prerequisites, renaming, rebooting\n"
 
 if $kernel64bit
 then
@@ -139,6 +138,7 @@ fi
 # Static network IP on eth0 , set up packet passthrough to wlan
 remote_cmd "$SCRIPTS_DIR/master/setup-networking.sh"
 
+echo -e "\nUpdating System, configuring prerequisites, renaming, rebooting\n"
 # Update, set config, rename and reboot
 remote_cmd "$SCRIPTS_DIR/master/install-init.sh"
 

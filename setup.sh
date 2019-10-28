@@ -16,6 +16,7 @@ rm master.zip
 
 # cd ~/kube-setup/scripts
 
+echo "Setting Execute Permissions for Installation Scripts"
 cd ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts
 sudo chmod +x *.sh
 
