@@ -121,38 +121,18 @@ bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubern
 
 2. Select **M**aster set up.
 
-#### Step 2: Configure Prerequisites
+3. Configure Installation Options
 
-1. Various optimizations/prerequisites set (tmpfs, GPU memory, 64bit kernel enabled, swap disabled, cgroups for k8s, iptables set to legacy mode).
-2. Network settings configured (Static address for eth0, and packet routing defined).
-3. DHCP and NFS Servers installed.
-4. The Raspberry Pi will be renamed to **k8smaster**.
-5. The Raspberry Pi is rebooted.
+    * Enable 64bit Linux Kernel
+    * Install [Pimoroni Fan SHIM](https://shop.pimoroni.com/products/fan-shim) Support
 
-#### Step 3: Docker Installation
-
-1. Reconnect to the Raspberry Pi as `ssh pi@k8smaster.local`.
-2. Docker is installed.
-3. The Raspberry Pi is rebooted.
-
-#### Step 4: Kubernetes Installation
-
-1. Reconnect to the Raspberry Pi as `ssh pi@k8smaster.local`.
-2. The installation will restart.
-3. Kubernetes will be installed.
-
-#### Step 5: Kubernetes Master Configuration
-
-1. [Flannel CNI](https://kubernetes.io/docs/concepts/cluster-administration/networking/#the-kubernetes-network-model) (Cluster Networking) installation.
-2. [MetalLB LoadBalance](https://metallb.universe.tf/) installation.
-3. [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) installation and configured for [admin access](https://medium.com/@kanrangsan/creating-admin-user-to-access-kubernetes-dashboard-723d6c9764e4).
+    The automated installation will start.
 
 ## Kubernetes Node Installation
 
 Ensure the k8smaster and all the Raspberry Pis that will be configured are **powered on** and connected to the **Network Switch**. The DHCP Server running on the k8smaster will allocate an IP Addresses to the Raspberry Pis to become the Kubernetes nodes.
 
 ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/k8s-first-node.png)
-
 
 #### Step 1: Connect to the Raspberry Pi to be Configured as a Node
 
@@ -306,3 +286,11 @@ sudo kubeadm reset && sudo systemctl daemon-reload && sudo systemctl restart kub
 
 1. [Kubernetes NFS-Client Provisioner](https://github.com/kubernetes-incubator/external-storage/tree/master/nfs-client)
 2. [NFS Client Provisioner Deployment Template](https://github.com/kubernetes-incubator/external-storage/blob/master/nfs-client/deploy/deployment-arm.yaml)
+
+### Flannel Cluster Networking
+
+1. [Flannel CNI](https://kubernetes.io/docs/concepts/cluster-administration/networking/#the-kubernetes-network-model) (Cluster Networking) installation.
+
+### MetalLB Load Balancer
+
+1. [MetalLB LoadBalance](https://metallb.universe.tf/) installation.
