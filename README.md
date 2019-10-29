@@ -110,31 +110,31 @@ Ensure the Raspberry Pi to be configured as a **Kubernetes Master** is:
 2. The **WiFi Router** is in range and powered on.
 3. If rebuilding the Kubernetes Master and disconnect existing Kubernetes Nodes from the Network Switch as they can interfere with Kubernetes Master initialization.
 
-#### Step 1: Connect to the Raspberry Pi to be Configured as the Kubernetes Master
+#### Step 1: Start the Kubernetes Master Installation Process
 
-1. From a macOS, Linux, or Windows Bash (Linux Subsystem for Windows)
+1. Open a new terminal window from a macOS, Linux, or Windows Bash (Linux Subsystem for Windows).
 2. Run the following command from the SSH terminal you started in step 1.
 
-```bash
-bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
-```
+    ```bash
+    bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
+    ```
 
-2. Select **M**aster set up.
+3. Select **M**aster set up.
 
-3. Configure Installation Options
+4. Configure Installation Options
 
     * Enable 64bit Linux Kernel
     * Install [Pimoroni Fan SHIM](https://shop.pimoroni.com/products/fan-shim) Support
 
-    The automated installation will start.
+5. The automated installation will start.
 
 ## Kubernetes Node Installation
 
 Ensure the k8smaster and all the Raspberry Pis that will be configured are **powered on** and connected to the **Network Switch**. The DHCP Server running on the k8smaster will allocate an IP Addresses to the Raspberry Pis to become the Kubernetes nodes.
 
-![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/k8s-first-node.png)
+![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/kubernetes-nodes.png)
 
-### Step 1: Connect to the Raspberry Pi to be Configured as a Node
+### Step 1: Connect to the new configured Kubernetes Master
 
 1. From your desktop computer, start an SSH Session to the k8smaster `ssh pi@k8smaster.local`
 
@@ -156,17 +156,17 @@ Ensure the k8smaster and all the Raspberry Pis that will be configured are **pow
 
     <!-- * Enable Boot From USB -->
 
-### Step 3: Review Available Devices
+### Step 3: Review Devices
 
 A list of devices found will be displayed. The devices display are those that have been allocated an IP Address by the DHCP Server running on the Kubernetes Master. Note, Kubernetes Nodes will only be installed on devices named _raspberrypi_.
 
-    Reading leases from /var/lib/dhcp/dhcpd.leases
-    MAC                IP              hostname       valid until         manufacturer
-    ===============================================================================================
-    b8:27:eb:39:61:6a  192.168.100.50  raspberrypi    2019-10-24 05:40:55 -NA-
-    b8:27:eb:8f:ed:9a  192.168.100.52  raspberrypi    2019-10-24 05:41:54 -NA-
-    b8:27:eb:a1:2f:52  192.168.100.51  raspberrypi    2019-10-24 05:41:05 -NA-
-    b8:27:eb:f4:7d:66  192.168.100.53  raspberrypi    2019-10-24 05:43:48 -NA-
+```text
+Reading leases from /var/lib/dhcp/dhcpd.leases
+MAC                IP              hostname       valid until         manufacturer
+===============================================================================================
+b8:27:eb:39:61:6a  192.168.100.50  raspberrypi    2019-10-24 05:40:55 -NA-
+b8:27:eb:a1:2f:52  192.168.100.51  raspberrypi    2019-10-24 05:41:05 -NA-
+```
 
 Answer yes when all devices you wish to install Kubernetes on are displayed. The automated installation will now start.
 
