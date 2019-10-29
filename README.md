@@ -134,11 +134,11 @@ Ensure the k8smaster and all the Raspberry Pis that will be configured are **pow
 
 ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/k8s-first-node.png)
 
-#### Step 1: Connect to the Raspberry Pi to be Configured as a Node
+### Step 1: Connect to the Raspberry Pi to be Configured as a Node
 
 1. From your desktop computer, start an SSH Session to the k8smaster `ssh pi@k8smaster.local`
 
-#### Step 2: Start the Installation Process
+### Step 2: Start the Installation Process
 
 1. Run the following command from the SSH terminal you started in step 1.
 
@@ -153,9 +153,22 @@ Ensure the k8smaster and all the Raspberry Pis that will be configured are **pow
     * Enable 64bit Linux Kernel
     * Install [Pimoroni Fan SHIM](https://shop.pimoroni.com/products/fan-shim) Support
 
-    The automated installation will start.
+
     <!-- * Enable Boot From USB -->
 
+### Step 3: Review Available Devices
+
+A list of devices found will be displayed. The device display are those that have been allocated an IP Address by the DHCP Server running on the Kubernetes Master. Note, Kubernetes Nodes will only be installed on devices named _raspberrypi_.
+
+    Reading leases from /var/lib/dhcp/dhcpd.leases
+    MAC                IP              hostname       valid until         manufacturer
+    ===============================================================================================
+    b8:27:eb:39:61:6a  192.168.100.50  raspberrypi    2019-10-24 05:40:55 -NA-
+    b8:27:eb:8f:ed:9a  192.168.100.52  raspberrypi    2019-10-24 05:41:54 -NA-
+    b8:27:eb:a1:2f:52  192.168.100.51  raspberrypi    2019-10-24 05:41:05 -NA-
+    b8:27:eb:f4:7d:66  192.168.100.53  raspberrypi    2019-10-24 05:43:48 -NA-
+
+Answer yes when all devices you wish to install Kubernetes on are displayed. The automated installation will now start.
 
 <!-- #### Step 4: Enable Boot from USB3 SSD
 
@@ -168,6 +181,8 @@ If you have USB3 attached SSD Storage then select this option. The installation 
 5. **fdisk** will close and the SSD dive with be formated and the SD Root root drive copied and the **cmdline.txt** patched to boot from SSD.
 
 This requires a reboot, log back in after the reboot and the installation will continue. -->
+
+
 
 ## Setting up a Static Route to the Kubernetes Cluster
 
