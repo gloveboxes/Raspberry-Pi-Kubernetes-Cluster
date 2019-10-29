@@ -6,7 +6,7 @@
 |----|---|
 |Platform| Raspberry Pi, Raspbian Buster, Kernel 4.19|
 |Date|October 2019|
-| Acknowledgements | Inspired by [Alex Ellis' work with his Raspberry Pi Zero Docker Cluster](https://blog.alexellis.io/visiting-pimoroni/) |
+| Acknowledgments | Inspired by [Alex Ellis' work with his Raspberry Pi Zero Docker Cluster](https://blog.alexellis.io/visiting-pimoroni/) |
 |Skill Level| This guide assumes you have some Raspberry Pi and networking experience. |
 
 ## Building a Raspberry Pi Kubernetes Cluster
@@ -43,7 +43,7 @@ The following list assumes a Kubernetes cluster built with a minimum of three Ra
 |Items||
 |-----|----|
 | 1 x Raspberry Pi for Kubernetes Master.<br/><ul><li>I used a Raspberry 3B Plus, I had one spare, it has dual-band WiFi, and Gigabit Ethernet over USB 2.0 port (300Mbps), fast enough.</li></ul><br/>2 x Raspberry Pis for Kubernetes Nodes<ul><li>I used two Raspberry Pi 4 4GBs.</li><li>Raspberry Pi 4s make great Kubernetes Nodes, but Raspberry Pi 3s and 2s work very well too.</li></ul> | ![rpi4](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/rpi4.png)
-|3 x SD Cards, one for each Raspberry Pi in the cluster.<ul><li>Minimum 16GB, recommend 32GB. The new U3 Series from SanDisk are very fast!</li><li>Can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.</li><li>Unsure what SD Card to buy, then check out these [SD Card recommendations](https://www.androidcentral.com/best-sd-cards-raspberry-pi-4)</li></ul> | ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/sd-cards.png) |
+|3 x SD Cards, one for each Raspberry Pi in the cluster.<ul><li>Minimum 16GB, recommend 32GB. The new U3 Series from SanDisk is fast!</li><li>The SD Card can be smaller if you intend to run the Kubernetes Nodes from USB3 SSD.</li><li>Unsure what SD Card to buy, then check out these [SD Card recommendations](https://www.androidcentral.com/best-sd-cards-raspberry-pi-4)</li></ul> | ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/sd-cards.png) |
 |3 x Power supplies, one for each Raspberry Pi.|![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/power-supply.jpg)|
 |1 x Network Switch [Dlink DGS-1005A](https://www.dlink.com.au/home-solutions/DGS-1005A-5-port-gigabit-desktop-switch) or similar| ![network switch](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/switch.png) |
 |3 x Ethernet Patch Cables (I used 25cm patch cables to reduce clutter.) | ![patch cables](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/patch-cable.jpg)|
@@ -64,7 +64,7 @@ There are plenty of guides for flashing Raspbian Lite SD Cards. Here are a coupl
 
 ### Creating Raspbian SD Card Boot Images
 
-1. Using [balena Etcher](https://www.balena.io/etcher/), flash 3 x SD Cards with [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/). See introduction to [Installing operating system images](https://www.raspberrypi.org/documentation/installation/installing-images/).
+1. Using [balena Etcher](https://www.balena.io/etcher/), flash 3 x SD Cards with [Raspbian Buster Lite](https://www.raspberrypi.org/downloads/raspbian/). See the introduction to [Installing operating system images](https://www.raspberrypi.org/documentation/installation/installing-images/).
 2. On each SD Card create an empty file named **ssh**, this enables SSH login on the Raspberry Pi.
     * **Windows:** From Powershell, open the drive labeled _boot_, most likely the _d:_ drive, and type `echo $null > ssh; exit`. From the Windows Command Prompt, open drive labeled _boot_, most like the _d:_ drive, and type `type NUL > ssh & exit`.
     * **macOS and Linux:** Open terminal from drive labeled _boot_, type `touch ssh && exit`.
@@ -158,7 +158,7 @@ Ensure the k8smaster and all the Raspberry Pis that will be configured are **pow
 
 ### Step 3: Review Available Devices
 
-A list of devices found will be displayed. The device display are those that have been allocated an IP Address by the DHCP Server running on the Kubernetes Master. Note, Kubernetes Nodes will only be installed on devices named _raspberrypi_.
+A list of devices found will be displayed. The devices display are those that have been allocated an IP Address by the DHCP Server running on the Kubernetes Master. Note, Kubernetes Nodes will only be installed on devices named _raspberrypi_.
 
     Reading leases from /var/lib/dhcp/dhcpd.leases
     MAC                IP              hostname       valid until         manufacturer
