@@ -5,6 +5,7 @@ kernel64bit=false
 ipaddress=''
 k8snodeNumber=''
 fanSHIM=false
+bootFromUsb=false
 
 function valid_ip()
 {

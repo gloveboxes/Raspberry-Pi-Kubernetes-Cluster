@@ -33,7 +33,7 @@ function StartNodeInstall() {
 
         if [ "$hostname" = "raspberrypi" ]; then
             getNextNodeNumber
-            ./install-node-auto.sh -i $ipaddress -n $nodeCount $set64BitKernelFlag $setFanShimFlag $setBootFromUsbFlag &
+            ./install-node-auto.sh -i $ipaddress -n $nodeCount $set64BitKernelFlag $setFanShimFlag $setBootFromUsbFlag
             ((nodeCount++))
         fi
     done
