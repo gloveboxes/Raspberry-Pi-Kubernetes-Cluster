@@ -44,7 +44,7 @@ function wait_for_network() {
       sleep 2
     fi    
   done 
-  echo "\nConnected"
+  echo -e "\nConnected"
   sleep 2
 }
 
