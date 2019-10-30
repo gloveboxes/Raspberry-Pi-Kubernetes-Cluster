@@ -3,6 +3,7 @@
 nodeCount=1
 set64BitKernelFlag=''
 setFanShimFlag=''
+setBootFromUsbFlag=''
 
 
 function getNextNodeNumber() {
@@ -32,7 +33,7 @@ function StartNodeInstall() {
 
         if [ "$hostname" = "raspberrypi" ]; then
             getNextNodeNumber
-            ./install-node-auto.sh -i $ipaddress -n $nodeCount $set64BitKernelFlag $setFanShimFlag &
+            ./install-node-auto.sh -i $ipaddress -n $nodeCount $set64BitKernelFlag $setFanShimFlag $setBootFromUsbFlag &
             ((nodeCount++))
         fi
     done
@@ -49,6 +50,19 @@ function ListDevices() {
         case $response in
             [Yy]* ) break;;
             [Nn]* ) continue;;
+            * ) echo "Please answer [Y]es, [N]o).";;
+        esac
+    done
+}
+
+function EnableBootFromUSB() {
+    while :
+    do
+        echo ""
+        read -p "Enable Boot from USB ? ([Y]es, [N]o): " response
+        case $response in
+            [Yy]* ) setBootFromUsbFlag='-u'; break;;
+            [Nn]* ) setBootFromUsbFlag=''; break;;
             * ) echo "Please answer [Y]es, [N]o).";;
         esac
     done
@@ -81,6 +95,7 @@ function EnableFanShim() {
 }
 
 ListDevices
+EnableBootFromUSB
 Enable64BitKernel
 EnableFanShim
 StartNodeInstall
