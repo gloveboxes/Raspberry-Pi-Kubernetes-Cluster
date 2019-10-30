@@ -28,8 +28,10 @@ function StartNodeInstall() {
         hostname=$(echo $i | cut -f2 -d:)
 
         if [ "$hostname" = "raspberrypi" ]; then
+            echo -e "\nStarting installation for device $ipaddress"
+
             getNextNodeNumber
-            echo -e "\nStarting installation for device $ipaddress\n"
+
             ./install-node-auto.sh -i $ipaddress -n $nodeCount $set64BitKernelFlag $setFanShimFlag $setBootFromUsbFlag
             ((nodeCount++))
         fi
@@ -42,7 +44,7 @@ function ListDevices() {
         echo -e "\nThe follow table lists Kubernetes Node Candidates.\n"
 
         devices=$(dhcp-lease-list --parsable 2>/dev/null |  egrep -o 'IP.*|' | awk '{print $2 ":"  $4}')
-        
+
         printf "%15s : %s\n" "HostName" "IP Address" 
         echo "================================"
         for i in $devices
