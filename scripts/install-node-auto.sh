@@ -131,7 +131,7 @@ ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname" &> /dev/null
 
 wait_for_network
 
-ssh-keyscan -H $hostname >> ~/.ssh/known_hosts  &> /dev/null # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
+ssh-keyscan -H $hostname >> ~/.ssh/known_hosts  2> /dev/null # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
 
 wait_for_ready $hostname
 
