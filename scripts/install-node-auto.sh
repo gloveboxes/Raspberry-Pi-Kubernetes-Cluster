@@ -30,17 +30,21 @@ function remote_cmd() {
 
 
 function wait_for_network() {
+  echo
+  printf "Waiting for network connection to Raspberry Pi."
   while :
   do
     # Loop until network response
-    ping $hostname -c 4
+    ping $hostname -c 2 > /dev/null
     if [ $? -eq 0 ]
     then
       break
     else
+      printf "."
       sleep 2
     fi    
   done 
+  echo -e " Connected.\n"
   sleep 2
 }
 
@@ -64,7 +68,7 @@ function wait_for_ready () {
 }
 
 
-while getopts i:n:fxh flag; do
+while getopts i:n:fxhu flag; do
   case $flag in
     i)
       ipaddress=$OPTARG
@@ -74,6 +78,9 @@ while getopts i:n:fxh flag; do
       ;;
     f)
       fanSHIM=true
+      ;;
+    u)
+      bootFromUsb=true
       ;;
     x)
       kernel64bit=true
@@ -141,6 +148,40 @@ echo -e "\nSetting Execution Permissions for installation scripts\n"
 remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/node/*.sh"
+
+
+# enable boot from USB
+if $bootFromUsb
+then
+  BOOT_USB3=false
+
+  while :
+  do
+      BOOT_USB3=false
+      echo 
+
+      remote_cmd "lsblk" 
+      echo
+      echo -e "\nListed are all the available block devices\n"
+      echo -e "This script assumes only ONE USB Drive is connected to the Raspberry Pi at /dev/sda"
+      echo -e "This script will DELETE ALL existing partitions on the USB drive at /dev/sda"
+      echo -e "A new primary partition is created and formated as /dev/sda1\n"
+
+      read -p "Do you wish proceed? ([Y]es, [N]o, [R]efresh): " response
+
+      case $response in
+      [Yy]* ) BOOT_USB3=true; break;;
+      [Nn]* ) break;;
+      [Rr]* ) continue;;
+      * ) echo "Please answer [Y]es, or [N]o).";;
+      esac
+  done
+
+  if [ "$BOOT_USB3" = true ]; then
+    remote_cmd "$SCRIPTS_DIR/common/boot-from-usb.sh"
+    wait_for_ready
+  fi
+fi
 
 # Enable 64bit Kernel
 if $kernel64bit

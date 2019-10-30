@@ -41,7 +41,7 @@ function wait_for_network() {
     then
       break
     else
-      print "."
+      printf "."
       sleep 2
     fi    
   done 
@@ -75,15 +75,12 @@ while getopts i:n:fxhu flag; do
       ipaddress=$OPTARG
       ;;
     f)
-      echo "Enable Fan SHIM"
       fanSHIM=true
       ;;
     u)
-      echo "Enable Boot from USB"
       bootFromUsb=true
       ;;
     x)
-      echo "Enable 64bit Kernel"
       kernel64bit=true
       ;;
     h)
