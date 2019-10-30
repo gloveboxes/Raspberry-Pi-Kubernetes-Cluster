@@ -52,22 +52,21 @@ function wait_for_network() {
 
 function wait_for_ready () {
   sleep 4
-
-  printf "Waiting for the Raspberry Pi to restart."
+  echo "Waiting for the Raspberry Pi to be ready."
 
   while :
   do
     # Loop until you can successfully execute a command on the remote system
-    remote_cmd 'uname -a'
+    remote_cmd 'uname -a' 2> /dev/null
     if [ $? -eq 0 ]
     then
+      echo "Waiting"
       break
     else
-      printf "."
       sleep 4
     fi    
   done    
-  echo -e " Connected.\n"
+  echo -e "Ready.\n"
   sleep 2
 }
 

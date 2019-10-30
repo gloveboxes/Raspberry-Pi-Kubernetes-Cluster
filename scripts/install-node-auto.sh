@@ -52,7 +52,6 @@ function wait_for_network() {
 
 function wait_for_ready () {
   sleep 4
-
   echo "Waiting for the Raspberry Pi to be ready."
 
   while :
