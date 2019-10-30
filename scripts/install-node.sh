@@ -40,8 +40,16 @@ function ListDevices() {
     while :
     do
         echo -e "\nThe follow table lists Kubernetes Node Candidates.\n"
-        dhcp-lease-list 2>/dev/null
+
         devices=$(dhcp-lease-list --parsable 2>/dev/null |  egrep -o 'IP.*|' | awk '{print $2 ":"  $4}')
+        printf "%15s : %s\n" "HostName" "IP Address" 
+        echo "================================"
+        for i in $devices
+        do 
+            ipaddress=$(echo $i | cut -f1 -d:)
+            hostname=$(echo $i | cut -f2 -d:)
+            printf "%15s : %s\n" $hostname $ipaddress
+        done
 
         echo -e "\nKubernetes only be installed on devices with a hostname of 'raspberrypi'"
         read -p "Are all devices to be configured as Kubernetes Nodes listed? ([Y]es, [N]o to refresh.): " response
