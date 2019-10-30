@@ -42,6 +42,7 @@ function ListDevices() {
         echo -e "\nThe follow table lists Kubernetes Node Candidates.\n"
 
         devices=$(dhcp-lease-list --parsable 2>/dev/null |  egrep -o 'IP.*|' | awk '{print $2 ":"  $4}')
+        
         printf "%15s : %s\n" "HostName" "IP Address" 
         echo "================================"
         for i in $devices
