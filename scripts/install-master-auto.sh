@@ -31,17 +31,20 @@ function remote_cmd() {
 
 
 function wait_for_network() {
+  printf "Waiting for network connection "
   while :
   do
     # Loop until network response
-    ping $hostname -c 2
+    ping $hostname -c 2 > /dev/null
     if [ $? -eq 0 ]
     then
       break
     else
+      print "."
       sleep 2
     fi    
   done 
+  echo "\nConnected"
   sleep 2
 }
 
@@ -122,7 +125,7 @@ ssh-keyscan -H $hostname >> ~/.ssh/known_hosts  # https://www.techrepublic.com/a
 
 wait_for_ready
 
-echo -e "\nDownloading installation bootstrap\n"
+echo -e "\nDownloading installation bootstrap onto the Raspberry Pi\n"
 remote_cmd 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
 remote_cmd 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
 remote_cmd 'sudo unzip -qq master.zip'

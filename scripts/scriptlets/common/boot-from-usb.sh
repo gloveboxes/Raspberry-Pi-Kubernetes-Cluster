@@ -1,7 +1,5 @@
 #!/bin/bash
-echo -e "\nEnabling boot from USB3 Drive\n"
-
-exit 
+echo -e "\nEnabling boot from USB Drive\n"
 
 sudo sfdisk --delete /dev/sda
 echo 'type=83' | sudo sfdisk /dev/sda
