@@ -65,7 +65,7 @@ function wait_for_ready () {
 }
 
 
-while getopts i:n:fxh flag; do
+while getopts i:n:fxhu flag; do
   case $flag in
     i)
       ipaddress=$OPTARG
@@ -139,7 +139,7 @@ remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 if $bootFromUsb
 then
   $SCRIPTS_DIR/common/boot-from-usb.sh
-  
+
   wait_for_ready
 fi
 
