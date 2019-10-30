@@ -1,8 +1,8 @@
 #!/bin/bash
 echo -e "\nEnabling boot from USB Drive\n"
 
-sudo sfdisk --delete /dev/sda
-echo 'type=83' | sudo sfdisk /dev/sda
+sudo sfdisk --delete /dev/sda > /dev/null
+echo 'type=83' | sudo sfdisk /dev/sda > /dev/null
 sudo sfdisk -d /dev/sda
 
 sudo mkfs.ext4 /dev/sda1
