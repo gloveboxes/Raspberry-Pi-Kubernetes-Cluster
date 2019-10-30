@@ -4,6 +4,7 @@ SCRIPTS_DIR="~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/scriptlets"
 kernel64bit=false
 ipaddress=''
 fanSHIM=false
+bootFromUsb=false
 
 
 function valid_ip()
@@ -73,6 +74,10 @@ while getopts i:n:fxh flag; do
       echo "Enable Fan SHIM"
       fanSHIM=true
       ;;
+    u)
+      echo "Enable Boot from USB"
+      bootFromUsb=true
+      ;;
     x)
       echo "Enable 64bit Kernel"
       kernel64bit=true
@@ -127,6 +132,17 @@ echo -e "\nSetting Execution Permissions for installation scripts\n"
 remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/common/*.sh"
 remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
+
+
+
+# enable boot from USB
+if $bootFromUsb
+then
+  $SCRIPTS_DIR/common/boot-from-usb.sh
+  
+  wait_for_ready
+fi
+
 
 # Enable 64bit Kernel
 if $kernel64bit

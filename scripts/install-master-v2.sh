@@ -4,6 +4,7 @@
 set64BitKernelFlag=''
 setFanShimFlag=''
 ipaddress=''
+setBootFromUsbFlag=''
 
 function valid_ip()
 {
@@ -20,6 +21,19 @@ function valid_ip()
         stat=$?
     fi
     return $stat
+}
+
+function EnableBootFromUSB() {
+    while :
+    do
+        echo ""
+        read -p "Enable Boot from USB ? ([Y]es, [N]o): " response
+        case $response in
+            [Yy]* ) setBootFromUsbFlag='-u'; break;;
+            [Nn]* ) setBootFromUsbFlag=''; break;;
+            * ) echo "Please answer [Y]es, [N]o).";;
+        esac
+    done
 }
 
 function Enable64BitKernel() {
@@ -69,7 +83,8 @@ function GetIpAddress() {
 }
 
 GetIpAddress
+EnableBootFromUSB
 Enable64BitKernel
 EnableFanShim
 
-./install-master-auto.sh -i $ipaddress $set64BitKernelFlag $setFanShimFlag
+./install-master-auto.sh -i $ipaddress $set64BitKernelFlag $setFanShimFlag $setBootFromUsbFlag
