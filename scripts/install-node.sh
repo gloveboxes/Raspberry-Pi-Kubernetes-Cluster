@@ -9,7 +9,7 @@ setBootFromUsbFlag=''
 function getNextNodeNumber() {
     while :
     do
-        ping "k8snode$nodeCount.local" -c 1 > /dev/null
+        ping "k8snode$nodeCount.local" -c 1 &> /dev/null
         if [ $? -ne 0 ]
         then 
             break
