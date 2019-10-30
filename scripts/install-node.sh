@@ -9,7 +9,7 @@ setBootFromUsbFlag=''
 function getNextNodeNumber() {
     while :
     do
-        ping "k8snode$nodeCount.local" -c 1
+        ping "k8snode$nodeCount.local" -c 1 > /dev/null
         if [ $? -ne 0 ]
         then 
             break
@@ -25,11 +25,6 @@ function StartNodeInstall() {
     do 
         ipaddress=$(echo $i | cut -f1 -d:)
         hostname=$(echo $i | cut -f2 -d:)
-
-        echo "IP Address $ipaddress"
-        echo "Hostname $hostname"
-        echo "FanShim $setFanShimFlag"
-        echo "64Bit Kernel $set64BitKernelFlag"
 
         if [ "$hostname" = "raspberrypi" ]; then
             getNextNodeNumber
