@@ -150,13 +150,14 @@ then
       echo -e "\nListed are all the available block devices\n"
       echo -e "This script assumes only ONE USB Drive is connected to the Raspberry Pi at /dev/sda"
       echo -e "This script will DELETE ALL existing partitions on the USB drive at /dev/sda"
-      echo -e "A new primary partition is created and formated at /dev/sda1\n"
+      echo -e "A new primary partition is created and formated as /dev/sda1\n"
 
-      read -p "Do you wish to create a bootable USB drive on device /dev/sda? ([Y]es, [N]o): " response
+      read -p "Do you wish proceed? ([Y]es, [N]o, [R]efresh): " response
 
       case $response in
       [Yy]* ) BOOT_USB3=true; break;;
       [Nn]* ) break;;
+      [Rr]* ) continue;;
       * ) echo "Please answer [Y]es, or [N]o).";;
       esac
   done
