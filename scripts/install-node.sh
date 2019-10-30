@@ -4,6 +4,7 @@ nodeCount=1
 set64BitKernelFlag=''
 setFanShimFlag=''
 setBootFromUsbFlag=''
+devices=''
 
 
 function getNextNodeNumber() {
@@ -20,7 +21,7 @@ function getNextNodeNumber() {
 }
 
 function StartNodeInstall() {
-    devices=$(dhcp-lease-list --parsable 2>/dev/null |  egrep -o 'IP.*|' | awk '{print $2 ":"  $4}')
+    # devices=$(dhcp-lease-list --parsable 2>/dev/null |  egrep -o 'IP.*|' | awk '{print $2 ":"  $4}')
     for i in $devices
     do 
         ipaddress=$(echo $i | cut -f1 -d:)
@@ -40,6 +41,7 @@ function ListDevices() {
     do
         echo -e "\nThe follow table lists Kubernetes Node Candidates.\n"
         dhcp-lease-list 2>/dev/null
+        devices=$(dhcp-lease-list --parsable 2>/dev/null |  egrep -o 'IP.*|' | awk '{print $2 ":"  $4}')
 
         echo -e "\nKubernetes only be installed on devices with a hostname of 'raspberrypi'"
         read -p "Are all devices to be configured as Kubernetes Nodes listed? ([Y]es, [N]o to refresh.): " response
