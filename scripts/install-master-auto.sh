@@ -31,7 +31,8 @@ function remote_cmd() {
 
 
 function wait_for_network() {
-  printf "Waiting for network connection to Raspberry Pi "
+  echo
+  printf "Waiting for network connection to Raspberry Pi."
   while :
   do
     # Loop until network response
@@ -44,7 +45,7 @@ function wait_for_network() {
       sleep 2
     fi    
   done 
-  echo -e " Connected\n"
+  echo -e " Connected.\n"
   sleep 2
 }
 
