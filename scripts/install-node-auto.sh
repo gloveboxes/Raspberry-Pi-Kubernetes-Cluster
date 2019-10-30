@@ -123,11 +123,11 @@ fi
 hostname=$ipaddress
 
 # delete existing kubernetes node
-kubectl delete node k8snode$k8snodeNumber
+kubectl delete node k8snode$k8snodeNumber &> /dev/null
 
 # Remove any existing ssh finger prints for the device
-ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "k8snode$k8snodeNumber.local"
-ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
+ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "k8snode$k8snodeNumber.local" &> /dev/null
+ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname" &> /dev/null
 
 wait_for_network
 
