@@ -34,7 +34,7 @@ function wait_for_network() {
   while :
   do
     # Loop until network response
-    ping $hostname -c 4
+    ping $hostname -c 2
     if [ $? -eq 0 ]
     then
       break
@@ -138,7 +138,7 @@ remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 # enable boot from USB
 if $bootFromUsb
 then
-  $SCRIPTS_DIR/common/boot-from-usb.sh
+  remote_cmd "$SCRIPTS_DIR/common/boot-from-usb.sh"
 
   wait_for_ready
 fi
