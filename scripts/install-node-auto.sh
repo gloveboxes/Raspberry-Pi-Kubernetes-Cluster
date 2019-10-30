@@ -60,9 +60,9 @@ function wait_for_ready () {
     remote_cmd 'uname -a' 2> /dev/null
     if [ $? -eq 0 ]
     then
-      echo "Waiting"
       break
     else
+      echo "Waiting"
       sleep 4
     fi    
   done    
