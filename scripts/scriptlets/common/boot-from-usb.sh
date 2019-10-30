@@ -15,7 +15,7 @@ do
     echo -e "This script will DELETE ALL existing partitions on the USB drive at /dev/sda"
     echo -e "A new primary partition is created and formated at /dev/sda1\n"
 
-    read -p "Do you wish to create a bootable USB drive on device /dev/sda? ([Y]es, [N]o): " response 
+    read -p "Do you wish to create a bootable USB drive on device /dev/sda? ([Y]es, [N]o): " response < /dev/tty
 
     case $response in
     [Yy]* ) BOOT_USB3=true; break;;
