@@ -138,9 +138,33 @@ remote_cmd "sudo chmod +x $SCRIPTS_DIR/master/*.sh"
 # enable boot from USB
 if $bootFromUsb
 then
-  remote_cmd "$SCRIPTS_DIR/common/boot-from-usb.sh"
+  BOOT_USB3=false
 
-  wait_for_ready
+  while :
+  do
+      BOOT_USB3=false
+      echo 
+
+      remote_cmd "lsblk" 
+      echo
+      echo -e "\nListed are all the available block devices\n"
+      echo -e "This script assumes only ONE USB Drive is connected to the Raspberry Pi at /dev/sda"
+      echo -e "This script will DELETE ALL existing partitions on the USB drive at /dev/sda"
+      echo -e "A new primary partition is created and formated at /dev/sda1\n"
+
+      read -p "Do you wish to create a bootable USB drive on device /dev/sda? ([Y]es, [N]o): " response
+
+      case $response in
+      [Yy]* ) BOOT_USB3=true; break;;
+      [Nn]* ) break;;
+      * ) echo "Please answer [Y]es, or [N]o).";;
+      esac
+  done
+
+  if [ "$BOOT_USB3" = true ]; then
+    remote_cmd "$SCRIPTS_DIR/common/boot-from-usb.sh"
+    wait_for_ready
+  fi
 fi
 
 
