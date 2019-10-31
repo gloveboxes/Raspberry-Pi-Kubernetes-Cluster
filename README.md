@@ -110,7 +110,18 @@ Ensure the Raspberry Pi to be configured as a **Kubernetes Master** is:
 2. The **WiFi Router** is in range and powered on.
 3. If rebuilding the Kubernetes Master and disconnect existing Kubernetes Nodes from the Network Switch as they can interfere with Kubernetes Master initialization.
 
-#### Step 1: Start the Kubernetes Master Installation Process
+#### Step 1: Install Prerequisites on your computer
+
+The installation bash scripts have two dependences. You need to install the following
+
+1. sshpass. Required to automate the installation process on the Raspberry Pi from your desktop computer.
+2. unzip. Required to unzip the installation scripts that are downloaded from GitHub.
+
+```bash
+sudo apt install sshpass unzip
+```
+
+#### Step 2: Start the Kubernetes Master Installation Process
 
 1. Open a new terminal window from a macOS, Linux, or Windows Bash (Linux Subsystem for Windows).
 2. Run the following command from the SSH terminal you started in step 1.
@@ -122,7 +133,7 @@ Ensure the Raspberry Pi to be configured as a **Kubernetes Master** is:
 3. Select **M**aster set up.
 
 4. Configure Installation Options
-
+    * Enable Boot from USB3 support
     * Enable 64bit Linux Kernel
     * Install [Pimoroni Fan SHIM](https://shop.pimoroni.com/products/fan-shim) Support
 
@@ -149,7 +160,7 @@ Ensure the k8smaster and all the Raspberry Pis that will be configured are **pow
 2. Select **N**ode set up.
 
 3. Configure Installation Options
-
+    * Enable Boot from USB3 support
     * Enable 64bit Linux Kernel
     * Install [Pimoroni Fan SHIM](https://shop.pimoroni.com/products/fan-shim) Support
 
@@ -161,11 +172,10 @@ Ensure the k8smaster and all the Raspberry Pis that will be configured are **pow
 A list of devices found will be displayed. The devices display are those that have been allocated an IP Address by the DHCP Server running on the Kubernetes Master. Note, Kubernetes Nodes will only be installed on devices named _raspberrypi_.
 
 ```text
-Reading leases from /var/lib/dhcp/dhcpd.leases
-MAC                IP              hostname       valid until         manufacturer
-===============================================================================================
-b8:27:eb:39:61:6a  192.168.100.50  raspberrypi    2019-10-24 05:40:55 -NA-
-b8:27:eb:a1:2f:52  192.168.100.51  raspberrypi    2019-10-24 05:41:05 -NA-
+          HostName : IP Address
+================================
+       raspberrypi : 192.168.100.50
+       raspberrypi : 192.168.100.51
 ```
 
 Answer yes when all devices you wish to install Kubernetes on are displayed. The automated installation will now start.
