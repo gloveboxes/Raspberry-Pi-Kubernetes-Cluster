@@ -34,6 +34,10 @@ sudo dphys-swapfile swapoff > /dev/null
 sudo dphys-swapfile uninstall > /dev/null
 sudo systemctl disable dphys-swapfile > /dev/null
 
+# Enable I2C
+sudo raspi-config nonint do_i2c 0
+# Enable SPI
+sudo raspi-config nonint do_spi 0
 # maximise memory by reducing gpu memory
 echo "gpu_mem=16" | sudo tee -a /boot/config.txt > /dev/null
 # disable wifi on the node board as network will be over Ethernet
