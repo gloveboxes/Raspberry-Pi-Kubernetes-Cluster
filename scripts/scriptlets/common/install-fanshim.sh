@@ -23,6 +23,7 @@ cd ~/
 
 while : ;
 do
+    rm ~/master.zip
     wget https://github.com/pimoroni/fanshim-python/archive/master.zip
     if [ $? -eq 0 ]
     then
