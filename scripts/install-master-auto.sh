@@ -105,10 +105,8 @@ then
 fi
 
 # Validate IP Address
-if valid_ip $ipaddress
+if ! valid_ip $ipaddress
 then
-  echo 'good ip address'
-else
   echo "invalid IP Address entered. Try again"
   exit 1
 fi
