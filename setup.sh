@@ -34,7 +34,6 @@ if [ -d "$BOOTSTRAP_DIR" ]; then
 fi
 
 unzip -qq master.zip
-rm master.zip
 
 echo -e "\nSetting Execute Permissions for Installation Scripts\n"
 cd ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts
