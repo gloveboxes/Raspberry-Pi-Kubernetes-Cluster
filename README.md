@@ -110,18 +110,7 @@ Ensure the Raspberry Pi to be configured as a **Kubernetes Master** is:
 2. The **WiFi Router** is in range and powered on.
 3. If rebuilding the Kubernetes Master and disconnect existing Kubernetes Nodes from the Network Switch as they can interfere with Kubernetes Master initialization.
 
-#### Step 1: Install Prerequisites on your computer
-
-The installation bash scripts have two dependences. You need to install the following
-
-1. sshpass. Required to automate the installation process on the Raspberry Pi from your desktop computer.
-2. unzip. Required to unzip the installation scripts that are downloaded from GitHub.
-
-```bash
-sudo apt install sshpass unzip
-```
-
-#### Step 2: Start the Kubernetes Master Installation Process
+#### Step 1: Start the Kubernetes Master Installation Process
 
 1. Open a new terminal window from a macOS, Linux, or Windows Bash (Linux Subsystem for Windows).
 2. Run the following command from the SSH terminal you started in step 1.
