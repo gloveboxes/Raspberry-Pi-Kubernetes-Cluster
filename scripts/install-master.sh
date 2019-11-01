@@ -82,9 +82,30 @@ function GetIpAddress() {
     done
 }
 
+function Generate_SSH() {
+    echo -e "\nGenerating SSH Key for Raspberry Pi Kubernetes Cluster Automated Installation\n"
+
+    if [ ! -d "~/.ssh" ]; then
+        mkdir -p ~/.ssh
+        echo -e "\nYou may be prompted for your local password to set the correct permissions for the ~/.ssh directory (700)\n"
+        sudo chmod -R 700 ~/.ssh
+    fi
+
+    if [ ! -f ~/.ssh/id_rsa_rpi_kube_cluster ]; then 
+        ssh-keygen -t rsa -N "" -b 4096 -f ~/.ssh/id_rsa_rpi_kube_cluster
+    fi
+
+    echo -e "About to copy the public SSH key to the Raspberry Pi."
+    echo -e 'You will be prompted to "Accept continue connecting", type yes'
+    echo -e "You will be prompted for the Raspberry Pi password. The default password is 'raspberry'\n"
+
+    ssh-copy-id -i ~/.ssh/id_rsa_rpi_kube_cluster pi@$ipaddress 
+}
+
 GetIpAddress
 EnableBootFromUSB
 Enable64BitKernel
 EnableFanShim
+Generate_SSH
 
 ./install-master-auto.sh -i $ipaddress $set64BitKernelFlag $setFanShimFlag $setBootFromUsbFlag
