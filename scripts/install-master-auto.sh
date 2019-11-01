@@ -116,11 +116,6 @@ hostname=$ipaddress
 
 wait_for_network
 
-# Remove any existing ssh finger prints for the device
-echo -e "\nDeleting existing SSH Fingerprint for $hostname\n"
-ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$hostname"
-ssh-keyscan -H $hostname >> ~/.ssh/known_hosts  # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
-
 wait_for_ready
 
 echo -e "\nDownloading installation bootstrap onto the Raspberry Pi\n"
