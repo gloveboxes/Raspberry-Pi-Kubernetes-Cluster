@@ -25,7 +25,7 @@ Confirm
 
 cd ~/
 
-curl -O https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip
+curl -O -J -L https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip
 
 BOOTSTRAP_DIR=~/Raspberry-Pi-Kubernetes-Cluster-master
 if [ -d "$BOOTSTRAP_DIR" ]; then
