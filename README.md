@@ -108,7 +108,7 @@ Ensure the Raspberry Pi to be configured as a **Kubernetes Master** is:
 
 1. Connected by **Ethernet** to the **Network Switch**, and the **Network Switch** is power **on**.
 2. The **WiFi Router** is in range and powered on.
-3. If rebuilding the Kubernetes Master and disconnect existing Kubernetes Nodes from the Network Switch as they can interfere with Kubernetes Master initialization.
+3. If rebuilding the Kubernetes Master then `disconnect` existing Kubernetes Nodes from the Network Switch as they can interfere with Kubernetes Master initialization.
 
 #### Step 1: Start the Kubernetes Master Installation Process
 
