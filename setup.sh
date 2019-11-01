@@ -22,6 +22,7 @@ function Confirm() {
 }
 
 Confirm
+echo
 
 cd ~/
 
