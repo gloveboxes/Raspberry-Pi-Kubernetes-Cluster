@@ -34,6 +34,7 @@ if [ -d "$BOOTSTRAP_DIR" ]; then
     sudo rm -r -f ~/Raspberry-Pi-Kubernetes-Cluster-master
 fi
 
+rm -r -f Raspberry-Pi-Kubernetes-Cluster-master
 unzip -qq Raspberry-Pi-Kubernetes-Cluster-master.zip
 rm Raspberry-Pi-Kubernetes-Cluster-master.zip
 
