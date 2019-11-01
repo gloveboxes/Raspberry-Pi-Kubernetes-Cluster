@@ -102,9 +102,7 @@ function Generate_SSH() {
     echo -e 'You will be prompted to "Accept continue connecting", type yes'
     echo -e "You will be prompted for the Raspberry Pi password. The default password is 'raspberry'\n"
 
-    # Remove any existing ssh finger prints for the device
-    echo -e "\nDeleting existing SSH Fingerprint for $hostname\n"
-    ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$ipaddress"
+    ssh-keygen -f "/home/pi/.ssh/known_hosts" -R "$ipaddress" &> /dev/null
     ssh-keyscan -H $ipaddress >> ~/.ssh/known_hosts  # https://www.techrepublic.com/article/how-to-easily-add-an-ssh-fingerprint-to-your-knownhosts-file-in-linux/
 
     ssh-copy-id -i ~/.ssh/id_rsa_rpi_kube_cluster pi@$ipaddress 

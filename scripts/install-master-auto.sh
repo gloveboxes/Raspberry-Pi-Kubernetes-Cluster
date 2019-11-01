@@ -26,7 +26,7 @@ function valid_ip()
 
 
 function remote_cmd() {
-    ssh -i /home/dave/.ssh/id_rsa_rpi_kube_cluster pi@$hostname $1
+    ssh -i ~/.ssh/id_rsa_rpi_kube_cluster pi@$hostname $1
 }
 
 

@@ -22,7 +22,7 @@ function Confirm() {
 }
 
 Confirm
-echo
+echo -e "\n"
 
 cd ~/
 
