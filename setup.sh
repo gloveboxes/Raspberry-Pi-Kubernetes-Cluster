@@ -1,5 +1,28 @@
 #!/bin/bash
 
+
+function Confirm() {
+
+    echo -e "\nThis script will install everything needed for a Raspberry Pi Kubernetes Cluster\n"
+
+    echo -e "Always be careful when running scripts and commands copied"
+    echo -e "from the internet. Ensure they are from a trusted source.\n"
+
+    echo -e "If you want to see what this script does before running it,"
+    echo -e "you should run: 'curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh'\n"
+
+
+    printf "Do you wish to continue? [y/N]: "
+    read -n1 response
+
+    if [ ! $response = 'y' ]
+    then
+        exit
+    fi
+}
+
+Confirm
+
 cd ~/
 
 wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip
