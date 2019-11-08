@@ -182,15 +182,13 @@ If you have USB3 attached SSD Storage then select this option. The installation 
 
 This requires a reboot, log back in after the reboot and the installation will continue. -->
 
-
-
 ## Setting up a Static Route to the Kubernetes Cluster
 
 1. The Kubernetes Cluster runs isolated on the **Network Switch** and operates on subnet 192.168.100.0/24.
 2. A static route needs to be configured either on the **Network Router** (or on your computer) to define the entry point (gateway) into the Cluster subnet (192.168.100.0/24).
 3. The gateway into the cluster is the IP Address of the WiFi adapter on the Kubernetes Master Raspberry Pi. In the following diagram, the gateway into the cluster is the address allocated by the **Network Router** to the Kubernetes Master WiFi adapter which is 192.168.0.55.
 
-Most **Network Routers** allow you to configure a static router. The following is an example configured on a Linksys Router.
+Most **Network Routers** allow you to configure a static route. The following is an example configured on a Linksys Router.
 
 ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/static-route-linksys.png)
 
