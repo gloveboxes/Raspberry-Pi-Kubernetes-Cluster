@@ -124,7 +124,7 @@ Ensure the Raspberry Pi to be configured as a **Kubernetes Master** is:
 
 4. Configure Installation Options
     * Enable Boot from USB3 support
-    * Enable 64bit Linux Kernel
+    <!-- * Enable 64bit Linux Kernel -->
     * Install [Pimoroni Fan SHIM](https://shop.pimoroni.com/products/fan-shim) Support
 
 5. The automated installation will start. Note, the entire automated Kubernetes Master installation process is driven from your desktop computer.
@@ -151,7 +151,7 @@ Ensure the k8smaster and all the Raspberry Pis that will be configured are **pow
 
 3. Configure Installation Options
     * Enable Boot from USB3 support
-    * Enable 64bit Linux Kernel
+    <!-- * Enable 64bit Linux Kernel -->
     * Install [Pimoroni Fan SHIM](https://shop.pimoroni.com/products/fan-shim) Support
 
 
@@ -170,23 +170,11 @@ A list of devices found will be displayed. The devices display are those that ha
 
 Answer yes when all devices you wish to install Kubernetes on are displayed. The automated installation will now start.
 
-<!-- #### Step 4: Enable Boot from USB3 SSD
-
-If you have USB3 attached SSD Storage then select this option. The installation script assumes the USB SSD Drive is located at **/dev/sda**. The scripts starts **fdisk**, you need to create a clean disk partition. Follow these steps:
-
-1. p to display existing disk partition
-2. d to delete existing partitions
-3. n to create a new partition, create a new primary partition, and take the rest of the defaults.
-4. w to write new partition table
-5. **fdisk** will close and the SSD dive with be formated and the SD Root root drive copied and the **cmdline.txt** patched to boot from SSD.
-
-This requires a reboot, log back in after the reboot and the installation will continue. -->
-
 ## Setting up a Static Route to the Kubernetes Cluster
 
 1. The Kubernetes Cluster runs isolated on the **Network Switch** and operates on subnet 192.168.100.0/24.
-2. A static route needs to be configured either on the **Network Router** (or on your computer) to define the entry point (gateway) into the Cluster subnet (192.168.100.0/24).
-3. The gateway into the cluster is the IP Address of the WiFi adapter on the Kubernetes Master Raspberry Pi. In the following diagram, the gateway into the cluster is the address allocated by the **Network Router** to the Kubernetes Master WiFi adapter which is 192.168.0.55.
+2. A static route needs to be configured either on the **Network Router** or on your computer to define the entry point (gateway) into the Cluster subnet (192.168.100.0/24).
+3. The gateway IP Address is allocated by your **Network Router** to the Kubernetes Master WiFi adapter. In the above example the Gateway address is 192.168.0.55.
 
 Most **Network Routers** allow you to configure a static route. The following is an example configured on a Linksys Router.
 
