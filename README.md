@@ -50,7 +50,7 @@ The following list assumes a Kubernetes cluster built with a minimum of three Ra
 | Optional: If you using a Raspberry Pi 4 then recommend active cooling: Pimoroni [FanSHIM](https://shop.pimoroni.com/products/fan-shim) | ![FanSHIM](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/fan-shim.jpg) |
 |Optional: 1 x [Raspberry Pi Rack](https://www.amazon.com.au/gp/product/B013SSA3HA/ref=ppx_yo_dt_b_asin_title_o02_s00?ie=UTF8&psc=1) or similar | ![raspberry pi rack](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/rack.jpg) |
 |Optional: 2 x [Pimoroni Blinkt](https://shop.pimoroni.com/products/blinkt) RGB Led Strips. The BlinkT LED Strip can be a great way to visualize pod activity. | ![blinlt](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/blinkt.jpg)|
-|Optional: 2 x USB3 Flash Drivers for Kubernetes Nodes, or similar. Would recommend the Samsung [USB 3.1 Flash Drive FIT Plus 128GB](https://www.samsung.com/us/computing/memory-storage/usb-flash-drives/usb-3-1-flash-drive-fit-plus-128gb-muf-128ab-am/). See the [5 of the Fastest and Best USB 3.0 Flash Drives](https://www.makeuseof.com/tag/5-of-the-fastest-usb-3-0-flash-drives-you-should-buy/). Installation script sets up Raspberry Pi Boot from USB3.| ![usb3 ssd](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/samsung-flash-128.png) |
+|Optional: 2 x USB3 Flash Drivers for Kubernetes Nodes, or similar. I would recommend the Samsung [USB 3.1 Flash Drive FIT Plus 128GB](https://www.samsung.com/us/computing/memory-storage/usb-flash-drives/usb-3-1-flash-drive-fit-plus-128gb-muf-128ab-am/). See the [5 of the Fastest and Best USB 3.0 Flash Drives](https://www.makeuseof.com/tag/5-of-the-fastest-usb-3-0-flash-drives-you-should-buy/). Installation script sets up Raspberry Pi Boot from USB3.| ![usb3 ssd](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/samsung-flash-128.png) |
 |Optional: 2 x USB3 SSDs for Kubernetes Nodes, or similar, ie something small. Installation script sets up Raspberry Pi Boot from USB3 SSD. Note, these are [SSD Enclosures](https://www.amazon.com.au/Wavlink-10Gbps-Enclosure-Aluminum-Include/dp/B07D54JH16/ref=sr_1_8?keywords=usb+3+ssd&qid=1571218898&s=electronics&sr=1-8), you need the M.2 drives as well.| ![usb3 ssd](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/usb-ssd.jpg) |
 
 ## Flashing Raspbian Buster Lite Boot SD Cards
@@ -135,7 +135,7 @@ Ensure the k8smaster and all the Raspberry Pis that will be configured are **pow
 
 ![](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/kubernetes-nodes.png)
 
-### Step 1: Connect to the new configured Kubernetes Master
+### Step 1: Connect to the newly configured Kubernetes Master
 
 1. From your desktop computer, start an SSH Session to the k8smaster `ssh pi@k8smaster.local`
 
@@ -174,7 +174,7 @@ Answer yes when all devices you wish to install Kubernetes on are displayed. The
 
 1. The Kubernetes Cluster runs isolated on the **Network Switch** and operates on subnet 192.168.100.0/24.
 2. A static route needs to be configured either on the **Network Router** or on your computer to define the entry point (gateway) into the Cluster subnet (192.168.100.0/24).
-3. The gateway IP Address is allocated by your **Network Router** to the Kubernetes Master WiFi adapter. In the above example the Gateway address is 192.168.0.55.
+3. The gateway IP Address is allocated by your **Network Router** to the Kubernetes Master WiFi adapter. In the above example, the Gateway address is 192.168.0.55.
 
 Most **Network Routers** allow you to configure a static route. The following is an example configured on a Linksys Router.
 
