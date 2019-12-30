@@ -14,13 +14,12 @@ spec:
     app: led-controller
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: led-controller
   labels:
-   app: led-controller
+    app: led-controller
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: led-controller
@@ -28,19 +27,6 @@ spec:
     metadata:
       labels:
         app: led-controller
-    spec:
-      # ensure of pods on different nodes
-      # https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
-      affinity:
-          podAntiAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-            - labelSelector:
-                matchExpressions:
-                - key: led-controller
-                  operator: In
-                  values:
-                  - led-controller
-              topologyKey: "kubernetes.io/hostname"
     spec:
       containers:
       - name: led-controller
