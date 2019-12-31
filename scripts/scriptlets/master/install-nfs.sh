@@ -6,6 +6,7 @@
 # Make the nfs directory to be shared
 mkdir -p ~/nfsshare
 mkdir -p ~/nfsshare/nginx
+mkdir -p ~/nfsshare/notebooks
 
 # Change ownership recurse
 sudo chown -R nobody:nogroup /home/pi/nfsshare
@@ -15,7 +16,7 @@ echo "Hello, World!" > /home/pi/nfsshare/nginx/index.html
 
 # available to * (all) IP address on the cluster
 echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports  > /dev/null
-echo "/home/pi/nfsshare/nginx *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports  > /dev/null
+# echo "/home/pi/nfsshare/nginx *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports  > /dev/null
 
 # reload exports
 sudo exportfs -ra

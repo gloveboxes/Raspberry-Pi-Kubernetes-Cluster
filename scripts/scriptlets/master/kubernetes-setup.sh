@@ -29,12 +29,21 @@ sudo chmod +x ~/get-dashboard-token.sh
 
 echo -e "\nInstalling Persistent Storage Support\n"
 
-## Enable Persistent Storage
-kubectl apply -f ./persistent-storage/nfs-client-deployment-arm.yaml
-kubectl apply -f ./persistent-storage/storage-class.yaml
+## Disabled NFS Storage Class Provisioner as now using
+## NFS Persistent Volumes
+## Leaving here for future reference
+
+## kubectl apply -f ./persistent-storage/nfs-client-deployment-arm.yaml
+## kubectl apply -f ./persistent-storage/storage-class.yaml
 
 ## Install nginx
 
 kubectl apply -f ./nginx/nginx-pv.yaml
 kubectl apply -f ./nginx/nginx-pv-claim.yaml
 kubectl apply -f ./nginx/nginx-deployment.yaml
+
+## Install jupyter notebooks
+
+kubectl apply -f ./jupyter/jupyter-volume.yaml
+kubectl apply -f ./jupyter/jupyter-volume-claim.yaml
+kubectl apply -f ./jupyter/jupyter-deployment.yaml

@@ -1,0 +1,22 @@
+# https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistent-volumes
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nginx-volume
+  labels: 
+    storage-tier: nfs
+spec:
+  capacity:
+    storage: 5Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  storageClassName: managed-nfs-storage
+  mountOptions:
+    - hard
+    - nfsvers=4.1
+  nfs:
+    path: /home/pi/nfsshare/nginx
+    server: k8smaster.local

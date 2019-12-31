@@ -1,0 +1,51 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jupyter
+  labels:
+    app: jupyter
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8888
+      protocol: TCP
+      targetPort: 8888
+  selector:
+    app: jupyter
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jupyter
+  labels:
+   app: jupyter
+spec:
+
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jupyter
+  template:
+    metadata:
+      labels:
+        app: jupyter
+    spec:
+      volumes:
+      - name: "jupyter-data"
+        persistentVolumeClaim:
+            claimName: "jupyter-claim"
+        # hostPath:
+        #   path: "/home/pi/notebooks"
+      containers:
+      - name: jupyter
+        image: glovebox/jupyter-datascience:latest
+        volumeMounts:
+          - mountPath: "/notebooks"
+            name: "jupyter-data"
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8888
+          protocol: TCP
+
+# on the node user pi, mkdir notebooks
+# sudo chmod -R 757 notebooks/

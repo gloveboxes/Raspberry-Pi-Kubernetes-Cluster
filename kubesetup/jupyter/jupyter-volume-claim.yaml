@@ -1,13 +1,13 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: nginx-claim
+  name: jupyter-claim
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 5Gi
   selector:
     matchLabels:
-      volume: nginx-volume
+      volume: jupyter-volume
