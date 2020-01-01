@@ -36,7 +36,7 @@ sudo raspi-config nonint do_spi 0
 # Disable hdmi to reduce power consumption
 sudo sed -i -e '$i \/usr/bin/tvservice -o\n' /etc/rc.local
 
-echo -e "\nMoving /tmp and /var/log to tmpfs - reduce SD Card wear\n"
+# echo -e "\nMoving /tmp and /var/log to tmpfs - reduce SD Card wear\n"
 # Disk optimisations - move temp to ram.
 # Reduce writes to the SD Card and increase IO performance by mapping the /tmp and /var/log directories to RAM. 
 # Note you will lose the contents of these directories on reboot.
