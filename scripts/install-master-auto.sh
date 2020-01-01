@@ -201,6 +201,12 @@ remote_cmd "$SCRIPTS_DIR/common/install-docker.sh"
 
 wait_for_ready
 
+# Install log2ram
+echo "Installing Log2Ram"
+remote_cmd "$SCRIPTS_DIR/common/install-log2ram.sh"
+
+wait_for_ready
+
 # Install Kubernetes Master
 echo -e "\nInstalling Kubernetes\n"
 remote_cmd "$SCRIPTS_DIR/common/install-kubernetes.sh"
