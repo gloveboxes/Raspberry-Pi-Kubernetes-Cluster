@@ -1,0 +1,71 @@
+<html>
+
+<head>
+    <link rel="shortcut icon" type="image/png" href="./static/index.png">
+    <link rel="stylesheet" type="text/css" href="./static/style.css">
+    <title>Getting Started with Kubernetes</title>
+</head>
+
+<body>
+    <img src="kubernetes-up-and-running.png">
+    <h1>Getting started with Kubernetes</h1>
+
+    <p>You can download a free copy of the <a
+            href="https://azure.microsoft.com/en-us/resources/kubernetes-up-and-running/?WT.mc_id=github-blog-dglover"
+            target="_blank">Kubernetes:
+            Up and Running, Second Edition</a> book.</p>
+
+    <p>It is an excellent introduction to Kubernetes and it will accelerate your understanding of Kubernetes.</p>
+
+    <p>Published: 8/22/2019</p>
+
+    <p>Improve the agility, reliability, and efficiency of your distributed systems by using Kubernetes. Get the
+        practical
+        Kubernetes deployment skills you need in this O’Reilly e-book. You’ll learn how to:</p>
+    <ul>
+        <li> Develop and deploy real-world applications.</li>
+
+        <li>Create and run a simple cluster.</li>
+
+        <li>Integrate storage into containerized microservices.</li>
+
+        <li>Use Kubernetes concepts and specialized objects like DaemonSet jobs, ConfigMaps, and secrets.</li>
+    </ul>
+
+    <p>Learn how to use tools and APIs to automate scalable distributed systems for online services, machine learning
+        applications, or even a cluster of Raspberry Pi computers.</p>
+
+    <h2>Kubernetes Resources</h2>
+
+    <a href="https://github.com/kubernetes-up-and-running/kuard" target="_blank">Demo application for "Kubernetes Up and
+        Running (on GitHub)"</a>
+
+    <h2>Installed Demos</h2>
+
+    <ol>
+        <li>NGINX Web Server: <a href="http://192.168.100.203/" target="_blank">This page</a></li>
+        <li>Jupyter Data Scrience Notebook: <a href="http://192.168.100.200:8888/" target="_blank"> Jupyter Notebooks
+                Data Science (Python3, Pandas, Numpy, Scipy, Tensorflow 2</a></li>
+        <li>Led Controller: <a href="http://192.168.100.201/api/ToggleLed?led=0"
+                target="_blank">http://192.168.100.201/api/ToggleLed?led=0</a></li>
+        <li>Image Classification: curl -X POST http://192.168.100.203/image -H "Content-Type: application/octet-stream"
+            --data-binary @banana.jpg</li>
+    </ol>
+
+
+
+<h2>Running Demos</h2>
+
+    <h3>Image Classification</h3>>
+    <code>
+        while : ; do curl -X POST http://192.168.100.203/image -H "Content-Type: application/octet-stream" --data-binary @banana.jpg done
+    </code>
+
+<h3>LED Controller</h3>
+<code>
+    count=0; while : ; do count=$(($count + 1)); curl http://192.168.100.202/api/ToggleLed?led=$(($count % 8)); done
+</code>
+
+</body>
+
+</html>

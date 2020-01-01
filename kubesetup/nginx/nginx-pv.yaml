@@ -6,7 +6,7 @@ metadata:
     volume: nginx-volume
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadOnlyMany
   capacity:
     storage: 5Gi
   nfs:

@@ -17,7 +17,7 @@ Building a Kubernetes Intelligent Edge cluster on Raspberry Pi is a great learni
 
 You can download a free copy of the [Kubernetes: Up and Running, Second Edition](https://azure.microsoft.com/en-us/resources/kubernetes-up-and-running/?WT.mc_id=github-blog-dglover) book. It is an excellent introduction to Kubernetes and it will accelerate your understanding of Kubernetes.
 
-![](Resources/kubernetes-up-and-running-2.png)
+![](Resources/kubernetes-up-and-running.png)
 
 Published: 8/22/2019
 

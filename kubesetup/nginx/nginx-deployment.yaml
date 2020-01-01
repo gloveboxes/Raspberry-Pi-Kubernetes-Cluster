@@ -11,23 +11,22 @@ spec:
       protocol: TCP
       targetPort: 80
   selector:
-    app: nginx-deployment
+    app: nginx-web-server
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
-  name: nginx-deployment
+  name: nginx-web-server
   labels:
-    app: nginx-deployment
+    app: nginx-web-server
 spec:
-  replicas: 1
   selector:
     matchLabels:
-      app: nginx-deployment
+      app: nginx-web-server
   template:
     metadata:
       labels:
-        app: nginx-deployment
+        app: nginx-web-server
     spec:
       volumes:
         - name: nginx-storage
@@ -36,6 +35,15 @@ spec:
       containers:
         - name: task-pv-container
           image: nginx
+          livenessProbe:
+            httpGet:
+              path: /healthy
+              port: 80
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 10
+            failureThreshold: 3
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
               name: "http-server"

@@ -4,7 +4,7 @@ metadata:
   name: nginx-claim
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadOnlyMany
   resources:
     requests:
       storage: 5Gi
