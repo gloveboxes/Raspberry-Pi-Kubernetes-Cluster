@@ -10,11 +10,12 @@ mkdir -p ~/nfsshare/mysql
 mkdir -p ~/nfsshare/notebooks
 mkdir -p ~/nfsshare/kuard
 
+cp -r ~/Raspberry-Pi-Kubernetes-Cluster-master/nginx/ ~/nfsshare/
+
 # Change ownership recurse
 sudo chown -R nobody:nogroup /home/pi/nfsshare
 # ‘777’ permission, everyone can read, write and execute the file, recurse
 sudo chmod -R 777 /home/pi/nfsshare
-echo "Hello, World!" > /home/pi/nfsshare/nginx/index.html
 
 # available to * (all) IP address on the cluster
 echo "/home/pi/nfsshare *(rw,async,no_subtree_check)" | sudo tee -a /etc/exports  > /dev/null
