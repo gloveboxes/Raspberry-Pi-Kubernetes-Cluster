@@ -6,7 +6,9 @@
 # Make the nfs directory to be shared
 mkdir -p ~/nfsshare
 mkdir -p ~/nfsshare/nginx
+mkdir -p ~/nfsshare/mysql
 mkdir -p ~/nfsshare/notebooks
+mkdir -p ~/nfsshare/kuard
 
 # Change ownership recurse
 sudo chown -R nobody:nogroup /home/pi/nfsshare

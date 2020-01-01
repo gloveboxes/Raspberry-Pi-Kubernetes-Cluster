@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: mysql
+# labels so that we can bind a Service to this Pod
+  labels:
+    app: mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: database
+        image: biarms/mysql
+        # securityContext:
+          # privileged: true
+          # runAsUser: 0
+          # runAsGroup: 0
+          # fsGroup: 2000
+        resources:
+          requests:
+            memory: 2Gi
+        env:
+        # Environment variables are not a best practice for security,
+        # but we're using them here for brevity in the example.
+        # See Chapter 11 for better options.
+        - name: MYSQL_ROOT_PASSWORD
+          value: raspberry
+        livenessProbe:
+          tcpSocket:
+            port: 3306
+        ports:
+        - containerPort: 3306
+        # volumeMounts:
+        #   - name: database
+        #     mountPath: "/var/lib/mysql"
+      volumes:
+      - name: database
+        persistentVolumeClaim:
+          claimName: "mysql-claim"

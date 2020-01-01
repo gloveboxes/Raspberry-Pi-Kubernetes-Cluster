@@ -27,7 +27,7 @@ kubectl apply -f ./dashboard/dashboard-admin-role-binding.yml
 cp ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/get-dashboard-token.sh ~/
 sudo chmod +x ~/get-dashboard-token.sh
 
-echo -e "\nInstalling Persistent Storage Support\n"
+# echo -e "\nInstalling Persistent Storage Support\n"
 
 ## Disabled NFS Storage Class Provisioner as now using
 ## NFS Persistent Volumes
@@ -36,14 +36,30 @@ echo -e "\nInstalling Persistent Storage Support\n"
 ## kubectl apply -f ./persistent-storage/nfs-client-deployment-arm.yaml
 ## kubectl apply -f ./persistent-storage/storage-class.yaml
 
-## Install nginx
+echo -e "\nInstalling Demos"
 
+## Install nginx
 kubectl apply -f ./nginx/nginx-pv.yaml
 kubectl apply -f ./nginx/nginx-pv-claim.yaml
 kubectl apply -f ./nginx/nginx-deployment.yaml
 
 ## Install jupyter notebooks
-
 kubectl apply -f ./jupyter/jupyter-volume.yaml
 kubectl apply -f ./jupyter/jupyter-volume-claim.yaml
 kubectl apply -f ./jupyter/jupyter-deployment.yaml
+
+## Install Led Controller DeamonSet
+kubectl apply -f ./led-controller/led-controller.yml
+
+## Install Image Classifier
+kubectl apply -f ./image-classifier.yml
+
+# Install Python Flask API
+kubectl apply -f ./openweathermap.yml
+
+## Install Kubernetes Up and Running Demo (kuard)
+## https://github.com/kubernetes-up-and-running/kuard
+kubectl apply -f ./kuard/kuard-volume.yaml
+kubectl apply -f ./kuard/kuard-volume-claim.yaml
+kubectl apply -f ./kuard/kuard-deployment.yaml
+
