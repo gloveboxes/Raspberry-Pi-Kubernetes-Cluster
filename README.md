@@ -13,6 +13,28 @@
 
 Building a Kubernetes Intelligent Edge cluster on Raspberry Pi is a great learning experience, a stepping stone to building robust Intelligent Edge solutions, and an awesome way to impress your friends. Skills you develop on the _edge_ can be used in the _cloud_ with [Azure Kubernetes Service](https://azure.microsoft.com/en-au/services/kubernetes-service/?WT.mc_id=devto-blog-dglover).
 
+### Learning Kubernetes
+
+You can download a free copy of the [Kubernetes: Up and Running, Second Edition](https://azure.microsoft.com/en-us/resources/kubernetes-up-and-running/) book. It is an excellent introduction to Kubernetes and it will accelerate your understanding of Kubernetes.
+
+![](Resources/kubernetes-up-and-running-2.png)
+
+Published: 8/22/2019
+
+Improve the agility, reliability, and efficiency of your distributed systems by using Kubernetes. Get the practical Kubernetes deployment skills you need in this O’Reilly e-book. You’ll learn how to:
+
+* Develop and deploy real-world applications.
+
+* Create and run a simple cluster.
+
+* Integrate storage into containerized microservices.
+
+* Use Kubernetes concepts and specialized objects like DaemonSet jobs, ConfigMaps, and secrets. 
+
+Learn how to use tools and APIs to automate scalable distributed systems for online services, machine learning applications, or even a cluster of Raspberry Pi computers.
+
+## Introduction
+
 The Kubernetes cluster is built with Raspberry Pi 4 nodes and is very capable. It has been tested with Python and C# [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover), [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=github-blog-dglover) Machine Learning models, and [NGINX](https://www.nginx.com/) Web Server.
 
 This project forms the basis for a four-part _Intelligence on the Edge_ series. The followup topics will include:
