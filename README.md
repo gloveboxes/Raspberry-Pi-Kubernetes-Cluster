@@ -11,11 +11,11 @@
 
 ## Building a Raspberry Pi Kubernetes Cluster
 
-Building a Kubernetes Intelligent Edge cluster on Raspberry Pi is a great learning experience, a stepping stone to building robust Intelligent Edge solutions, and an awesome way to impress your friends. Skills you develop on the _edge_ can be used in the _cloud_ with [Azure Kubernetes Service](https://azure.microsoft.com/en-au/services/kubernetes-service/?WT.mc_id=devto-blog-dglover).
+Building a Kubernetes Intelligent Edge cluster on Raspberry Pi is a great learning experience, a stepping stone to building robust Intelligent Edge solutions, and an awesome way to impress your friends. Skills you develop on the _edge_ can be used in the _cloud_ with [Azure Kubernetes Service](https://azure.microsoft.com/en-au/services/kubernetes-service/?WT.mc_id=github-blog-dglover).
 
 ### Learning Kubernetes
 
-You can download a free copy of the [Kubernetes: Up and Running, Second Edition](https://azure.microsoft.com/en-us/resources/kubernetes-up-and-running/?WT.mc_id=devto-blog-dglover) book. It is an excellent introduction to Kubernetes and it will accelerate your understanding of Kubernetes.
+You can download a free copy of the [Kubernetes: Up and Running, Second Edition](https://azure.microsoft.com/en-us/resources/kubernetes-up-and-running/?WT.mc_id=github-blog-dglover) book. It is an excellent introduction to Kubernetes and it will accelerate your understanding of Kubernetes.
 
 ![](Resources/kubernetes-up-and-running-2.png)
 
@@ -39,7 +39,7 @@ The Kubernetes cluster is built with Raspberry Pi 4 nodes and is very capable. I
 
 This project forms the basis for a four-part _Intelligence on the Edge_ series. The followup topics will include:
 
-* Build, debug, and deploy Python and C# [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=devto-blog-dglover) to a Raspberry Pi Kubernetes Cluster, and learn how to access hardware from a Kubernetes managed container.
+* Build, debug, and deploy Python and C# [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=github-blog-dglover) to a Raspberry Pi Kubernetes Cluster, and learn how to access hardware from a Kubernetes managed container.
 
 * Developing, deploying and managing _Intelligence on the Edge_ with [Azure IoT Edge on Kubernetes](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-kubernetes?WT.mc_id=github-blog-dglover).
 
