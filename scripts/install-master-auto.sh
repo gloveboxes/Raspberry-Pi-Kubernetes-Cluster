@@ -120,9 +120,9 @@ wait_for_ready
 
 echo -e "\nDownloading installation bootstrap onto the Raspberry Pi\n"
 remote_cmd 'sudo rm -r -f Raspberry-Pi-Kubernetes-Cluster-master'
-remote_cmd 'sudo wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
-remote_cmd 'sudo unzip -qq master.zip'
-remote_cmd 'sudo rm master.zip'
+remote_cmd 'wget -q https://github.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/archive/master.zip'
+remote_cmd 'unzip -qq master.zip'
+remote_cmd 'rm master.zip'
 
 echo -e "\nSetting Execution Permissions for installation scripts\n"
 remote_cmd 'sudo chmod +x ~/Raspberry-Pi-Kubernetes-Cluster-master/scripts/*.sh'

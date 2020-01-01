@@ -41,7 +41,7 @@ echo -e "\nInstalling Demos"
 ## Install nginx
 kubectl apply -f ./nginx/nginx-pv.yaml
 kubectl apply -f ./nginx/nginx-pv-claim.yaml
-kubectl apply -f ./nginx/nginx-deployment.yaml
+kubectl apply -f ./nginx/nginx-daemonset.yaml
 
 ## Install jupyter notebooks
 kubectl apply -f ./jupyter/jupyter-volume.yaml
