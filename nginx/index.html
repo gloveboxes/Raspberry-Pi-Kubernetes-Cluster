@@ -24,16 +24,18 @@
         Kubernetes deployment skills you need in this O’Reilly e-book. You’ll learn how to:</p>
     <ul>
         <li> Develop and deploy real-world applications.</li>
-
         <li>Create and run a simple cluster.</li>
-
         <li>Integrate storage into containerized microservices.</li>
-
         <li>Use Kubernetes concepts and specialized objects like DaemonSet jobs, ConfigMaps, and secrets.</li>
     </ul>
 
     <p>Learn how to use tools and APIs to automate scalable distributed systems for online services, machine learning
         applications, or even a cluster of Raspberry Pi computers.</p>
+
+    <h2>Azure Kubernetes Services</h2>
+
+    <a href="https://docs.microsoft.com/azure/aks/?WT.mc_id=github-blog-dglover" target="_blank">Azure Kubernetes
+        Services Documentation</a>
 
     <h2>Kubernetes Resources</h2>
 
@@ -42,28 +44,58 @@
 
     <h2>Installed Demos</h2>
 
-    <ol>
-        <li>NGINX Web Server: <a href="http://192.168.100.203/" target="_blank">This page</a></li>
-        <li>Jupyter Data Scrience Notebook: <a href="http://192.168.100.200:8888/" target="_blank"> Jupyter Notebooks
-                Data Science (Python3, Pandas, Numpy, Scipy, Tensorflow 2</a></li>
-        <li>Led Controller: <a href="http://192.168.100.201/api/ToggleLed?led=0"
-                target="_blank">http://192.168.100.201/api/ToggleLed?led=0</a></li>
-        <li>Image Classification: curl -X POST http://192.168.100.203/image -H "Content-Type: application/octet-stream"
-            --data-binary @banana.jpg</li>
-    </ol>
+    <p>Before run the demos you need to insure an instance of the corresponding demo pod is running. By default, there
+        are zero
+        pod instances active when the cluster is set up. The easiest way to start a pod is from the Kubernetes Dashboard
+        <i>Deployments</i> and <i>Replica Set</i> tabs</p>
 
+    <p>You need the application service address and port. Again. most easily obtained from the
 
-
-<h2>Running Demos</h2>
-
-    <h3>Image Classification</h3>>
-    <code>
-        while : ; do curl -X POST http://192.168.100.203/image -H "Content-Type: application/octet-stream" --data-binary @banana.jpg done
+        <ul>
+            <li><a
+                    href="http://localhost:8001/api/v1/namespaces/kubernetes-dashboard/services/https:kubernetes-dashboard:/proxy/#/service?namespace=default">Kubernetes
+                    Services</a> tab</li>
+            <li>or from the command line:<br /><br />
+                <code>
+        <b>kubectl get services</b>
     </code>
 
-<h3>LED Controller</h3>
-<code>
-    count=0; while : ; do count=$(($count + 1)); curl http://192.168.100.202/api/ToggleLed?led=$(($count % 8)); done
+                <pre>
+NAME               TYPE           CLUSTER-IP      EXTERNAL-IP       PORT(S)          AGE
+image-classifier   LoadBalancer   10.96.136.29    192.168.100.200   80:32519/TCP     4h25m
+jupyter            LoadBalancer   10.96.224.173   192.168.100.203   8888:30471/TCP   4h25m
+kuard              LoadBalancer   10.96.229.114   192.168.100.201   8080:32515/TCP   4h25m
+kubernetes         ClusterIP      10.96.0.1       <none>            443/TCP          4h26m
+led-controller     LoadBalancer   10.96.148.9     192.168.100.205   80:30752/TCP     4h25m
+nginx-service      LoadBalancer   10.96.9.213     192.168.100.202   80:32711/TCP     4h25m
+openweathermap     LoadBalancer   10.96.109.92    192.168.100.204   80:31732/TCP     4h25m
+</pre>
+
+            </li>
+        </ul>
+
+        <h3>Preinstalled Demos</h3>
+
+        <ol>
+            <li>NGINX Web Server: http://{nginx-service EXTERNAL-IP}</li>
+            <li>Jupyter Notebook (Python3, Pandas, Numpy, Scipy, Tensorflow 2): http://{jupyter EXTERNAL-IP:8888/}</li>
+            <li>Led Controller: http://{led-controller EXTERNAL-IP}/api/ToggleLed?led=0</li>
+            <li>Image Classification: curl -X POST http://{image-classifier EXTERNAL-IP}/image -H "Content-Type:
+                application/octet-stream" --data-binary @banana.jpg</li>
+        </ol>
+
+
+
+        <h2>Running Demos</h2>
+
+        <h3>Image Classification</h3>
+        <code>
+        while : ; do curl -X POST http://{image-classifier EXTERNAL-IP}/image -H "Content-Type: application/octet-stream" --data-binary @banana.jpg done &
+    </code>
+
+        <h3>LED Controller</h3>
+        <code>
+    count=0; while : ; do count=$(($count + 1)); curl http://{led-controller EXTERNAL-IP}/api/ToggleLed?led=$(($count % 8)); done &
 </code>
 
 </body>
