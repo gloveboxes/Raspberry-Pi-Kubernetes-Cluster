@@ -39,9 +39,9 @@ spec:
             httpGet:
               path: /healthy
               port: 80
-            initialDelaySeconds: 5
+            initialDelaySeconds: 15
             timeoutSeconds: 1
-            periodSeconds: 10
+            periodSeconds: 120
             failureThreshold: 3
           imagePullPolicy: Always
           ports:

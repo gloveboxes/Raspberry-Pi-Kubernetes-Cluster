@@ -14,7 +14,7 @@ spec:
     app: jupyter
 ---
 apiVersion: apps/v1
-kind: Deployment
+kind: ReplicaSet
 metadata:
   name: jupyter
   labels:
