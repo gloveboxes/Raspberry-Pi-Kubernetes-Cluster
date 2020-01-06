@@ -279,6 +279,12 @@ NFS Server installed on k8smaster.local
 dhcp-lease-list
 ```
 
+### Switching Clusters
+
+```bash
+kubectl config use-context pi3 or pi4
+```
+
 ### Resetting Kubernetes Master or Node
 
 ````bash
