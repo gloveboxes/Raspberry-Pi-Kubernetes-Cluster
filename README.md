@@ -282,6 +282,10 @@ dhcp-lease-list
 ### Switching Clusters
 
 ```bash
+kubectl config get-contexts
+kubectl config view
+kubectl config current-context
+
 kubectl config use-context pi3 or pi4
 ```
 
