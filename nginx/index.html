@@ -121,7 +121,8 @@ openweathermap     LoadBalancer   10.96.109.92    192.168.100.204   80:31732/TCP
         <ol>
             <li>NGINX Web Server: http://{nginx-service EXTERNAL-IP}</li>
             <li>Jupyter Notebook (Python3, Pandas, Numpy, Scipy, Tensorflow 2): http://{jupyter EXTERNAL-IP:8888/}</li>
-            <li>Led Controller: http://{led-controller EXTERNAL-IP}/api/ToggleLed?led=0</li>
+            <li>Led Controller: http://{led-controller EXTERNAL-IP}/api/ToggleLed?led=0</li> (Python Azure Function) 
+            <li>Openweathermap: http://{openweathermap EXTERNAL-IP}/api/GetWeather?name=dave</li> (.NET C# Azure Function) 
             <li>Image Classification: curl -X POST http://{image-classifier EXTERNAL-IP}/image -H "Content-Type:
                 application/octet-stream" --data-binary @banana.jpg</li>
         </ol>
