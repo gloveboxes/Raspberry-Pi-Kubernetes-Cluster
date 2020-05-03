@@ -22,7 +22,8 @@ echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/
 while : ;
 do
     echo -e "\nInstalling Kubernetes Packages\n"
-    sudo apt-get update && sudo apt-get install -y kubeadm
+    sudo apt-get update
+    sudo apt-get install -y kubeadm
     if [ $? -eq 0 ]
     then
         break
