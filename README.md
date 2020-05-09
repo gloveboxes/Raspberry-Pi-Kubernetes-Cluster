@@ -224,7 +224,9 @@ route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.0.55
 
 ### Troubleshooting Worker Node DNS issues
 
-The Kubernetes master node network installation script sets the DNS servers used by the cluster to *domain-name-servers 8.8.8.8, 8.8.4.4* in */etc/dhcp/dhcpd.conf*. On company or managed networks querying these DNS servers may be blocked. If the default DNS addresses are blocked then the Kubernetes worker node installation will fail.
+The Kubernetes master node network installation script sets the DNS servers used by the cluster to *domain-name-servers 8.8.8.8, 8.8.4.4* in */etc/dhcp/dhcpd.conf*. 
+
+On company or managed networks querying these DNS servers may be blocked. If the default DNS addresses are blocked then the Kubernetes worker node installation will fail.
 
 Update the domain-name-servers in the */etc/dhcp/dhcpd.conf* file to the IP addresses of your managed network DNS servers.
 
