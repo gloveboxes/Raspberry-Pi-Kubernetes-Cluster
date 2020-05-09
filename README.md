@@ -5,7 +5,7 @@
 |Author|[Dave Glover, Microsoft Australia](https://developer.microsoft.com/en-us/advocates/dave-glover?WT.mc_id=github-blog-dglover)|
 |----|---|
 |Platform| Raspberry Pi, Raspbian Buster, Kernel 4.19|
-|Date|October 2019|
+|Date|Updated May 2020|
 | Acknowledgments | Inspired by [Alex Ellis' work with his Raspberry Pi Zero Docker Cluster](https://blog.alexellis.io/visiting-pimoroni/) |
 |Skill Level| This guide assumes you have some Raspberry Pi and networking experience. |
 
@@ -221,6 +221,12 @@ route add 192.168.100.0 mask 255.255.255.0 192.168.0.55
 ```bash
 route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.0.55
 ```
+
+### Troubleshooting Worker Node DNS issues
+
+The Kubernetes master node network installation script sets the DNS servers to *domain-name-servers 8.8.8.8, 8.8.4.4* in */etc/dhcp/dhcpd.conf*. On company or managed networks querying these DNS servers may be blocked. If the default DNS addresses are blocked then the Kubernetes worker node installation will fail.
+
+Update the domain-name-servers in the */etc/dhcp/dhcpd.conf* file to the IP addresses of your managed network DNS servers.
 
 ## Installing kubectl on your Desktop Computer
 
