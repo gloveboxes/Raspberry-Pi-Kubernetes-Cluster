@@ -231,7 +231,7 @@ route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.0.55
 4. Copy Kube Config from **k8smaster.local**
 
     ```bash
-    scp -r pi@k8smaster.local:~/.kube .kube
+    scp -r pi@k8smaster.local:~/.kube ./
     ```
 
 ## Kubernetes Dashboard
