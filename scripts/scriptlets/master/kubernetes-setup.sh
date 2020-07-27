@@ -19,7 +19,7 @@ echo -e "\nInstalling MetalLB LoadBalancer\n"
 # Install Kubernetes Dashboard
 # https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/
 # https://medium.com/@kanrangsan/creating-admin-user-to-access-kubernetes-dashboard-723d6c9764e4
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0-beta8/aio/deploy/recommended.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
 kubectl apply -f ./dashboard/dashboard-admin-user.yml
 kubectl apply -f ./dashboard/dashboard-admin-role-binding.yml
 

@@ -16,7 +16,7 @@ then
             sleep 10
         fi
     done
-    
+
 cat <<EOF | sudo tee /etc/docker/daemon.json
 {
   "exec-opts": ["native.cgroupdriver=systemd"],
@@ -27,6 +27,8 @@ cat <<EOF | sudo tee /etc/docker/daemon.json
   "storage-driver": "overlay2"
 }
 EOF
+
+# sudo systemctl enable docker
 
 fi
 
