@@ -137,6 +137,7 @@ Ensure the Raspberry Pi to be configured as a **Kubernetes Master** is:
 
 1. Open a new terminal window from a macOS, Linux, or Windows Bash (Linux Subsystem for Windows).
 2. Run the following command from the SSH terminal you started in step 1.
+   > Note, as at July 2020 for [Raspberry Pi 3B and 3B+ CGroup support](https://github.com/raspberrypi/linux/issues/3644) is not included in the kernel. CGroups is required for Kubernetes. The work around is to enable the 64bit kernel. You will be prompted to enable the 64Bit kernel. 
 
     ```bash
     bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
@@ -164,6 +165,7 @@ Ensure the k8smaster and all the Raspberry Pis that will be configured are **pow
 ### Step 2: Start the Installation Process
 
 1. Run the following command from the SSH terminal you started in step 1.
+   > Note, as at July 2020 for [Raspberry Pi 3B and 3B+ CGroup support](https://github.com/raspberrypi/linux/issues/3644) is not included in the kernel. CGroups is required for Kubernetes. The work around is to enable the 64bit kernel. You will be prompted to enable the 64Bit kernel. 
 
     ```bash
     bash -c "$(curl https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/setup.sh)"
