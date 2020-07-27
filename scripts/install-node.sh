@@ -105,6 +105,6 @@ function EnableFanShim() {
 
 ListDevices
 EnableBootFromUSB
-# Enable64BitKernel
+Enable64BitKernel
 EnableFanShim
 StartNodeInstall
