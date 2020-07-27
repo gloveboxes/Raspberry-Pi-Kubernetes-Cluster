@@ -110,7 +110,7 @@ function Generate_SSH() {
 
 GetIpAddress
 EnableBootFromUSB
-# Enable64BitKernel
+Enable64BitKernel
 EnableFanShim
 Generate_SSH
 
