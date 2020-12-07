@@ -2,7 +2,7 @@
 
 ![Raspberry Pi Kubernetes Cluster](https://raw.githubusercontent.com/gloveboxes/Raspberry-Pi-Kubernetes-Cluster/master/Resources/rpi-kube-cluster.jpg)
 
-|Author|[Dave Glover, Microsoft Australia](https://developer.microsoft.com/en-us/advocates/dave-glover?WT.mc_id=julyot-rkc-dglover)|
+|Author|[Dave Glover, Microsoft Australia](https://developer.microsoft.com/advocates/dave-glover?WT.mc_id=iot-0000-dglover)|
 |----|---|
 |Platform| Raspberry Pi, Raspbian Buster, Kernel 4.19|
 |Date|Updated May 2020|
@@ -11,11 +11,11 @@
 
 ## Building a Raspberry Pi Kubernetes Cluster
 
-Building a Kubernetes Intelligent Edge cluster on Raspberry Pi is a great learning experience, a stepping stone to building robust Intelligent Edge solutions, and an awesome way to impress your friends. Skills you develop on the _edge_ can be used in the _cloud_ with [Azure Kubernetes Service](https://azure.microsoft.com/en-au/services/kubernetes-service/?WT.mc_id=julyot-rkc-dglover).
+Building a Kubernetes Intelligent Edge cluster on Raspberry Pi is a great learning experience, a stepping stone to building robust Intelligent Edge solutions, and an awesome way to impress your friends. Skills you develop on the _edge_ can be used in the _cloud_ with [Azure Kubernetes Service](https://azure.microsoft.com/services/kubernetes-service/?WT.mc_id=iot-0000-dglover).
 
 ### Learning Kubernetes
 
-You can download a free copy of the [Kubernetes: Up and Running, Second Edition](https://azure.microsoft.com/en-us/resources/kubernetes-up-and-running/?WT.mc_id=julyot-rkc-dglover) book. It is an excellent introduction to Kubernetes and it will accelerate your understanding of Kubernetes.
+You can download a free copy of the [Kubernetes: Up and Running, Second Edition](https://azure.microsoft.com/resources/kubernetes-up-and-running/?WT.mc_id=iot-0000-dglover) book. It is an excellent introduction to Kubernetes and it will accelerate your understanding of Kubernetes.
 
 ![](Resources/kubernetes-up-and-running.png)
 
@@ -35,13 +35,13 @@ Learn how to use tools and APIs to automate scalable distributed systems for onl
 
 ## Introduction
 
-The Kubernetes cluster is built with Raspberry Pi 4 nodes and is very capable. It has been tested with Python and C# [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=julyot-rkc-dglover), [Azure Custom Vision](https://azure.microsoft.com/en-au/services/cognitive-services/custom-vision-service?WT.mc_id=julyot-rkc-dglover) Machine Learning models, and [NGINX](https://www.nginx.com/) Web Server.
+The Kubernetes cluster is built with Raspberry Pi 4 nodes and is very capable. It has been tested with Python and C# [Azure Functions](https://azure.microsoft.com/services/functions?WT.mc_id=iot-0000-dglover), [Azure Custom Vision](https://azure.microsoft.com/services/cognitive-services/custom-vision-service?WT.mc_id=iot-0000-dglover) Machine Learning models, and [NGINX](https://www.nginx.com/) Web Server.
 
 This project forms the basis for a four-part _Intelligence on the Edge_ series. The followup topics will include:
 
-* Build, debug, and deploy Python and C# [Azure Functions](https://azure.microsoft.com/en-au/services/functions?WT.mc_id=julyot-rkc-dglover) to a Raspberry Pi Kubernetes Cluster, and learn how to access hardware from a Kubernetes managed container.
+* Build, debug, and deploy Python and C# [Azure Functions](https://azure.microsoft.com/services/functions?WT.mc_id=iot-0000-dglover) to a Raspberry Pi Kubernetes Cluster, and learn how to access hardware from a Kubernetes managed container.
 
-* Developing, deploying and managing _Intelligence on the Edge_ with [Azure IoT Edge on Kubernetes](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-kubernetes?WT.mc_id=julyot-rkc-dglover).
+* Developing, deploying and managing _Intelligence on the Edge_ with [Azure IoT Edge on Kubernetes](https://docs.microsoft.com/azure/iot-edge/how-to-install-iot-edge-kubernetes?WT.mc_id=iot-0000-dglover).
 
 * Getting started with the [dapr.io](https://dapr.io?WT.mc_id=github-blog-dglover), an event-driven, portable runtime for building microservices on cloud and edge.
 
